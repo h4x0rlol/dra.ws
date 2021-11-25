@@ -1,0 +1,14 @@
+{
+  "name": "draw.ws",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/h4x0rlol/redraw.git",
+  "author": "h4x0rlol <mazafaker.com@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "husky": "^7.0.4"
+  }
+}
