@@ -1,0 +1,31 @@
+.light {
+	--bg-primary: #f6f6f6;
+	--bg-secondary: #fff;
+	--bg-tertiary: #ccc;
+	--bg-active: #ebeaea;
+
+	--color-primary: #000;
+	--color-secondary: #626d7a;
+
+	--shadow-primary: gray;
+
+	--border-primary: #dadce0;
+	--border-secondary: #ccc;
+	--border-tertiary: #000;
+}
+
+.dark {
+	--bg-primary: #22272e;
+	--bg-secondary: #2d333b;
+	--bg-tertiary: #22272e;
+	--bg-active: #1c2128;
+
+	--color-primary: #cdd9e5;
+	--color-secondary: #9d9285;
+
+	--shadow-primary: #d3d3d3;
+
+	--border-primary: #25231f;
+	--border-secondary: #2d333b;
+	--border-tertiary: #fff;
+}
