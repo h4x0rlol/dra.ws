@@ -1,0 +1,13 @@
+@import 'src/styles/breakpoints.scss';
+
+.board {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	flex: 70%;
+	height: 100vh;
+
+	@media (max-width: $laptop) {
+		flex: 0;
+	}
+}
