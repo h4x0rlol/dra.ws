@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
+import { getTheme } from './utils/themeController';
 
 const App: React.FC = (): JSX.Element => {
 	useEffect(() => {
-		document.documentElement.className = 'dark';
+		getTheme();
 	}, []);
 
 	return <div>Hello world</div>;
