@@ -1,26 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
 import cn from 'classnames';
-import Pencil from 'src/components/Svg/Pencil';
+import { observer } from 'mobx-react-lite';
+import PencilIcon from 'src/components/Svg/PencilIcon';
+import toolStore from 'src/store/toolStore';
+import canvasStore from 'src/store/canvasStore';
+import Pencil from 'src/utils/tools/Pencil';
 import styles from './Toolbar.module.scss';
 
-const Toolbar: React.FC = (): JSX.Element => {
+const Toolbar: React.FC = observer((): JSX.Element => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.buttons}>
-				<button className={styles.button} type="button">
-					<Pencil
-						onClick={() => {
-							// toolState.setTool(new Pencil(canvasState.canvas));
-							// setCurrentTool('Pencil');
-						}}
-						// className={cn(styles.icon, {
-						// 	[styles.active]: currentTool === 'Pencil',
-						// })}
-					/>
+				<button
+					type="button"
+					onClick={() => {
+						if (canvasStore.canvas) {
+							toolStore.setTool(new Pencil(canvasStore.canvas));
+						}
+					}}
+					className={cn(styles.button, {
+						[styles.active]: toolStore.tool instanceof Pencil,
+					})}
+				>
+					<PencilIcon className={styles.icon} />
 				</button>
 			</div>
 		</div>
 	);
-};
+});
 
 export default Toolbar;

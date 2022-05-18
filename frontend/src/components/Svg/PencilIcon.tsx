@@ -1,9 +1,13 @@
 import React, { SVGProps } from 'react';
 
-const Pencil: React.FC<SVGProps<SVGElement>> = ({ className }): JSX.Element => {
+const PencilIcon: React.FC<SVGProps<SVGElement>> = ({
+	className,
+	onClick,
+}): JSX.Element => {
 	return (
 		<svg
 			className={className}
+			onClick={onClick}
 			xmlns="http://www.w3.org/2000/svg"
 			width="25"
 			height="25"
@@ -14,4 +18,4 @@ const Pencil: React.FC<SVGProps<SVGElement>> = ({ className }): JSX.Element => {
 	);
 };
 
-export default Pencil;
+export default PencilIcon;

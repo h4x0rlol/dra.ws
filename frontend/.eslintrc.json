@@ -26,7 +26,7 @@
 				"props": false
 			}
 		],
-		"indent": ["error", "tab"],
+		"indent": "off",
 		"prettier/prettier": [2, { "useTabs": true, "endOfLine": "auto" }],
 		"@typescript-eslint/no-use-before-define": ["error"],
 		"react/jsx-filename-extension": [
