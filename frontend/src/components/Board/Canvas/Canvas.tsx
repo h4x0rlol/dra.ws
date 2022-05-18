@@ -1,39 +1,42 @@
 import React, { useEffect, useRef } from 'react';
+import canvasStore from 'src/store/canvasStore';
 import styles from './Canvas.module.scss';
 
 const Canvas: React.FC = (): JSX.Element => {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
 	useEffect(() => {
-		// canvasState.setCanvas(canvasRef.current);
+		if (canvasRef.current) {
+			canvasStore.setCanvas(canvasRef.current);
+		}
 	}, []);
 
-	// useEffect(() => {
-	// 	document.addEventListener('keydown', (e) => {
-	// 	  if (e.ctrlKey && e.key === 'z') {
-	// 		canvasState.undo();
-	// 	  }
+	useEffect(() => {
+		document.addEventListener('keydown', (e) => {
+			if (e.ctrlKey && e.key === 'z') {
+				canvasStore.undo();
+			}
 
-	// 	  if (e.ctrlKey && e.key === 'y') {
-	// 		canvasState.redo();
-	// 	  }
-	// 	});
+			if (e.ctrlKey && e.key === 'y') {
+				canvasStore.redo();
+			}
+		});
 
-	// 	return () => {
-	// 	  document.removeEventListener('keydown', (e) => {
-	// 		if (e.ctrlKey && e.key === 'z') {
-	// 		  canvasState.undo();
-	// 		}
+		return () => {
+			document.removeEventListener('keydown', (e) => {
+				if (e.ctrlKey && e.key === 'z') {
+					canvasStore.undo();
+				}
 
-	// 		if (e.ctrlKey && e.key === 'y') {
-	// 		  canvasState.redo();
-	// 		}
-	// 	  });
-	// 	};
-	//   }, []);
+				if (e.ctrlKey && e.key === 'y') {
+					canvasStore.redo();
+				}
+			});
+		};
+	}, []);
 
 	const mouseDownHandler = (): void => {
-		// canvasState.pushToUndo(canvasRef.current.toDataURL());
+		canvasStore.pushToUndo(canvasRef.current?.toDataURL());
 	};
 
 	return (
