@@ -1,0 +1,48 @@
+@import 'src/styles/breakpoints.scss';
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 15px 15px 15px 50px;
+}
+
+.wrapper {
+	height: 850px;
+	display: flex;
+	width: 1200px;
+	overflow: auto;
+
+	@media (max-width: 1600px) {
+		width: 1000px;
+		height: 750px;
+	}
+	@media (max-width: $laptopL) {
+		width: 900px;
+		height: 800px;
+	}
+	@media (max-width: 1390px) {
+		width: 700px;
+		height: 600px;
+	}
+	@media (max-width: $tablet) {
+		height: 550px;
+		width: 580px;
+	}
+	@media (max-width: 540px) {
+		height: 400px;
+		width: 400px;
+	}
+	@media (max-width: $mobileL) {
+		width: 300px;
+		height: 500px;
+	}
+	@media (max-width: $mobileL) {
+		width: 245px;
+		height: 390px;
+	}
+	@media (max-width: $mobileS) {
+		width: 220px;
+		height: 319px;
+	}
+}
