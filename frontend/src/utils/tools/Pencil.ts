@@ -11,13 +11,13 @@ export default class Pencil extends Tool {
 	}
 
 	listen(): void {
-		this.canvas.onmouseup = this.mouseUpHandler.bind(this);
 		this.canvas.onmousedown = this.mouseDownHandler.bind(this);
 		this.canvas.onmousemove = this.mouseMoveHandler.bind(this);
-	}
+		this.canvas.onmouseup = this.mouseUpHandler.bind(this);
 
-	mouseUpHandler(): void {
-		this.mouseDown = false;
+		this.canvas.ontouchstart = this.touchDownHandler.bind(this);
+		this.canvas.ontouchmove = this.touchMoveHandler.bind(this);
+		this.canvas.ontouchend = this.mouseUpHandler.bind(this);
 	}
 
 	mouseDownHandler(e: MouseEvent): void {
@@ -38,10 +38,42 @@ export default class Pencil extends Tool {
 		}
 	}
 
-	draw(x: number, y: number): void {
-		if (this.ctx) {
-			this.ctx.lineTo(x, y);
-			this.ctx.stroke();
+	mouseUpHandler(): void {
+		this.mouseDown = false;
+	}
+
+	touchMoveHandler(ev: TouchEvent): void {
+		if (this.mouseDown) {
+			ev.preventDefault();
+			const bcr = (
+				ev as unknown as React.MouseEvent<HTMLElement>
+			).currentTarget.getBoundingClientRect();
+			const x = ev.targetTouches[0].clientX - bcr.x;
+			const y = ev.targetTouches[0].clientY - bcr.y;
+			this.draw(
+				(x * this.canvas.width) / this.canvas.clientWidth || 0,
+				(y * this.canvas.height) / this.canvas.clientHeight || 0
+			);
 		}
+	}
+
+	touchDownHandler(ev: TouchEvent): void {
+		const bcr = (
+			ev as unknown as React.MouseEvent<HTMLElement>
+		).currentTarget.getBoundingClientRect();
+		const x = ev.targetTouches[0].clientX - bcr.x;
+		const y = ev.targetTouches[0].clientY - bcr.y;
+
+		this.mouseDown = true;
+		this.ctx.beginPath();
+		this.ctx.moveTo(
+			(x * this.canvas.width) / this.canvas.clientWidth || 0,
+			(y * this.canvas.height) / this.canvas.clientHeight || 0
+		);
+	}
+
+	draw(x: number, y: number): void {
+		this.ctx.lineTo(x, y);
+		this.ctx.stroke();
 	}
 }

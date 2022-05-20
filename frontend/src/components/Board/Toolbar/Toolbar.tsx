@@ -15,7 +15,14 @@ const Toolbar: React.FC = observer((): JSX.Element => {
 					type="button"
 					onClick={() => {
 						if (canvasStore.canvas) {
-							toolStore.setTool(new Pencil(canvasStore.canvas));
+							if (toolStore.tool instanceof Pencil) {
+								toolStore.tool.destroyEvents();
+								toolStore.setTool(null);
+							} else {
+								toolStore.setTool(
+									new Pencil(canvasStore.canvas)
+								);
+							}
 						}
 					}}
 					className={cn(styles.button, {

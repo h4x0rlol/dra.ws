@@ -10,6 +10,7 @@ export default class Tool {
 		this.ctx = canvas.getContext(
 			'2d'
 		) as unknown as CanvasRenderingContext2D;
+
 		this.mouseDown = false;
 		this.destroyEvents();
 	}
@@ -31,5 +32,8 @@ export default class Tool {
 		this.canvas.onmousedown = null;
 		this.canvas.onmousemove = null;
 		this.canvas.onclick = null;
+		this.canvas.ontouchstart = null;
+		this.canvas.ontouchmove = null;
+		this.canvas.ontouchend = null;
 	}
 }

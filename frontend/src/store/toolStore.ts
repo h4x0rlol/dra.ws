@@ -16,7 +16,7 @@ class ToolState {
 		makeAutoObservable(this);
 	}
 
-	setTool(tool: InstanceType<typeof Tool>): void {
+	setTool(tool: InstanceType<typeof Tool> | null): void {
 		this.tool = tool;
 		this.setColor(this.color);
 		this.setLineWidth(this.lineWidth);
