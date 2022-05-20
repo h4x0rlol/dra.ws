@@ -1,7 +1,7 @@
 import React from 'react';
 import Canvas from 'src/components/Board/Canvas/Canvas';
-import SettingsBar from 'src/components/Board/SettingsBar';
 import Toolbar from 'src/components/Board/Toolbar/Toolbar';
+import SettingsBar from 'src/components/SettingsBar/SettingsBar';
 import styles from './Board.module.scss';
 
 const Board: React.FC = (): JSX.Element => {
