@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import Tool from 'src/utils/tools/Tool';
 
 class ToolState {
-	tool: InstanceType<typeof Tool> | null = null;
+	tool: Tool | null = null;
 
 	color: string = '#000000';
 
@@ -16,7 +16,7 @@ class ToolState {
 		makeAutoObservable(this);
 	}
 
-	setTool(tool: InstanceType<typeof Tool> | null): void {
+	setTool(tool: Tool | null): void {
 		this.tool = tool;
 		this.setColor(this.color);
 		this.setLineWidth(this.lineWidth);
@@ -45,7 +45,9 @@ class ToolState {
 		switch (type) {
 			case 'default':
 				this.lineType = 'default';
-				if (this.tool) this.tool.lineType = [];
+				if (this.tool) {
+					this.tool.lineType = [];
+				}
 				break;
 			case 'dashed':
 				this.lineType = 'dashed';
@@ -64,7 +66,9 @@ class ToolState {
 				break;
 			default:
 				this.lineType = 'default';
-				if (this.tool) this.tool.lineType = [];
+				if (this.tool) {
+					this.tool.lineType = [];
+				}
 		}
 	}
 }

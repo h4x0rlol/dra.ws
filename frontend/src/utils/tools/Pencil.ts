@@ -1,3 +1,4 @@
+import canvasStore from 'src/store/canvasStore';
 import Tool from './Tool';
 
 export default class Pencil extends Tool {
@@ -22,6 +23,7 @@ export default class Pencil extends Tool {
 
 	mouseDownHandler(e: MouseEvent): void {
 		this.mouseDown = true;
+		canvasStore.pushToUndo(this.canvas?.toDataURL());
 		this.ctx.beginPath();
 		this.ctx.moveTo(
 			(e.offsetX * this.canvas.width) / this.canvas.clientWidth || 0,

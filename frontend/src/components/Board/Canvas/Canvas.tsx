@@ -35,14 +35,10 @@ const Canvas: React.FC = (): JSX.Element => {
 		};
 	}, []);
 
-	const mouseDownHandler = (): void => {
-		canvasStore.pushToUndo(canvasRef.current?.toDataURL());
-	};
-
 	return (
 		<div className={styles.container}>
 			<div className={styles.wrapper}>
-				<canvas ref={canvasRef} onMouseDown={mouseDownHandler} />
+				<canvas ref={canvasRef} />
 			</div>
 		</div>
 	);
