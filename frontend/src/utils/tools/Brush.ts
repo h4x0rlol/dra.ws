@@ -1,13 +1,15 @@
 import canvasStore from 'src/store/canvasStore';
 import Tool from './Tool';
 
-export default class Pencil extends Tool {
+export default class Brush extends Tool {
 	constructor(canvas: HTMLCanvasElement) {
 		super(canvas);
-		this.ctx.lineCap = 'butt';
-		this.ctx.lineJoin = 'miter';
-		this.ctx.lineWidth = 1;
-		this.ctx.globalAlpha = 1;
+		this.ctx.lineCap = 'round';
+		this.ctx.lineJoin = 'round';
+		//  TODO
+		// https://codesandbox.io/s/paint-tool-final-g362x?from-embed=&file=/src/index.js:2345-2351
+		// Make brush
+		// this.ctx.globalAlpha = '0.01';
 		this.listen();
 	}
 

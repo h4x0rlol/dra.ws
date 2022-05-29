@@ -5,6 +5,8 @@ import PencilIcon from 'src/components/Svg/PencilIcon';
 import toolStore from 'src/store/toolStore';
 import canvasStore from 'src/store/canvasStore';
 import Pencil from 'src/utils/tools/Pencil';
+import Brush from 'src/utils/tools/Brush';
+import BrushIcon from 'src/components/Svg/BrushIcon';
 import Tool from 'src/utils/tools/Tool';
 import styles from './Toolbar.module.scss';
 
@@ -31,6 +33,15 @@ const Toolbar: React.FC = (): JSX.Element => {
 					})}
 				>
 					<PencilIcon className={styles.icon} />
+				</button>
+				<button
+					type="button"
+					onClick={() => onSelect(Brush)}
+					className={cn(styles.button, {
+						[styles.active]: toolStore.tool instanceof Brush,
+					})}
+				>
+					<BrushIcon className={styles.icon} />
 				</button>
 			</div>
 		</div>
