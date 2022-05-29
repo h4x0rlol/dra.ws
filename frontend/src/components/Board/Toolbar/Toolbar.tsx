@@ -1,12 +1,14 @@
 import React from 'react';
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
-import PencilIcon from 'src/components/Svg/PencilIcon';
 import toolStore from 'src/store/toolStore';
 import canvasStore from 'src/store/canvasStore';
 import Pencil from 'src/utils/tools/Pencil';
+import PencilIcon from 'src/components/Svg/PencilIcon';
 import Brush from 'src/utils/tools/Brush';
 import BrushIcon from 'src/components/Svg/BrushIcon';
+import Line from 'src/utils/tools/Line';
+import LineIcon from 'src/components/Svg/LineIcon';
 import Tool from 'src/utils/tools/Tool';
 import styles from './Toolbar.module.scss';
 
@@ -34,6 +36,7 @@ const Toolbar: React.FC = (): JSX.Element => {
 				>
 					<PencilIcon className={styles.icon} />
 				</button>
+
 				<button
 					type="button"
 					onClick={() => onSelect(Brush)}
@@ -42,6 +45,16 @@ const Toolbar: React.FC = (): JSX.Element => {
 					})}
 				>
 					<BrushIcon className={styles.icon} />
+				</button>
+
+				<button
+					type="button"
+					onClick={() => onSelect(Line)}
+					className={cn(styles.button, {
+						[styles.active]: toolStore.tool instanceof Line,
+					})}
+				>
+					<LineIcon className={styles.icon} />
 				</button>
 			</div>
 		</div>
