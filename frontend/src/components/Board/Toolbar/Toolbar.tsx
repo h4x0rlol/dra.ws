@@ -12,6 +12,8 @@ import LineIcon from 'src/components/Svg/LineIcon';
 import Tool from 'src/utils/tools/Tool';
 import Rect from 'src/utils/tools/Rect';
 import RectIcon from 'src/components/Svg/RectIcon';
+import Triangle from 'src/utils/tools/Triangle';
+import TriangleIcon from 'src/components/Svg/TriangleIcon';
 import styles from './Toolbar.module.scss';
 
 const Toolbar: React.FC = (): JSX.Element => {
@@ -67,6 +69,16 @@ const Toolbar: React.FC = (): JSX.Element => {
 					})}
 				>
 					<RectIcon className={styles.icon} />
+				</button>
+
+				<button
+					type="button"
+					onClick={() => onSelect(Triangle)}
+					className={cn(styles.button, {
+						[styles.active]: toolStore.tool instanceof Triangle,
+					})}
+				>
+					<TriangleIcon className={styles.icon} />
 				</button>
 			</div>
 		</div>
