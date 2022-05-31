@@ -1,0 +1,8 @@
+{
+	"settingsBar": {
+		"colorInput": "Color",
+		"penSize": "Pen size",
+		"lineType": "Line type",
+		"fill": "Fill figure:"
+	}
+}

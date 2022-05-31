@@ -1,0 +1,143 @@
+@import 'src/styles/breakpoints.scss';
+@import 'src/styles/theme.scss';
+
+.wrapper {
+	height: 45px;
+	background-color: var(--bg-secondary);
+	display: flex;
+	align-items: center;
+	padding: 0;
+	width: 100%;
+	z-index: 1;
+	border-bottom: 1px solid var(--border-primary);
+
+	@media (max-width: 1740px) {
+		height: 75px;
+	}
+	@media (max-width: 540px) {
+		height: 110px;
+	}
+	@media (max-width: $mobileL) {
+		height: 190px;
+	}
+	@media (max-width: $mobileM) {
+		height: 215px;
+	}
+}
+
+.container {
+	display: flex;
+	align-items: center;
+	padding-left: 10px;
+
+	@media (max-width: 1600px) {
+		padding: 5px;
+	}
+}
+
+.item {
+	display: flex;
+	align-items: center;
+	padding-left: 10px;
+
+	@media (max-width: 1600px) {
+		padding: 5px;
+	}
+}
+
+.p {
+	font-size: 17px;
+	font-variant: all-petite-caps;
+	font-weight: bold;
+}
+
+.input {
+	width: 45px;
+	background: transparent;
+	height: 25px;
+	font-size: 17px;
+	font-variant: all-petite-caps;
+	font-weight: bold;
+	margin-left: 10px;
+	border: none;
+	color: var(--color-primary);
+
+	::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+	-moz-appearance: textfield;
+}
+
+.color_input {
+	width: 50px;
+	background: transparent;
+	height: 25px;
+	margin-left: 10px;
+}
+
+.range_input {
+	width: 110px;
+	background: transparent;
+	height: 25px;
+	margin-left: 10px;
+}
+
+.span {
+	padding: 0 10px 0 10px;
+	font-size: 17px;
+	margin-left: 10px;
+	height: 25px;
+	font-variant: all-petite-caps;
+	font-weight: bold;
+	text-align: center;
+	background-color: #eee;
+	border: 1px solid var(--bg-secondary);
+	border-radius: 4px;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	border-right: 0;
+	color: #000;
+}
+
+.checkbox {
+	height: 25px;
+	width: 23px;
+	margin-left: 10px;
+}
+
+.select {
+	margin-left: 10px;
+	height: 25px;
+	width: 65px;
+	font-weight: bold;
+	background-color: var(--bg-secondary);
+	border: 1px solid var(--border-secondary);
+	border-radius: 4px;
+	color: var(--color-primary);
+
+	:focus {
+		outline: 0;
+		border: 2px solid var(--border-primary);
+		border-radius: 4px;
+	}
+}
+
+.option {
+	font-size: 17px;
+	font-weight: bold;
+	color: var(--color-primary);
+}
+
+.svg {
+	fill: var(--color-primary);
+}
+
+.button {
+	cursor: pointer;
+	border: 1px solid var(--border-secondary);
+	border-radius: 4px;
+	background-color: transparent;
+	margin-left: 10px;
+	height: 25px;
+}
