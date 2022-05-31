@@ -1,0 +1,12 @@
+@import 'src/styles/theme.scss';
+
+.container {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	flex: 25%;
+	border: 1px solid var(--border-primary);
+	z-index: 1;
+	background-color: var(--bg-primary);
+	color: var(--color-primary);
+}

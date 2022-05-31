@@ -1,0 +1,15 @@
+@import 'src/styles/breakpoints.scss';
+@import 'src/styles/theme.scss';
+
+.container {
+	height: 100vh;
+	display: flex;
+	flex-direction: row;
+	background-color: var(--bg-primary);
+	color: var(--color-primary);
+
+	@media (max-width: $laptop) {
+		flex-direction: column;
+		height: 200vh;
+	}
+}

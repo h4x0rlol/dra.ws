@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getTheme } from './utils/themeController';
-import Board from './views/Board/Board';
+import Lobby from './views/Lobby/Lobby';
 
 const App: React.FC = (): JSX.Element => {
 	useEffect(() => {
 		getTheme();
 	}, []);
 
-	return <Board />;
+	const [status, setStatus] = useState('weslcome'); // path to index
+
+	return <Lobby />;
 };
 
 export default App;
