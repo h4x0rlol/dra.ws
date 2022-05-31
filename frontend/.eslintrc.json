@@ -19,6 +19,15 @@
 	},
 	"plugins": ["react", "@typescript-eslint", "react-hooks"],
 	"rules": {
+		"jsx-a11y/label-has-associated-control": [
+			"error",
+			{
+				"required": {
+					"some": ["nesting", "id"]
+				}
+			}
+		],
+
 		"no-use-before-define": "off",
 		"no-param-reassign": [
 			2,

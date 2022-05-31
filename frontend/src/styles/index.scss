@@ -6,13 +6,16 @@
 }
 
 body {
+	background-color: var(--bg-primary);
+	color: var(--color-primary);
+	overflow: hidden;
+}
+
+* {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Source Sans Pro', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	line-height: 1.618;
-	background-color: var(--bg-primary);
-	color: var(--color-primary);
+	font-family: 'Source Sans Pro', sans-serif;
 }

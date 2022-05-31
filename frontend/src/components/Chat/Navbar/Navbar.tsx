@@ -5,6 +5,7 @@ import ExitIcon from 'src/components/Svg/ExitIcon';
 import ShareIcon from 'src/components/Svg/ShareIcon';
 import UserIcon from 'src/components/Svg/UserIcon';
 import UsersIcon from 'src/components/Svg/UsersIcon';
+import ThemeToggle from 'src/components/ThemeToggle/ThemeToggle';
 import styles from './Navbar.module.scss';
 
 const Navbar: React.FC = (): JSX.Element => {
@@ -33,7 +34,9 @@ const Navbar: React.FC = (): JSX.Element => {
 				</div>
 				<div className={styles.hr} />
 
-				<div className={styles.item}>sssss</div>
+				<div className={styles.item}>
+					<ThemeToggle />
+				</div>
 				<div className={styles.hr} />
 
 				<div className={styles.item}>

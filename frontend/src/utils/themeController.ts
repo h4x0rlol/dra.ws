@@ -1,6 +1,9 @@
+import themeStore from 'src/store/themeStore';
+
 const setTheme = (themeName: string): void => {
 	localStorage.setItem('theme', themeName);
 	document.documentElement.className = themeName;
+	themeStore.setTheme(themeName);
 };
 
 const getTheme = (): void => {
