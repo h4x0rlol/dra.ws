@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import canvasStore from 'src/store/canvasStore';
 import toolStore from 'src/store/toolStore';
 import { preventNegativeValue } from 'src/utils/helpers';
-import ClearIcon from '../Svg/ClearIcon';
-import DownloadIcon from '../Svg/DownloadIcon';
-import RedoIcon from '../Svg/RedoIcon';
-import UndoIcon from '../Svg/UndoIcon';
+import ClearIcon from '../../Svg/ClearIcon';
+import DownloadIcon from '../../Svg/DownloadIcon';
+import RedoIcon from '../../Svg/RedoIcon';
+import UndoIcon from '../../Svg/UndoIcon';
 import styles from './SettingsBar.module.scss';
 
 const SettingsBar: React.FC = (): JSX.Element => {

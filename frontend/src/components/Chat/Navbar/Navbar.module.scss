@@ -1,0 +1,76 @@
+@import 'src/styles/breakpoints.scss';
+@import 'src/styles/theme.scss';
+
+.wrapper {
+	height: 44px;
+	background-color: var(--bg-secondary);
+	display: flex;
+	align-items: center;
+	padding: 0;
+	width: 100%;
+	z-index: 1;
+	border-bottom: 1px solid var(--border-primary);
+
+	@media (max-width: 1740px) {
+		height: 75px;
+	}
+}
+
+.container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	flex-wrap: wrap;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.item {
+	display: flex;
+	align-items: center;
+	padding-left: 10px;
+
+	@media (max-width: 1600px) {
+		padding: 5px;
+	}
+}
+
+.p {
+	font-size: 17px;
+}
+
+.button {
+	border: none;
+	cursor: pointer;
+	background-color: transparent;
+	margin-left: 10px;
+	height: 25px;
+}
+
+.checkbox {
+	height: 25px;
+	width: 23px;
+	margin-left: 10px;
+}
+
+.svg {
+	fill: var(--color-primary);
+}
+
+.user_svg {
+	fill: var(--color-primary);
+	margin-right: 10px;
+}
+
+.hr {
+	border-left: 1px solid var(--border-secondary);
+	height: 44px;
+	margin-left: 10px;
+
+	@media (max-width: 1740px) {
+		height: 25px;
+	}
+	@media (max-width: 540px) {
+		height: 0;
+	}
+}

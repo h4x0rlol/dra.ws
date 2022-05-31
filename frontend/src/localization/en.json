@@ -4,5 +4,8 @@
 		"penSize": "Pen size",
 		"lineType": "Line type",
 		"fill": "Fill figure:"
+	},
+	"navbar": {
+		"users": "Users"
 	}
 }
