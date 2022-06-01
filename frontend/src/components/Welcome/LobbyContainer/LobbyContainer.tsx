@@ -6,9 +6,14 @@ import styles from './LobbyContainer.module.scss';
 import CreateLobby from '../CreateLobby/CreateLobby';
 import LobbyList from '../LobbyList/LobbyList';
 
+enum Options {
+	CREATE = 'CREATE',
+	LIST = 'LIST',
+}
+
 const LobbyContainer: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
-	const [isCreateLobby, setIsCreateLobby] = useState(true);
+	const [isCreateLobby, setIsCreateLobby] = useState(Options.CREATE);
 
 	return (
 		<>
@@ -16,10 +21,10 @@ const LobbyContainer: React.FC = (): JSX.Element => {
 				<button
 					type="button"
 					className={cn(styles.option, {
-						[styles.active]: isCreateLobby,
-						[styles.inactive]: !isCreateLobby,
+						[styles.active]: isCreateLobby === Options.CREATE,
+						[styles.inactive]: isCreateLobby === Options.LIST,
 					})}
-					onClick={() => setIsCreateLobby(true)}
+					onClick={() => setIsCreateLobby(Options.CREATE)}
 				>
 					{t('home.create')}
 				</button>
@@ -27,10 +32,10 @@ const LobbyContainer: React.FC = (): JSX.Element => {
 				<button
 					type="button"
 					className={cn(styles.option, {
-						[styles.active]: isCreateLobby,
-						[styles.inactive]: !isCreateLobby,
+						[styles.active]: isCreateLobby === Options.LIST,
+						[styles.inactive]: isCreateLobby === Options.CREATE,
 					})}
-					onClick={() => setIsCreateLobby(false)}
+					onClick={() => setIsCreateLobby(Options.LIST)}
 				>
 					{t('home.list')}
 				</button>

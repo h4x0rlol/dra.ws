@@ -19,6 +19,8 @@
 		"private": "Private Lobby - ",
 		"empty": "No available lobbies currently",
 		"create": "Create a lobby",
-		"list": "Lobby list"
+		"list": "Lobby list",
+		"description": "Here you can draw together with your friends",
+		"share": "Just share a link"
 	}
 }
