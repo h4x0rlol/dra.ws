@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getTheme } from './utils/themeController';
+import Home from './views/Home/Home';
 import Lobby from './views/Lobby/Lobby';
 
 // TODO
@@ -8,7 +9,7 @@ import Lobby from './views/Lobby/Lobby';
 // Make text on canvas
 
 const App: React.FC = (): JSX.Element => {
-	const [status, setStatus] = useState('weslcome'); // path to index
+	const [home, setHome] = useState(true);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
@@ -18,6 +19,10 @@ const App: React.FC = (): JSX.Element => {
 
 	if (isLoading) {
 		return <div>Loading...</div>;
+	}
+
+	if (home) {
+		return <Home />;
 	}
 
 	return <Lobby />;
