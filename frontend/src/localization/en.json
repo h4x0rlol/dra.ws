@@ -16,6 +16,7 @@
 	"home": {
 		"placeholder": "Your nickname...",
 		"start": "Start drawing",
-		"private": "Private Lobby - "
+		"private": "Private Lobby - ",
+		"empty": "No available lobbies currently"
 	}
 }

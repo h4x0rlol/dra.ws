@@ -1,0 +1,28 @@
+@import 'src/styles/theme.scss';
+
+.wrapper {
+	display: flex;
+	width: 100%;
+	padding: 15px 15px 0 30px;
+	overflow: auto;
+}
+
+.item {
+	word-wrap: break-word;
+	width: 100%;
+	padding-bottom: 10px;
+}
+
+.link {
+	word-break: break-word;
+	color: var(--color-primary);
+}
+
+.empty {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	padding: 52.5px;
+	color: var(--color-secondary);
+}
