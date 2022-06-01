@@ -3,11 +3,17 @@ import { getTheme } from './utils/themeController';
 import Lobby from './views/Lobby/Lobby';
 
 const App: React.FC = (): JSX.Element => {
+	const [status, setStatus] = useState('weslcome'); // path to index
+	const [isLoading, setIsLoading] = useState(true);
+
 	useEffect(() => {
 		getTheme();
+		setIsLoading(false);
 	}, []);
 
-	const [status, setStatus] = useState('weslcome'); // path to index
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
 
 	return <Lobby />;
 };
