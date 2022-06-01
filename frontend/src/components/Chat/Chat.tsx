@@ -9,7 +9,7 @@ const Chat: React.FC = (): JSX.Element => {
 	return (
 		<div className={styles.container}>
 			<Navbar />
-			{/* {users ? <UsersList /> : <Room />} */}
+			{users ? <UsersList /> : <Room />}
 		</div>
 	);
 };

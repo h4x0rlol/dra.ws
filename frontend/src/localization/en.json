@@ -7,5 +7,9 @@
 	},
 	"navbar": {
 		"users": "Users"
+	},
+	"room": {
+		"welcome": "Welcome to chat",
+		"placeholder": "Write a message..."
 	}
 }
