@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import Board from 'src/components/Board/Board';
 import Chat from 'src/components/Chat/Chat';
@@ -12,4 +13,4 @@ const Lobby: React.FC = (): JSX.Element => {
 	);
 };
 
-export default Lobby;
+export default observer(Lobby);

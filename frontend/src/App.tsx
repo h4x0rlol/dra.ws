@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Loader from './components/Loader/Loader';
 import { getTheme } from './utils/themeController';
 import Home from './views/Home/Home';
 import Lobby from './views/Lobby/Lobby';
@@ -18,7 +19,7 @@ const App: React.FC = (): JSX.Element => {
 	}, []);
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <Loader />;
 	}
 
 	if (home) {
