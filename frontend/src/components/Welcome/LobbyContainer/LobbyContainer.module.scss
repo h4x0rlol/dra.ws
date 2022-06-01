@@ -1,0 +1,43 @@
+@import 'src/styles/theme.scss';
+
+.options {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	border-top: 1px solid var(--color-primary);
+	border-bottom: 1px solid var(--color-primary);
+}
+
+.option {
+	border: none;
+	cursor: pointer;
+	display: flex;
+	font-size: 18px;
+	width: 100%;
+	justify-content: center;
+	color: var(--color-primary);
+
+	:hover {
+		background: var(--bg-active);
+	}
+
+	:focus-visible {
+		outline: 1px solid var(--color-primary);
+		background: var(--bg-active);
+	}
+
+	:active {
+		outline: none;
+		border: 1x solid var(--color-primary);
+	}
+}
+
+.active {
+	background: var(--bg-active);
+}
+
+.inactive {
+	background: var(--bg-primary);
+}

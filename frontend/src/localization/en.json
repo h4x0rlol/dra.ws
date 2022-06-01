@@ -17,6 +17,8 @@
 		"placeholder": "Your nickname...",
 		"start": "Start drawing",
 		"private": "Private Lobby - ",
-		"empty": "No available lobbies currently"
+		"empty": "No available lobbies currently",
+		"create": "Create a lobby",
+		"list": "Lobby list"
 	}
 }
