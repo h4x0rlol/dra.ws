@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { observer } from 'mobx-react-lite';
 import SendIcon from 'src/components/Svg/SendIcon';
 import Message from '../Message/Message';
 import styles from './Room.module.scss';
@@ -53,4 +54,4 @@ const Room: React.FC = (): JSX.Element => {
 	);
 };
 
-export default Room;
+export default observer(Room);

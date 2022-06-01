@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { observer } from 'mobx-react-lite';
 import styles from './UsersList.module.scss';
 
 const UsersList: React.FC = (): JSX.Element => {
@@ -20,4 +21,4 @@ const UsersList: React.FC = (): JSX.Element => {
 	);
 };
 
-export default UsersList;
+export default observer(UsersList);

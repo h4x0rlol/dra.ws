@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+import { observer } from 'mobx-react-lite';
 import styles from './Message.module.scss';
 
 interface MessageProps {
@@ -48,4 +49,4 @@ const Message: React.FC<MessageProps> = ({
 	);
 };
 
-export default Message;
+export default observer(Message);

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import Navbar from 'src/components/Chat/Navbar/Navbar';
 import Room from 'src/components/Chat/Room/Room';
 import UsersList from 'src/components/Chat/UsersList/UsersList';
@@ -14,4 +15,4 @@ const Chat: React.FC = (): JSX.Element => {
 	);
 };
 
-export default Chat;
+export default observer(Chat);
