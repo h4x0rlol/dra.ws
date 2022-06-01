@@ -1,0 +1,43 @@
+@import 'src/styles/theme.scss';
+
+.container {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	width: 100%;
+	padding: 10px 0 10px 0;
+	height: fit-content;
+}
+
+.wrapper {
+	display: flex;
+	width: 100%;
+	margin-top: 15px;
+	padding-left: 15px;
+}
+
+.list {
+	width: 100%;
+	list-style: inside;
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.item {
+	word-wrap: break-word;
+	width: 100%;
+	padding-bottom: 10px;
+}
+
+.welcome {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	height: 100%;
+	font-size: 15px;
+	line-height: 19px;
+	color: var(--color-secondary);
+}
