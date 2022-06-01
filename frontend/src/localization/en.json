@@ -12,5 +12,10 @@
 		"welcome": "Welcome to chat",
 		"placeholder": "Write a message...",
 		"users": "Currently in lobby:"
+	},
+	"home": {
+		"placeholder": "Your nickname...",
+		"start": "Start drawing",
+		"private": "Private Lobby - "
 	}
 }

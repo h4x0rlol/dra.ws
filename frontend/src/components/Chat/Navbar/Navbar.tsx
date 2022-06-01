@@ -15,7 +15,11 @@ const Navbar: React.FC = (): JSX.Element => {
 		<div className={styles.wrapper}>
 			<div className={styles.container}>
 				<div className={styles.item}>
-					<UserIcon className={styles.user_svg} />
+					<UserIcon
+						width={25}
+						height={25}
+						className={styles.user_svg}
+					/>
 					<p className={styles.p}>adeptqqq</p>
 				</div>
 				<div className={styles.hr} />

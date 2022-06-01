@@ -1,0 +1,125 @@
+@import 'src/styles/breakpoints.scss';
+@import 'src/styles/theme.scss';
+
+.wrapper {
+	display: flex;
+	width: 100%;
+	margin: 30px 15px 30px 15px;
+	overflow: auto;
+
+	@media (max-width: $mobileM) {
+		margin: 30px 0px 30px 1px;
+	}
+	@media (max-width: 350px) {
+		margin: 30px 0px 30px -3px;
+	}
+}
+
+.username {
+	display: flex;
+}
+
+.svg {
+	display: flex;
+	fill: var(--color-primary);
+}
+
+.user_svg {
+	display: flex;
+	fill: var(--color-primary);
+	margin-right: 10px;
+}
+
+.input {
+	display: flex;
+	font-size: 18px;
+	height: 33px;
+
+	background-color: var(--bg-active);
+	color: var(--color-primary);
+	border: 1px solid var(--border-secondary);
+	border-radius: 1px;
+	padding: 5px;
+
+	:focus {
+		outline: 0;
+		border: 1x solid var(--color-primary);
+		border-radius: 1px;
+	}
+
+	@media (max-width: $mobileL) {
+		font-size: 14px;
+	}
+	@media (max-width: $mobileS) {
+		font-size: 12px;
+	}
+}
+
+.buttons {
+	display: flex;
+	flex-direction: column;
+}
+
+.button {
+	display: flex;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	font-size: 18px;
+	justify-content: center;
+	margin-left: 10px;
+	padding: 5px;
+	color: var(--color-primary);
+	background: var(--bg-primary);
+	border: 1px solid var(--color-primary);
+
+	:hover {
+		background: var(--bg-active);
+	}
+
+	:focus-visible {
+		outline: 1px solid var(--color-primary);
+		background: var(--bg-active);
+	}
+	:active {
+		outline: none;
+		border: 1x solidvar(--color-primary);
+	}
+
+	@media (max-width: $mobileL) {
+		font-size: 14px;
+	}
+
+	@media (max-width: $mobileS) {
+		font-size: 12px;
+	}
+}
+
+.input_wrapper {
+	display: flex;
+	margin-left: 10px;
+	margin-top: 10px;
+	align-items: center;
+	justify-content: center;
+}
+
+.p {
+	font-size: 14px;
+}
+
+.checkbox {
+	margin-left: 5px;
+	height: 20px;
+}
+
+.error {
+	display: flex;
+	justify-content: center;
+	margin-top: 5px;
+	font-size: 11px;
+	color: red;
+
+	@media (max-width: $mobileL) {
+		margin-left: 40px;
+	}
+}
