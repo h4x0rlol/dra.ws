@@ -9,6 +9,8 @@
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
-    "husky": "^7.0.4"
+    "concurrently": "^7.2.1",
+    "husky": "^7.0.4",
+    "nodemon": "^2.0.16"
   }
 }
