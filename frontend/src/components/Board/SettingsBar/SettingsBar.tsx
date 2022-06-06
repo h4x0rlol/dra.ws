@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import canvasStore from 'src/store/canvasStore';
+import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
 import { preventNegativeValue } from 'src/utils/helpers';
 import ClearIcon from '../../Svg/ClearIcon';
@@ -42,6 +43,18 @@ const SettingsBar: React.FC = (): JSX.Element => {
 	const handleFillChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		if (toolStore.tool) {
 			toolStore.setFill(e.target.checked);
+		}
+	};
+
+	const download = (): void => {
+		const dataUrl = canvasStore.canvas?.toDataURL();
+		const a = document.createElement('a');
+		if (dataUrl) {
+			a.href = dataUrl;
+			a.download = `${lobbyStore?.sessionId}.jpg`;
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
 		}
 	};
 
@@ -138,7 +151,11 @@ const SettingsBar: React.FC = (): JSX.Element => {
 				</div>
 
 				<div className={styles.item}>
-					<button type="button" className={styles.button}>
+					<button
+						type="button"
+						className={styles.button}
+						onClick={download}
+					>
 						<DownloadIcon className={styles.svg} />
 					</button>
 				</div>
