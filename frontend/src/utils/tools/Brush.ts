@@ -133,6 +133,8 @@ export default class Brush extends Tool {
 		ctx.strokeStyle = color;
 		ctx.lineWidth = lineWidth;
 		ctx.setLineDash(lineType);
+		ctx.lineCap = 'round';
+		ctx.lineJoin = 'round';
 		ctx.lineTo(x, y);
 		ctx.stroke();
 	}

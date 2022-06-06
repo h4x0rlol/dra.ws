@@ -2,6 +2,7 @@ import { Figures } from 'src/api/figures';
 import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
 import toolStore from 'src/store/toolStore';
+import { getLineType } from '../helpers';
 import Tool from './Tool';
 
 export default class Rect extends Tool {
@@ -19,8 +20,7 @@ export default class Rect extends Tool {
 		super(canvas, socket, id);
 		this.ctx.lineCap = 'butt';
 		this.ctx.lineJoin = 'miter';
-		this.ctx.lineWidth = 1;
-		this.ctx.globalAlpha = 1;
+		// this.ctx.globalAlpha = 1;
 		this.startX = 0;
 		this.startY = 0;
 		this.width = 0;
@@ -110,6 +110,12 @@ export default class Rect extends Tool {
 					fill: toolStore.fill,
 					width: this.width,
 					height: this.height,
+					lineWidth: toolStore.lineWidth,
+					lineType: getLineType(
+						toolStore.lineType,
+						toolStore.lineWidth
+					),
+					color: toolStore.color,
 				},
 			})
 		);
@@ -127,6 +133,12 @@ export default class Rect extends Tool {
 				this.canvas.width,
 				this.canvas.height
 			);
+			this.ctx.strokeStyle = toolStore.color;
+			this.ctx.lineWidth = toolStore.lineWidth;
+			this.ctx.setLineDash(
+				getLineType(toolStore.lineType, toolStore.lineWidth)
+			);
+
 			this.ctx.beginPath();
 			this.ctx.rect(x, y, w, h);
 
@@ -145,8 +157,16 @@ export default class Rect extends Tool {
 		y: number,
 		w: number,
 		h: number,
-		fill: boolean
+		fill: boolean,
+		lineWidth: number,
+		lineType: number[],
+		color: string
 	): void {
+		ctx.strokeStyle = color;
+		ctx.lineWidth = lineWidth;
+		ctx.setLineDash(lineType);
+		ctx.lineCap = 'butt';
+		ctx.lineJoin = 'miter';
 		ctx.beginPath();
 		ctx.rect(x, y, w, h);
 

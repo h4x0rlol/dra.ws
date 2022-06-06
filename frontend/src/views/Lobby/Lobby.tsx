@@ -26,7 +26,17 @@ const Lobby: React.FC = (): JSX.Element => {
 				Brush.draw(ctx, x, y, lineWidth, lineType, color);
 				break;
 			case Figures.RECT:
-				Rect.staticDraw(ctx, x, y, width, height, fill);
+				Rect.staticDraw(
+					ctx,
+					x,
+					y,
+					width,
+					height,
+					fill,
+					lineWidth,
+					lineType,
+					color
+				);
 				break;
 			case Figures.FINISH:
 				ctx.beginPath();
