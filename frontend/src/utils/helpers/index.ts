@@ -38,3 +38,16 @@ export const getRandomColor = (): string => {
 	});
 	return res;
 };
+
+export const getLineType = (type: string, width: number): number[] => {
+	switch (type) {
+		case 'default':
+			return [];
+		case 'dashed':
+			return [width * 3, width * 2];
+		case 'dotted':
+			return [width, width * 2];
+		default:
+			return [];
+	}
+};

@@ -16,13 +16,14 @@ const Lobby: React.FC = (): JSX.Element => {
 	const params = useParams();
 
 	const drawHandler = (msg: Message): void => {
-		const { type, x, y, width, height, fill } = msg.figure;
+		const { type, x, y, width, height, fill, lineType, lineWidth, color } =
+			msg.figure;
 		const ctx = canvasStore.canvas?.getContext(
 			'2d'
 		) as unknown as CanvasRenderingContext2D;
 		switch (type) {
 			case Figures.BRUSH:
-				Brush.draw(ctx, x, y);
+				Brush.draw(ctx, x, y, lineWidth, lineType, color);
 				break;
 			case Figures.RECT:
 				Rect.staticDraw(ctx, x, y, width, height, fill);

@@ -1,6 +1,8 @@
 import { Figures } from 'src/api/figures';
 import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
+import toolStore from 'src/store/toolStore';
+import { getLineType } from '../helpers';
 import Tool from './Tool';
 
 export default class Brush extends Tool {
@@ -37,10 +39,6 @@ export default class Brush extends Tool {
 
 	mouseMoveHandler(e: MouseEvent): void {
 		if (this.mouseDown) {
-			// this.draw(
-			// 	(e.offsetX * this.canvas.width) / this.canvas.clientWidth || 0,
-			// 	(e.offsetY * this.canvas.height) / this.canvas.clientHeight || 0
-			// );
 			this.socket?.send(
 				JSON.stringify({
 					method: Methods.DRAW,
@@ -53,6 +51,12 @@ export default class Brush extends Tool {
 						y:
 							(e.offsetY * this.canvas.height) /
 								this.canvas.clientHeight || 0,
+						lineWidth: toolStore.lineWidth,
+						lineType: getLineType(
+							toolStore.lineType,
+							toolStore.lineWidth
+						),
+						color: toolStore.color,
 					},
 				})
 			);
@@ -83,10 +87,24 @@ export default class Brush extends Tool {
 			).currentTarget.getBoundingClientRect();
 			const x = ev.targetTouches[0].clientX - bcr.x;
 			const y = ev.targetTouches[0].clientY - bcr.y;
-			// this.draw(
-			// 	(x * this.canvas.width) / this.canvas.clientWidth || 0,
-			// 	(y * this.canvas.height) / this.canvas.clientHeight || 0
-			// );
+
+			this.socket?.send(
+				JSON.stringify({
+					method: Methods.DRAW,
+					id: this.id,
+					figure: {
+						type: Figures.BRUSH,
+						x,
+						y,
+						lineWidth: toolStore.lineWidth,
+						lineType: getLineType(
+							toolStore.lineType,
+							toolStore.lineWidth
+						),
+						color: toolStore.color,
+					},
+				})
+			);
 		}
 	}
 
@@ -104,7 +122,17 @@ export default class Brush extends Tool {
 		);
 	}
 
-	static draw(ctx: CanvasRenderingContext2D, x: number, y: number): void {
+	static draw(
+		ctx: CanvasRenderingContext2D,
+		x: number,
+		y: number,
+		lineWidth: number,
+		lineType: number[],
+		color: string
+	): void {
+		ctx.strokeStyle = color;
+		ctx.lineWidth = lineWidth;
+		ctx.setLineDash(lineType);
 		ctx.lineTo(x, y);
 		ctx.stroke();
 	}

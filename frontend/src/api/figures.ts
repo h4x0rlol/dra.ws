@@ -11,4 +11,7 @@ export type Figure = {
 	width: number;
 	height: number;
 	fill: boolean;
+	lineWidth: number;
+	lineType: number[];
+	color: string;
 };
