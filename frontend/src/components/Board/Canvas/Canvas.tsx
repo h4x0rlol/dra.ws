@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef } from 'react';
 import canvasStore from 'src/store/canvasStore';
+import toolStore from 'src/store/toolStore';
 import styles from './Canvas.module.scss';
 
 const Canvas: React.FC = (): JSX.Element => {
@@ -9,6 +10,8 @@ const Canvas: React.FC = (): JSX.Element => {
 	useEffect(() => {
 		if (canvasRef.current) {
 			canvasStore.setCanvas(canvasRef.current);
+			toolStore.tool?.destroyEvents();
+			toolStore.setTool(null);
 		}
 	}, []);
 

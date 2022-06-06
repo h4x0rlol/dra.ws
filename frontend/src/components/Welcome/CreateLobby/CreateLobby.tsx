@@ -1,12 +1,20 @@
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import UserIcon from 'src/components/Svg/UserIcon';
+import lobbyStore from 'src/store/lobbyStore';
 import styles from './CreateLobby.module.scss';
 
 const CreateLobby: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
-	const [username, setUsername] = useState('');
+	const navigate = useNavigate();
+	const usernameRef = useRef<HTMLInputElement | null>(null);
+
+	const createHandler = (): void => {
+		lobbyStore.setUserName(usernameRef.current?.value);
+		navigate(`/lobby/f${(+new Date()).toString(16)}`);
+	};
 
 	return (
 		<div className={styles.wrapper}>
@@ -20,8 +28,7 @@ const CreateLobby: React.FC = (): JSX.Element => {
 					<input
 						type="text"
 						placeholder={t('home.placeholder')}
-						value={username}
-						onChange={(e) => setUsername(e.target.value)}
+						ref={usernameRef}
 						className={styles.input}
 					/>
 				</div>
@@ -30,7 +37,11 @@ const CreateLobby: React.FC = (): JSX.Element => {
 			</div>
 
 			<div className={styles.buttons}>
-				<button type="button" className={styles.button}>
+				<button
+					type="button"
+					className={styles.button}
+					onClick={createHandler}
+				>
 					{t('home.start')}
 				</button>
 				<div className={styles.input_wrapper}>

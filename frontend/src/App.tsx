@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Loader from './components/Loader/Loader';
 import { getTheme } from './utils/themeController';
 import Home from './views/Home/Home';
@@ -10,7 +11,7 @@ import Lobby from './views/Lobby/Lobby';
 // Make text on canvas
 
 const App: React.FC = (): JSX.Element => {
-	const [home, setHome] = useState(true);
+	const [home, setHome] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
@@ -26,7 +27,14 @@ const App: React.FC = (): JSX.Element => {
 		return <Home />;
 	}
 
-	return <Lobby />;
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/lobby/:id" element={<Lobby />} />
+			</Routes>
+		</BrowserRouter>
+	);
 };
 
 export default App;
