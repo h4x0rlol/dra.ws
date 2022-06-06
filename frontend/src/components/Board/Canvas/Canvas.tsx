@@ -1,7 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef } from 'react';
 import canvasStore from 'src/store/canvasStore';
+import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
+import Brush from 'src/utils/tools/Brush';
 import styles from './Canvas.module.scss';
 
 const Canvas: React.FC = (): JSX.Element => {
@@ -14,6 +16,19 @@ const Canvas: React.FC = (): JSX.Element => {
 			toolStore.setTool(null);
 		}
 	}, []);
+
+	useEffect(() => {
+		if (canvasStore.canvas && lobbyStore.socket && lobbyStore.sessionId) {
+			console.log('here');
+			toolStore.setTool(
+				new Brush(
+					canvasStore.canvas,
+					lobbyStore.socket,
+					lobbyStore.sessionId
+				)
+			);
+		}
+	}, [canvasStore.canvas, lobbyStore.socket, lobbyStore.sessionId]);
 
 	useEffect(() => {
 		document.addEventListener('keydown', (e) => {

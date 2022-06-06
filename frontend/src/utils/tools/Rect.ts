@@ -9,8 +9,8 @@ export default class Rect extends Tool {
 
 	saved: string;
 
-	constructor(canvas: HTMLCanvasElement) {
-		super(canvas);
+	constructor(canvas: HTMLCanvasElement, socket: WebSocket, id: string) {
+		super(canvas, socket, id);
 		this.ctx.lineCap = 'butt';
 		this.ctx.lineJoin = 'miter';
 		this.ctx.lineWidth = 1;

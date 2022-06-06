@@ -18,8 +18,8 @@ export default class Triangle extends Tool {
 
 	triangles: TriangleCoord[];
 
-	constructor(canvas: HTMLCanvasElement) {
-		super(canvas);
+	constructor(canvas: HTMLCanvasElement, socket: WebSocket, id: string) {
+		super(canvas, socket, id);
 		this.ctx.lineCap = 'butt';
 		this.ctx.lineJoin = 'miter';
 		this.ctx.lineWidth = 1;

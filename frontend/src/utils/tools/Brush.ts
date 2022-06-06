@@ -1,9 +1,11 @@
+import { Figures } from 'src/api/figures';
+import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
 import Tool from './Tool';
 
 export default class Brush extends Tool {
-	constructor(canvas: HTMLCanvasElement) {
-		super(canvas);
+	constructor(canvas: HTMLCanvasElement, socket: WebSocket, id: string) {
+		super(canvas, socket, id);
 		this.ctx.lineCap = 'round';
 		this.ctx.lineJoin = 'round';
 		//  TODO
@@ -35,9 +37,24 @@ export default class Brush extends Tool {
 
 	mouseMoveHandler(e: MouseEvent): void {
 		if (this.mouseDown) {
-			this.draw(
-				(e.offsetX * this.canvas.width) / this.canvas.clientWidth || 0,
-				(e.offsetY * this.canvas.height) / this.canvas.clientHeight || 0
+			// this.draw(
+			// 	(e.offsetX * this.canvas.width) / this.canvas.clientWidth || 0,
+			// 	(e.offsetY * this.canvas.height) / this.canvas.clientHeight || 0
+			// );
+			this.socket?.send(
+				JSON.stringify({
+					method: Methods.DRAW,
+					id: this.id,
+					figure: {
+						type: Figures.BRUSH,
+						x:
+							(e.offsetX * this.canvas.width) /
+								this.canvas.clientWidth || 0,
+						y:
+							(e.offsetY * this.canvas.height) /
+								this.canvas.clientHeight || 0,
+					},
+				})
 			);
 		}
 	}
@@ -66,19 +83,29 @@ export default class Brush extends Tool {
 			).currentTarget.getBoundingClientRect();
 			const x = ev.targetTouches[0].clientX - bcr.x;
 			const y = ev.targetTouches[0].clientY - bcr.y;
-			this.draw(
-				(x * this.canvas.width) / this.canvas.clientWidth || 0,
-				(y * this.canvas.height) / this.canvas.clientHeight || 0
-			);
+			// this.draw(
+			// 	(x * this.canvas.width) / this.canvas.clientWidth || 0,
+			// 	(y * this.canvas.height) / this.canvas.clientHeight || 0
+			// );
 		}
 	}
 
 	mouseUpHandler(): void {
 		this.mouseDown = false;
+
+		this.socket?.send(
+			JSON.stringify({
+				method: Methods.DRAW,
+				id: this.id,
+				figure: {
+					type: Figures.FINISH,
+				},
+			})
+		);
 	}
 
-	draw(x: number, y: number): void {
-		this.ctx.lineTo(x, y);
-		this.ctx.stroke();
+	static draw(ctx: CanvasRenderingContext2D, x: number, y: number): void {
+		ctx.lineTo(x, y);
+		ctx.stroke();
 	}
 }

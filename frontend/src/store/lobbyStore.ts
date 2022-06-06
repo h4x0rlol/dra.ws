@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
 class LobbyStore {
-	username: string = '';
+	username: string = 'dsadsadsa';
 
 	socket: WebSocket | null = null;
 

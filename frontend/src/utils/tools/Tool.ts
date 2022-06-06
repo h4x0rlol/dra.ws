@@ -5,12 +5,17 @@ export default class Tool {
 
 	mouseDown: boolean;
 
-	constructor(canvas: HTMLCanvasElement) {
+	socket: WebSocket | null = null;
+
+	id: string | null = null;
+
+	constructor(canvas: HTMLCanvasElement, socket: WebSocket, id: string) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext(
 			'2d'
 		) as unknown as CanvasRenderingContext2D;
-
+		this.socket = socket;
+		this.id = id;
 		this.mouseDown = false;
 		this.destroyEvents();
 	}

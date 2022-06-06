@@ -18,16 +18,23 @@ import Circle from 'src/utils/tools/Circle';
 import CircleIcon from 'src/components/Svg/CircleIcon';
 import Eraser from 'src/utils/tools/Eraser';
 import EraserIcon from 'src/components/Svg/EraserIcon';
+import lobbyStore from 'src/store/lobbyStore';
 import styles from './Toolbar.module.scss';
 
 const Toolbar: React.FC = (): JSX.Element => {
 	const onSelect = (CurrentTool: typeof Tool): void => {
-		if (canvasStore.canvas) {
+		if (canvasStore.canvas && lobbyStore.socket && lobbyStore.sessionId) {
 			if (toolStore.tool instanceof CurrentTool) {
 				toolStore.tool.destroyEvents();
 				toolStore.setTool(null);
 			} else {
-				toolStore.setTool(new CurrentTool(canvasStore.canvas));
+				toolStore.setTool(
+					new CurrentTool(
+						canvasStore.canvas,
+						lobbyStore.socket,
+						lobbyStore.sessionId
+					)
+				);
 			}
 		}
 	};

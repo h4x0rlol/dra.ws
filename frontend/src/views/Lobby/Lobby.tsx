@@ -1,18 +1,34 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Figures } from 'src/api/figures';
 import { Message } from 'src/api/message';
 import { Methods } from 'src/api/methods';
 import Board from 'src/components/Board/Board';
 import Chat from 'src/components/Chat/Chat';
+import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
+import Brush from 'src/utils/tools/Brush';
 import styles from './Lobby.module.scss';
 
 const Lobby: React.FC = (): JSX.Element => {
 	const params = useParams();
 
 	const drawHandler = (msg: Message): void => {
-		console.log('kek');
+		const { type, x, y } = msg.figure;
+		const ctx = canvasStore.canvas?.getContext(
+			'2d'
+		) as unknown as CanvasRenderingContext2D;
+		switch (type) {
+			case Figures.BRUSH:
+				Brush.draw(ctx, x, y);
+				break;
+			case Figures.FINISH:
+				ctx.beginPath();
+				break;
+			default:
+				break;
+		}
 	};
 
 	useEffect(() => {
