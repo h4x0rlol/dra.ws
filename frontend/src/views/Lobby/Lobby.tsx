@@ -9,19 +9,23 @@ import Chat from 'src/components/Chat/Chat';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import Brush from 'src/utils/tools/Brush';
+import Rect from 'src/utils/tools/Rect';
 import styles from './Lobby.module.scss';
 
 const Lobby: React.FC = (): JSX.Element => {
 	const params = useParams();
 
 	const drawHandler = (msg: Message): void => {
-		const { type, x, y } = msg.figure;
+		const { type, x, y, width, height, fill } = msg.figure;
 		const ctx = canvasStore.canvas?.getContext(
 			'2d'
 		) as unknown as CanvasRenderingContext2D;
 		switch (type) {
 			case Figures.BRUSH:
 				Brush.draw(ctx, x, y);
+				break;
+			case Figures.RECT:
+				Rect.staticDraw(ctx, x, y, width, height, fill);
 				break;
 			case Figures.FINISH:
 				ctx.beginPath();

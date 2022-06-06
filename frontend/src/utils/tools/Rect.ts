@@ -1,3 +1,5 @@
+import { Figures } from 'src/api/figures';
+import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
 import toolStore from 'src/store/toolStore';
 import Tool from './Tool';
@@ -6,6 +8,10 @@ export default class Rect extends Tool {
 	startX: number;
 
 	startY: number;
+
+	width: number;
+
+	height: number;
 
 	saved: string;
 
@@ -17,6 +23,8 @@ export default class Rect extends Tool {
 		this.ctx.globalAlpha = 1;
 		this.startX = 0;
 		this.startY = 0;
+		this.width = 0;
+		this.height = 0;
 		this.saved = '';
 		this.listen();
 	}
@@ -48,10 +56,10 @@ export default class Rect extends Tool {
 			const currentY =
 				(e.offsetY * this.canvas.height) / this.canvas.clientHeight ||
 				0;
-			const width = currentX - this.startX;
-			const height = currentY - this.startY;
+			this.width = currentX - this.startX;
+			this.height = currentY - this.startY;
 
-			this.draw(this.startX, this.startY, width, height);
+			this.draw(this.startX, this.startY, this.width, this.height);
 		}
 	}
 
@@ -81,15 +89,30 @@ export default class Rect extends Tool {
 				(x * this.canvas.width) / this.canvas.clientWidth || 0;
 			const currentY =
 				(y * this.canvas.height) / this.canvas.clientHeight || 0;
-			const width = currentX - this.startX;
-			const height = currentY - this.startY;
+			this.width = currentX - this.startX;
+			this.height = currentY - this.startY;
 
-			this.draw(this.startX, this.startY, width, height);
+			this.draw(this.startX, this.startY, this.width, this.height);
 		}
 	}
 
 	mouseUpHandler(): void {
 		this.mouseDown = false;
+		console.log(this.width, this.height);
+		this.socket?.send(
+			JSON.stringify({
+				method: Methods.DRAW,
+				id: this.id,
+				figure: {
+					type: Figures.RECT,
+					x: this.startX,
+					y: this.startY,
+					fill: toolStore.fill,
+					width: this.width,
+					height: this.height,
+				},
+			})
+		);
 	}
 
 	draw(x: number, y: number, w: number, h: number): void {
@@ -114,5 +137,24 @@ export default class Rect extends Tool {
 
 			this.ctx.stroke();
 		};
+	}
+
+	static staticDraw(
+		ctx: CanvasRenderingContext2D,
+		x: number,
+		y: number,
+		w: number,
+		h: number,
+		fill: boolean
+	): void {
+		ctx.beginPath();
+		ctx.rect(x, y, w, h);
+
+		if (fill) {
+			ctx.fillStyle = toolStore.color;
+			ctx.fill();
+		}
+
+		ctx.stroke();
 	}
 }
