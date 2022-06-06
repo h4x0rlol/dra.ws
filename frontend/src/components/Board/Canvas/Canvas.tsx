@@ -1,5 +1,8 @@
+import axios from 'axios';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
@@ -8,7 +11,7 @@ import styles from './Canvas.module.scss';
 
 const Canvas: React.FC = (): JSX.Element => {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
+	const params = useParams();
 	useEffect(() => {
 		if (canvasRef.current) {
 			canvasStore.setCanvas(canvasRef.current);
@@ -54,10 +57,23 @@ const Canvas: React.FC = (): JSX.Element => {
 		};
 	}, []);
 
+	const mouseUpHandler = (): void => {
+		if (lobbyStore.socket && canvasStore.canvas) {
+			console.log('update');
+			lobbyStore.socket?.send(
+				JSON.stringify({
+					id: params.id,
+					method: Methods.UPDATE,
+					image: canvasStore.canvas?.toDataURL(),
+				})
+			);
+		}
+	};
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.wrapper}>
-				<canvas ref={canvasRef} />
+				<canvas ref={canvasRef} onMouseUp={mouseUpHandler} />
 			</div>
 		</div>
 	);

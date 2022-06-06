@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -37,6 +38,7 @@ const Lobby: React.FC = (): JSX.Element => {
 					lineType,
 					color
 				);
+				ctx.beginPath();
 				break;
 			case Figures.FINISH:
 				ctx.beginPath();
@@ -45,6 +47,37 @@ const Lobby: React.FC = (): JSX.Element => {
 				break;
 		}
 	};
+
+	useEffect(() => {
+		if (canvasStore.canvas) {
+			const ctx = canvasStore.canvas.getContext(
+				'2d'
+			) as unknown as CanvasRenderingContext2D;
+			axios
+				.get(`http://localhost:5000/image?id=${params.id}`)
+				.then((response) => {
+					const img = new Image();
+					img.src = response.data;
+					img.onload = () => {
+						if (canvasStore.canvas) {
+							ctx.clearRect(
+								0,
+								0,
+								canvasStore.canvas.width,
+								canvasStore.canvas.height
+							);
+							ctx.drawImage(
+								img,
+								0,
+								0,
+								canvasStore.canvas.width,
+								canvasStore.canvas.height
+							);
+						}
+					};
+				});
+		}
+	}, []);
 
 	useEffect(() => {
 		const socket: WebSocket = new WebSocket('ws://localhost:5000');

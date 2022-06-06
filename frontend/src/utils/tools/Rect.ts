@@ -171,7 +171,7 @@ export default class Rect extends Tool {
 		ctx.rect(x, y, w, h);
 
 		if (fill) {
-			ctx.fillStyle = toolStore.color;
+			ctx.fillStyle = color;
 			ctx.fill();
 		}
 
