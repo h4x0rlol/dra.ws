@@ -13,7 +13,7 @@ class LobbyStore {
 
 	sessionId: string | null = null;
 
-	isPublic: boolean = true;
+	isPublic: boolean = false;
 
 	constructor() {
 		makeAutoObservable(this);
