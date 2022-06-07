@@ -85,8 +85,9 @@ app.ws("/", (ws, req) => {
             (user) => user !== msg?.username
           );
           LOBBIES[msg?.id] = newClients;
+
           if (newClients.length === 0) {
-            LOBBIES[msg?.id] = undefined;
+            delete LOBBIES[msg?.id];
             PUBLIC_LOBBIES = PUBLIC_LOBBIES.filter(
               (lobby) => lobby !== msg?.id
             );
