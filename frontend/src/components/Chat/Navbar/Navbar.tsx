@@ -41,6 +41,7 @@ const Navbar: React.FC = (): JSX.Element => {
 						type="checkbox"
 						className={styles.checkbox}
 						checked={!lobbyStore.isPublic}
+						disabled={Boolean(true)}
 					/>
 				</div>
 				<div className={styles.hr} />

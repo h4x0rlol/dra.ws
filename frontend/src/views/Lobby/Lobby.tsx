@@ -12,11 +12,7 @@ import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import Brush from 'src/utils/tools/Brush';
 import Rect from 'src/utils/tools/Rect';
-import {
-	adjectives,
-	animals,
-	uniqueNamesGenerator,
-} from 'unique-names-generator';
+import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 import styles from './Lobby.module.scss';
 
 const Lobby: React.FC = (): JSX.Element => {
@@ -114,13 +110,11 @@ const Lobby: React.FC = (): JSX.Element => {
 				const msg: Message = JSON.parse(e.data);
 				switch (msg.method) {
 					case Methods.CONNECTION:
-						console.log(`${msg.username} connected`);
 						break;
 					case Methods.DRAW:
 						drawHandler(msg);
 						break;
 					case Methods.UNDO:
-						console.log('undo');
 						getImageData();
 						break;
 					case Methods.REDO:

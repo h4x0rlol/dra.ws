@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import Navbar from 'src/components/Chat/Navbar/Navbar';
 import Room from 'src/components/Chat/Room/Room';

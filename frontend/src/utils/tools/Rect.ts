@@ -98,7 +98,6 @@ export default class Rect extends Tool {
 
 	mouseUpHandler(): void {
 		this.mouseDown = false;
-		console.log(this.width, this.height);
 		this.socket?.send(
 			JSON.stringify({
 				method: Methods.DRAW,

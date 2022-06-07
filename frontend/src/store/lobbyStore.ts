@@ -1,10 +1,4 @@
 import { makeAutoObservable } from 'mobx';
-import {
-	adjectives,
-	animals,
-	colors,
-	uniqueNamesGenerator,
-} from 'unique-names-generator';
 
 export enum RoomState {
 	CHAT = 'chat',

@@ -11,7 +11,6 @@ const LobbyList: React.FC = (): JSX.Element => {
 
 	useEffect(() => {
 		axiosConfig.get('/lobbies').then((res) => {
-			console.log(res.data);
 			if (res.status === 200) {
 				setList(res.data?.lobbies);
 			}

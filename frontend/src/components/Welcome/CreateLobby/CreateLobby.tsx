@@ -1,15 +1,10 @@
 import { observer } from 'mobx-react-lite';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import UserIcon from 'src/components/Svg/UserIcon';
 import lobbyStore from 'src/store/lobbyStore';
-import {
-	adjectives,
-	animals,
-	uniqueNamesGenerator,
-} from 'unique-names-generator';
 import styles from './CreateLobby.module.scss';
 
 const CreateLobby: React.FC = (): JSX.Element => {
