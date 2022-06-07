@@ -14,10 +14,10 @@ class CanvasStore {
 	}
 
 	setCanvas(canvas: HTMLCanvasElement): void {
-		canvas.width = 1920;
-		canvas.height = 1080;
-		canvas.style.width = '1920px';
-		canvas.style.height = `1080px`;
+		canvas.width = 1600;
+		canvas.height = 900;
+		canvas.style.width = '1600px';
+		canvas.style.height = '900px';
 		canvas.style.background = '#fff';
 		this.canvas = canvas;
 		this.setBackground(this.background);

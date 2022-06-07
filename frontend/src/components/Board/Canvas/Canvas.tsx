@@ -59,7 +59,6 @@ const Canvas: React.FC = (): JSX.Element => {
 
 	const mouseUpHandler = (): void => {
 		if (lobbyStore.socket && canvasStore.canvas) {
-			console.log('update');
 			lobbyStore.socket?.send(
 				JSON.stringify({
 					id: params.id,

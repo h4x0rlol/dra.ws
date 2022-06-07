@@ -25,9 +25,9 @@ const Lobby: React.FC = (): JSX.Element => {
 	const drawHandler = (msg: Message): void => {
 		const { type, x, y, width, height, fill, lineType, lineWidth, color } =
 			msg.figure;
-		const ctx = canvasStore.canvas?.getContext(
-			'2d'
-		) as unknown as CanvasRenderingContext2D;
+		const ctx = canvasStore.canvas?.getContext('2d', {
+			alpha: false,
+		}) as unknown as CanvasRenderingContext2D;
 		switch (type) {
 			case Figures.BRUSH:
 				Brush.draw(ctx, x, y, lineWidth, lineType, color);
@@ -54,7 +54,7 @@ const Lobby: React.FC = (): JSX.Element => {
 		}
 	};
 
-	useEffect(() => {
+	const getImageData = (): void => {
 		if (canvasStore.canvas) {
 			const ctx = canvasStore.canvas.getContext(
 				'2d'
@@ -83,6 +83,10 @@ const Lobby: React.FC = (): JSX.Element => {
 					};
 				});
 		}
+	};
+
+	useEffect(() => {
+		getImageData();
 	}, []);
 
 	useEffect(() => {
@@ -115,6 +119,16 @@ const Lobby: React.FC = (): JSX.Element => {
 					case Methods.DRAW:
 						drawHandler(msg);
 						break;
+					case Methods.UNDO:
+						console.log('undo');
+						getImageData();
+						break;
+					case Methods.REDO:
+						getImageData();
+						break;
+					case Methods.CLEAR:
+						getImageData();
+						break;
 					default:
 						break;
 				}
@@ -129,6 +143,7 @@ const Lobby: React.FC = (): JSX.Element => {
 					method: Methods.CLOSE,
 				})
 			);
+			socket.close();
 		};
 	}, []);
 
@@ -140,6 +155,7 @@ const Lobby: React.FC = (): JSX.Element => {
 				method: Methods.CLOSE,
 			})
 		);
+		lobbyStore.socket?.close();
 	});
 	return (
 		<div className={styles.container}>

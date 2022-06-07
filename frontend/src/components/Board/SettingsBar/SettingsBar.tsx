@@ -1,6 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
@@ -13,6 +15,7 @@ import styles from './SettingsBar.module.scss';
 
 const SettingsBar: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
+	const params = useParams();
 
 	const handleColorChange = (
 		e: React.ChangeEvent<HTMLInputElement>
@@ -56,6 +59,48 @@ const SettingsBar: React.FC = (): JSX.Element => {
 			a.click();
 			document.body.removeChild(a);
 		}
+	};
+
+	const handleUndo = (): void => {
+		canvasStore.undo();
+
+		setTimeout(() => {
+			lobbyStore.socket?.send(
+				JSON.stringify({
+					id: params.id,
+					method: Methods.UNDO,
+					image: canvasStore.canvas?.toDataURL(),
+				})
+			);
+		});
+	};
+
+	const handleRedo = (): void => {
+		canvasStore.redo();
+
+		setTimeout(() => {
+			lobbyStore.socket?.send(
+				JSON.stringify({
+					id: params.id,
+					method: Methods.REDO,
+					image: canvasStore.canvas?.toDataURL(),
+				})
+			);
+		});
+	};
+
+	const handleClear = (): void => {
+		canvasStore.clear();
+
+		setTimeout(() => {
+			lobbyStore.socket?.send(
+				JSON.stringify({
+					id: params.id,
+					method: Methods.CLEAR,
+					image: canvasStore.canvas?.toDataURL(),
+				})
+			);
+		});
 	};
 
 	return (
@@ -127,14 +172,14 @@ const SettingsBar: React.FC = (): JSX.Element => {
 					<button
 						type="button"
 						className={styles.button}
-						onClick={() => canvasStore.undo()}
+						onClick={handleUndo}
 					>
 						<UndoIcon className={styles.svg} />
 					</button>
 					<button
 						type="button"
 						className={styles.button}
-						onClick={() => canvasStore.redo()}
+						onClick={handleRedo}
 					>
 						<RedoIcon className={styles.svg} />
 					</button>
@@ -144,7 +189,7 @@ const SettingsBar: React.FC = (): JSX.Element => {
 					<button
 						type="button"
 						className={styles.button}
-						onClick={() => canvasStore.clear()}
+						onClick={handleClear}
 					>
 						<ClearIcon className={styles.svg} />
 					</button>

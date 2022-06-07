@@ -3,4 +3,7 @@ export enum Methods {
 	CLOSE = 'close',
 	DRAW = 'draw',
 	UPDATE = 'update',
+	UNDO = 'undo',
+	REDO = 'redo',
+	CLEAR = 'clear',
 }

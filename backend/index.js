@@ -65,19 +65,14 @@ app.ws("/", (ws, req) => {
         broadcastConnection(ws, msg);
         break;
       case "update":
-        try {
-          console.log("update");
-          const data = msg.image.replace(`data:image/png;base64,`, "");
-          fs.writeFileSync(
-            path.resolve(__dirname, "files", `${msg.id}.jpg`),
-            data,
-            "base64"
-          );
-          break;
-        } catch (e) {
-          console.log(e);
-          break;
-        }
+        updateImage(msg);
+        break;
+      case "undo":
+      case "redo":
+      case "clear":
+        updateImage(msg);
+        broadcastConnection(ws, msg);
+        break;
       case "close":
         console.log(`clos ${msg?.username}`);
         if (LOBBIES[msg?.id]) {
@@ -128,6 +123,20 @@ const broadcastConnection = (ws, msg) => {
       client.send(JSON.stringify(msg));
     }
   });
+};
+
+const updateImage = (msg) => {
+  try {
+    console.log("update");
+    const data = msg.image.replace(`data:image/png;base64,`, "");
+    fs.writeFileSync(
+      path.resolve(__dirname, "files", `${msg.id}.jpg`),
+      data,
+      "base64"
+    );
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 main();
