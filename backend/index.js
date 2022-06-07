@@ -10,6 +10,8 @@ const WSServer = require("express-ws")(app);
 const aWss = WSServer.getWss();
 
 const PORT = process.env.PORT || 5000;
+const CLIENTS = [];
+let LOBBIES = [];
 app.use(cors());
 app.use(express.json());
 
@@ -22,6 +24,22 @@ const main = () => {
     console.log(e);
   }
 };
+
+app.get("/health", async (req, res) => {
+  try {
+    return res.status(200).json({ message: "Up" });
+  } catch (e) {
+    return res.status(500).json({ message: "Down" });
+  }
+});
+
+app.get("/lobbies", async (req, res) => {
+  try {
+    return res.status(200).json({ lobbies: LOBBIES });
+  } catch (e) {
+    return res.status(500).json({ message: e.message });
+  }
+});
 
 app.get("/image", async (req, res) => {
   try {
@@ -60,6 +78,9 @@ app.ws("/", (ws, req) => {
           console.log(e);
           break;
         }
+      case "close":
+        LOBBIES = LOBBIES.filter((lobby) => lobby !== msg?.id);
+        break;
       default:
         break;
     }
@@ -67,9 +88,16 @@ app.ws("/", (ws, req) => {
 });
 
 const connectionHandler = (ws, msg) => {
-  ws.id = msg?.id;
-
-  broadcastConnection(ws, msg);
+  try {
+    CLIENTS.push(msg?.id);
+    ws.id = msg?.id;
+    if (msg?.public && !LOBBIES.includes(msg?.id)) {
+      LOBBIES.push(msg?.id);
+    }
+    broadcastConnection(ws, msg);
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const broadcastConnection = (ws, msg) => {

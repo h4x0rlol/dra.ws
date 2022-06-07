@@ -89,6 +89,7 @@ const Lobby: React.FC = (): JSX.Element => {
 					id: params.id,
 					username: lobbyStore.username,
 					method: Methods.CONNECTION,
+					public: lobbyStore.isPublic,
 				})
 			);
 			socket.onmessage = (e) => {
@@ -107,6 +108,13 @@ const Lobby: React.FC = (): JSX.Element => {
 		};
 
 		return () => {
+			socket.send(
+				JSON.stringify({
+					id: params.id,
+					username: lobbyStore.username,
+					method: Methods.CLOSE,
+				})
+			);
 			socket.close();
 		};
 	}, []);

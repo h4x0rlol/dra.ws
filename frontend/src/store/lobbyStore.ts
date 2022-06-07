@@ -1,22 +1,30 @@
 import { makeAutoObservable } from 'mobx';
+import {
+	adjectives,
+	animals,
+	colors,
+	uniqueNamesGenerator,
+} from 'unique-names-generator';
 
 class LobbyStore {
-	username: string = 'dsadsadsa';
+	username: string = '';
 
 	socket: WebSocket | null = null;
 
 	sessionId: string | null = null;
 
+	isPublic: boolean = true;
+
 	constructor() {
 		makeAutoObservable(this);
 	}
 
-	setUserName(username: string | undefined): void {
-		if (username) {
-			this.username = username;
-		} else {
-			this.username = 'randname';
-		}
+	setUserName(username: string): void {
+		this.username = username;
+	}
+
+	setIsPublic(isPublic: boolean): void {
+		this.isPublic = isPublic;
 	}
 
 	setSocket(socket: WebSocket): void {

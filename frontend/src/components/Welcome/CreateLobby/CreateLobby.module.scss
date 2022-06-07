@@ -116,8 +116,8 @@
 	display: flex;
 	justify-content: center;
 	margin-top: 5px;
-	font-size: 11px;
-	color: red;
+	font-size: 12px;
+	color: var(--color-primary);
 
 	@media (max-width: $mobileL) {
 		margin-left: 40px;

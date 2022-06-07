@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { axiosConfig } from './api/axios.config';
 import Loader from './components/Loader/Loader';
 import { getTheme } from './utils/themeController';
 import Home from './views/Home/Home';
@@ -11,20 +12,21 @@ import Lobby from './views/Lobby/Lobby';
 // Make text on canvas
 
 const App: React.FC = (): JSX.Element => {
-	const [home, setHome] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		getTheme();
-		setIsLoading(false);
+		axiosConfig.get('/health').then((res) => {
+			if (res.status === 200) {
+				setIsLoading(false);
+			} else {
+				setIsLoading(false);
+			}
+		});
 	}, []);
 
 	if (isLoading) {
 		return <Loader />;
-	}
-
-	if (home) {
-		return <Home />;
 	}
 
 	return (
@@ -32,6 +34,7 @@ const App: React.FC = (): JSX.Element => {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/lobby/:id" element={<Lobby />} />
+				<Route path="*" element={<Navigate to="/" replace />} />
 			</Routes>
 		</BrowserRouter>
 	);

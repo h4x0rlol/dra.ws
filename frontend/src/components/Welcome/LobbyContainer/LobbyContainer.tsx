@@ -40,7 +40,7 @@ const LobbyContainer: React.FC = (): JSX.Element => {
 					{t('home.list')}
 				</button>
 			</div>
-			{isCreateLobby ? <CreateLobby /> : <LobbyList />}
+			{isCreateLobby === Options.CREATE ? <CreateLobby /> : <LobbyList />}
 		</>
 	);
 };

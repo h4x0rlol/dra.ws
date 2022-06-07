@@ -1,19 +1,43 @@
 import { observer } from 'mobx-react-lite';
 import React, { useRef, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import UserIcon from 'src/components/Svg/UserIcon';
 import lobbyStore from 'src/store/lobbyStore';
+import {
+	adjectives,
+	animals,
+	uniqueNamesGenerator,
+} from 'unique-names-generator';
 import styles from './CreateLobby.module.scss';
 
 const CreateLobby: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
-	const usernameRef = useRef<HTMLInputElement | null>(null);
+	const [error, setError] = useState(false);
+
+	const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>): void => {
+		lobbyStore.setUserName(e.target.value);
+		if (e.target.value.length > 8) {
+			setError(true);
+		} else {
+			setError(false);
+		}
+	};
 
 	const createHandler = (): void => {
-		lobbyStore.setUserName(usernameRef.current?.value);
-		navigate(`/lobby/f${(+new Date()).toString(16)}`);
+		if (lobbyStore.username.length <= 8) {
+			const uuid = uuidv4();
+			if (lobbyStore.username.length === 0) {
+				const shortName = uniqueNamesGenerator({
+					dictionaries: [adjectives, animals],
+					length: 2,
+				});
+				lobbyStore.setUserName(shortName);
+			}
+			navigate(`/lobby/f${uuid}`);
+		}
 	};
 
 	return (
@@ -28,12 +52,17 @@ const CreateLobby: React.FC = (): JSX.Element => {
 					<input
 						type="text"
 						placeholder={t('home.placeholder')}
-						ref={usernameRef}
+						value={lobbyStore.username}
+						onChange={(e) => handleChangeName(e)}
 						className={styles.input}
 					/>
 				</div>
 
-				{/* <div className={styles.error}>Maximum length must be 8 symbols</div> */}
+				{error && (
+					<div className={styles.error}>
+						Maximum length must be 8 symbols
+					</div>
+				)}
 			</div>
 
 			<div className={styles.buttons}>
@@ -46,7 +75,14 @@ const CreateLobby: React.FC = (): JSX.Element => {
 				</button>
 				<div className={styles.input_wrapper}>
 					<p className={styles.p}>{t('home.private')} </p>
-					<input type="checkbox" className={styles.checkbox} />
+					<input
+						type="checkbox"
+						className={styles.checkbox}
+						checked={!lobbyStore.isPublic}
+						onChange={() =>
+							lobbyStore.setIsPublic(!lobbyStore.isPublic)
+						}
+					/>
 				</div>
 			</div>
 		</div>
