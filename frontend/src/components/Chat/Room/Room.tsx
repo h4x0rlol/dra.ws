@@ -5,7 +5,6 @@ import SendIcon from 'src/components/Svg/SendIcon';
 import lobbyStore from 'src/store/lobbyStore';
 import { Methods } from 'src/api/methods';
 import { useParams } from 'react-router-dom';
-import { MessageTypes } from 'src/api/message';
 import Message from '../Message/Message';
 
 import styles from './Room.module.scss';
@@ -28,7 +27,6 @@ const Room: React.FC = (): JSX.Element => {
 					hour: 'numeric',
 					minute: 'numeric',
 				}),
-				type: MessageTypes.OUTCOMING,
 			})
 		);
 		setMessage('');
@@ -79,7 +77,6 @@ const Room: React.FC = (): JSX.Element => {
 							onKeyPress={(e) => {
 								if (e.key === 'Enter' && !e.shiftKey) {
 									e.preventDefault();
-									console.log('send');
 									handleSend();
 								}
 							}}

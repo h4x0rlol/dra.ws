@@ -1,4 +1,4 @@
-import { Figure, Figures } from './figures';
+import { Figure } from './figures';
 import { Methods } from './methods';
 
 export enum MessageTypes {

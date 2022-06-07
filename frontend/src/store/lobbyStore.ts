@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { ChatMessage, Message } from 'src/api/message';
+import { ChatMessage } from 'src/api/message';
 
 export enum RoomState {
 	CHAT = 'chat',

@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
@@ -44,7 +43,6 @@ app.get("/lobbies", async (req, res) => {
 app.get("/users", async (req, res) => {
   try {
     const id = req.query.id;
-    console.log(id);
     if (LOBBIES[id]) {
       return res.status(200).json({ users: LOBBIES[id] });
     } else {
@@ -76,14 +74,11 @@ app.ws("/", (ws, req) => {
         connectionHandler(ws, msg);
         break;
       case "draw":
+      case "message":
         broadcastConnection(ws, msg);
         break;
       case "update":
         updateImage(msg);
-        break;
-      case "message":
-        console.log(msg);
-        broadcastConnection(ws, msg);
         break;
       case "undo":
       case "redo":
@@ -125,7 +120,6 @@ const connectionHandler = (ws, msg) => {
     } else {
       LOBBIES[msg?.id] = [msg?.username];
     }
-    console.log(LOBBIES);
     if (msg?.public && !PUBLIC_LOBBIES.includes(msg?.id)) {
       PUBLIC_LOBBIES.push(msg?.id);
     }
