@@ -7,12 +7,20 @@ import ShareIcon from 'src/components/Svg/ShareIcon';
 import UserIcon from 'src/components/Svg/UserIcon';
 import UsersIcon from 'src/components/Svg/UsersIcon';
 import ThemeToggle from 'src/components/ThemeToggle/ThemeToggle';
-import lobbyStore from 'src/store/lobbyStore';
+import lobbyStore, { RoomState } from 'src/store/lobbyStore';
 import styles from './Navbar.module.scss';
 
 const Navbar: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
+
+	const handleChangeRoomState = (): void => {
+		if (lobbyStore.roomState === RoomState.CHAT) {
+			lobbyStore.setRoomState(RoomState.USERS);
+		} else {
+			lobbyStore.setRoomState(RoomState.CHAT);
+		}
+	};
 
 	return (
 		<div className={styles.wrapper}>
@@ -39,7 +47,11 @@ const Navbar: React.FC = (): JSX.Element => {
 
 				<div className={styles.item}>
 					<p className={styles.p}>{t('navbar.users')}</p>
-					<button type="button" className={styles.button}>
+					<button
+						type="button"
+						className={styles.button}
+						onClick={handleChangeRoomState}
+					>
 						<UsersIcon className={styles.svg} />
 					</button>
 				</div>

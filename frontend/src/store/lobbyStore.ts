@@ -6,6 +6,11 @@ import {
 	uniqueNamesGenerator,
 } from 'unique-names-generator';
 
+export enum RoomState {
+	CHAT = 'chat',
+	USERS = 'users',
+}
+
 class LobbyStore {
 	username: string = '';
 
@@ -15,12 +20,18 @@ class LobbyStore {
 
 	isPublic: boolean = false;
 
+	roomState: RoomState = RoomState.CHAT;
+
 	constructor() {
 		makeAutoObservable(this);
 	}
 
 	setUserName(username: string): void {
 		this.username = username;
+	}
+
+	setRoomState(roomState: RoomState): void {
+		this.roomState = roomState;
 	}
 
 	setIsPublic(isPublic: boolean): void {
