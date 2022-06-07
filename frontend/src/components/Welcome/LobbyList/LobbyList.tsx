@@ -21,9 +21,9 @@ const LobbyList: React.FC = (): JSX.Element => {
 	return (
 		<div className={styles.wrapper}>
 			<ul>
-				{list.map((lobby) => {
+				{list?.map((lobby) => {
 					return (
-						<li className={styles.item}>
+						<li className={styles.item} key={lobby}>
 							<Link to={`lobby/${lobby}`} className={styles.link}>
 								{lobby}
 							</Link>

@@ -5,12 +5,18 @@ import { useParams } from 'react-router-dom';
 import { Figures } from 'src/api/figures';
 import { Message } from 'src/api/message';
 import { Methods } from 'src/api/methods';
+import { useBeforeunload } from 'react-beforeunload';
 import Board from 'src/components/Board/Board';
 import Chat from 'src/components/Chat/Chat';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import Brush from 'src/utils/tools/Brush';
 import Rect from 'src/utils/tools/Rect';
+import {
+	adjectives,
+	animals,
+	uniqueNamesGenerator,
+} from 'unique-names-generator';
 import styles from './Lobby.module.scss';
 
 const Lobby: React.FC = (): JSX.Element => {
@@ -80,6 +86,14 @@ const Lobby: React.FC = (): JSX.Element => {
 	}, []);
 
 	useEffect(() => {
+		if (lobbyStore.username.length === 0) {
+			const shortName = uniqueNamesGenerator({
+				dictionaries: [animals],
+				length: 1,
+			});
+			lobbyStore.setUserName(shortName.substring(0, 8));
+		}
+
 		const socket: WebSocket = new WebSocket('ws://localhost:5000');
 		lobbyStore.setSocket(socket);
 		lobbyStore.setSessionId(params.id);
@@ -115,10 +129,18 @@ const Lobby: React.FC = (): JSX.Element => {
 					method: Methods.CLOSE,
 				})
 			);
-			socket.close();
 		};
 	}, []);
 
+	useBeforeunload(() => {
+		lobbyStore.socket?.send(
+			JSON.stringify({
+				id: params.id,
+				username: lobbyStore.username,
+				method: Methods.CLOSE,
+			})
+		);
+	});
 	return (
 		<div className={styles.container}>
 			<Board />

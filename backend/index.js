@@ -10,8 +10,8 @@ const WSServer = require("express-ws")(app);
 const aWss = WSServer.getWss();
 
 const PORT = process.env.PORT || 5000;
-const CLIENTS = [];
-let LOBBIES = [];
+const LOBBIES = {};
+let PUBLIC_LOBBIES = [];
 app.use(cors());
 app.use(express.json());
 
@@ -35,7 +35,7 @@ app.get("/health", async (req, res) => {
 
 app.get("/lobbies", async (req, res) => {
   try {
-    return res.status(200).json({ lobbies: LOBBIES });
+    return res.status(200).json({ lobbies: PUBLIC_LOBBIES });
   } catch (e) {
     return res.status(500).json({ message: e.message });
   }
@@ -79,20 +79,41 @@ app.ws("/", (ws, req) => {
           break;
         }
       case "close":
-        LOBBIES = LOBBIES.filter((lobby) => lobby !== msg?.id);
+        console.log(`clos ${msg?.username}`);
+        if (LOBBIES[msg?.id]) {
+          const newClients = LOBBIES[msg?.id].filter(
+            (user) => user !== msg?.username
+          );
+          LOBBIES[msg?.id] = newClients;
+          if (newClients.length === 0) {
+            LOBBIES[msg?.id] = undefined;
+            PUBLIC_LOBBIES = PUBLIC_LOBBIES.filter(
+              (lobby) => lobby !== msg?.id
+            );
+          }
+        }
         break;
       default:
         break;
     }
   });
+  ws.on("close", (ws, msg) => {
+    console.log("CLOSING");
+    console.log(ws);
+  });
 });
 
 const connectionHandler = (ws, msg) => {
   try {
-    CLIENTS.push(msg?.id);
     ws.id = msg?.id;
-    if (msg?.public && !LOBBIES.includes(msg?.id)) {
-      LOBBIES.push(msg?.id);
+    if (LOBBIES[msg?.id]) {
+      LOBBIES[msg?.id] = [...LOBBIES[msg?.id], msg?.username];
+    } else {
+      LOBBIES[msg?.id] = [msg?.username];
+    }
+    console.log(LOBBIES);
+    if (msg?.public && !PUBLIC_LOBBIES.includes(msg?.id)) {
+      PUBLIC_LOBBIES.push(msg?.id);
     }
     broadcastConnection(ws, msg);
   } catch (e) {

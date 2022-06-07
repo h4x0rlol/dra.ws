@@ -29,13 +29,6 @@ const CreateLobby: React.FC = (): JSX.Element => {
 	const createHandler = (): void => {
 		if (lobbyStore.username.length <= 8) {
 			const uuid = uuidv4();
-			if (lobbyStore.username.length === 0) {
-				const shortName = uniqueNamesGenerator({
-					dictionaries: [adjectives, animals],
-					length: 2,
-				});
-				lobbyStore.setUserName(shortName);
-			}
 			navigate(`/lobby/f${uuid}`);
 		}
 	};
