@@ -81,6 +81,10 @@ app.ws("/", (ws, req) => {
       case "update":
         updateImage(msg);
         break;
+      case "message":
+        console.log(msg);
+        broadcastConnection(ws, msg);
+        break;
       case "undo":
       case "redo":
       case "clear":

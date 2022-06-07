@@ -3,7 +3,8 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Figures } from 'src/api/figures';
-import { Message } from 'src/api/message';
+import { v4 as uuidv4 } from 'uuid';
+import { ChatMessage, Message, MessageTypes } from 'src/api/message';
 import { Methods } from 'src/api/methods';
 import { useBeforeunload } from 'react-beforeunload';
 import Board from 'src/components/Board/Board';
@@ -81,6 +82,10 @@ const Lobby: React.FC = (): JSX.Element => {
 		}
 	};
 
+	const setMessage = (messages: ChatMessage): void => {
+		lobbyStore.setMessages(messages);
+	};
+
 	useEffect(() => {
 		getImageData();
 	}, []);
@@ -97,6 +102,8 @@ const Lobby: React.FC = (): JSX.Element => {
 		const socket: WebSocket = new WebSocket('ws://localhost:5000');
 		lobbyStore.setSocket(socket);
 		lobbyStore.setSessionId(params.id);
+		lobbyStore.setUserId(uuidv4());
+
 		socket.onopen = () => {
 			socket.send(
 				JSON.stringify({
@@ -122,6 +129,20 @@ const Lobby: React.FC = (): JSX.Element => {
 						break;
 					case Methods.CLEAR:
 						getImageData();
+						break;
+					case Methods.MESSAGE:
+						setMessage({
+							id: msg.id,
+							userId: msg.userId,
+							username: msg.username,
+							method: msg.method,
+							message: msg.message,
+							date: msg.date,
+							type:
+								msg.userId === lobbyStore.userId
+									? MessageTypes.OUTCOMING
+									: MessageTypes.INCOMING,
+						});
 						break;
 					default:
 						break;

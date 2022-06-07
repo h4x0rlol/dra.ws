@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+import { ChatMessage, Message } from 'src/api/message';
 
 export enum RoomState {
 	CHAT = 'chat',
@@ -12,16 +13,31 @@ class LobbyStore {
 
 	sessionId: string | null = null;
 
+	userId: string = '';
+
 	isPublic: boolean = false;
 
 	roomState: RoomState = RoomState.CHAT;
+
+	messages: ChatMessage[] = [];
 
 	constructor() {
 		makeAutoObservable(this);
 	}
 
+	setUserId(id: string): void {
+		this.userId = id;
+	}
+
 	setUserName(username: string): void {
 		this.username = username;
+	}
+
+	setMessages(message: ChatMessage): void {
+		if (this.messages.length > 100) {
+			this.messages.splice(0, 50);
+		}
+		this.messages = [...this.messages, message];
 	}
 
 	setRoomState(roomState: RoomState): void {

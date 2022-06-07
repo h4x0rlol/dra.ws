@@ -6,4 +6,5 @@ export enum Methods {
 	UNDO = 'undo',
 	REDO = 'redo',
 	CLEAR = 'clear',
+	MESSAGE = 'message',
 }
