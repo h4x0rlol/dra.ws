@@ -95,7 +95,10 @@ app.ws("/", (ws, req) => {
           LOBBIES[msg?.id] = newClients;
 
           if (newClients.length === 0) {
+            deleteImage(msg);
+            console.log(LOBBIES);
             delete LOBBIES[msg?.id];
+
             PUBLIC_LOBBIES = PUBLIC_LOBBIES.filter(
               (lobby) => lobby !== msg?.id
             );
@@ -146,6 +149,15 @@ const updateImage = (msg) => {
       data,
       "base64"
     );
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const deleteImage = (msg) => {
+  try {
+    console.log("delete");
+    fs.unlinkSync(path.resolve(__dirname, "files", `${msg?.id}.jpg`));
   } catch (e) {
     console.log(e);
   }

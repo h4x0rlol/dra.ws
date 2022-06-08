@@ -1,7 +1,8 @@
-import axios from 'axios';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { axiosConfig } from 'src/api/axios.config';
+import { WS_URL } from 'src/api/urls';
 import { Figures } from 'src/api/figures';
 import { v4 as uuidv4 } from 'uuid';
 import { ChatMessage, Message, MessageTypes } from 'src/api/message';
@@ -56,29 +57,27 @@ const Lobby: React.FC = (): JSX.Element => {
 			const ctx = canvasStore.canvas.getContext(
 				'2d'
 			) as unknown as CanvasRenderingContext2D;
-			axios
-				.get(`http://localhost:5000/image?id=${params.id}`)
-				.then((response) => {
-					const img = new Image();
-					img.src = response.data;
-					img.onload = () => {
-						if (canvasStore.canvas) {
-							ctx.clearRect(
-								0,
-								0,
-								canvasStore.canvas.width,
-								canvasStore.canvas.height
-							);
-							ctx.drawImage(
-								img,
-								0,
-								0,
-								canvasStore.canvas.width,
-								canvasStore.canvas.height
-							);
-						}
-					};
-				});
+			axiosConfig.get(`/image?id=${params.id}`).then((response) => {
+				const img = new Image();
+				img.src = response.data;
+				img.onload = () => {
+					if (canvasStore.canvas) {
+						ctx.clearRect(
+							0,
+							0,
+							canvasStore.canvas.width,
+							canvasStore.canvas.height
+						);
+						ctx.drawImage(
+							img,
+							0,
+							0,
+							canvasStore.canvas.width,
+							canvasStore.canvas.height
+						);
+					}
+				};
+			});
 		}
 	};
 
@@ -99,7 +98,7 @@ const Lobby: React.FC = (): JSX.Element => {
 			lobbyStore.setUserName(shortName.substring(0, 8));
 		}
 
-		const socket: WebSocket = new WebSocket('ws://localhost:5000');
+		const socket: WebSocket = new WebSocket(WS_URL);
 		lobbyStore.setSocket(socket);
 		lobbyStore.setSessionId(params.id);
 		lobbyStore.setUserId(uuidv4());
