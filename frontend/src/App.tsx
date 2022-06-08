@@ -7,9 +7,8 @@ import Home from './views/Home/Home';
 import Lobby from './views/Lobby/Lobby';
 
 // TODO
-// Make popups (choose tool, copied link, exit)
+// Make popups (choose tool, copied link, sure want to leave?)
 // Make brush
-// Make text on canvas
 
 const App: React.FC = (): JSX.Element => {
 	const [isLoading, setIsLoading] = useState(true);

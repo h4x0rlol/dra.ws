@@ -10,6 +10,7 @@ export default class Brush extends Tool {
 		super(canvas, socket, id);
 		this.ctx.lineCap = 'round';
 		this.ctx.lineJoin = 'round';
+
 		//  TODO
 		// https://codesandbox.io/s/paint-tool-final-g362x?from-embed=&file=/src/index.js:2345-2351
 		// Make brush
@@ -135,6 +136,14 @@ export default class Brush extends Tool {
 		ctx.setLineDash(lineType);
 		ctx.lineCap = 'round';
 		ctx.lineJoin = 'round';
+		ctx.shadowColor = color;
+		ctx.shadowBlur = lineWidth / 2;
+		ctx.quadraticCurveTo(
+			x + Number((Math.random() * 10).toFixed()),
+			y + Number((Math.random() * 10).toFixed()),
+			x,
+			y
+		);
 		ctx.lineTo(x, y);
 		ctx.stroke();
 	}

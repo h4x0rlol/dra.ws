@@ -76,6 +76,7 @@ export default class Pencil extends Tool {
 	}
 
 	draw(x: number, y: number): void {
+		this.ctx.shadowBlur = 0;
 		this.ctx.lineTo(x, y);
 		this.ctx.stroke();
 	}

@@ -20,7 +20,7 @@ export default class Rect extends Tool {
 		super(canvas, socket, id);
 		this.ctx.lineCap = 'butt';
 		this.ctx.lineJoin = 'miter';
-		// this.ctx.globalAlpha = 1;
+		this.ctx.shadowBlur = 0;
 		this.startX = 0;
 		this.startY = 0;
 		this.width = 0;
@@ -166,6 +166,7 @@ export default class Rect extends Tool {
 		ctx.setLineDash(lineType);
 		ctx.lineCap = 'butt';
 		ctx.lineJoin = 'miter';
+		ctx.shadowBlur = 0;
 		ctx.beginPath();
 		ctx.rect(x, y, w, h);
 
