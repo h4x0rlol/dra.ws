@@ -2,8 +2,8 @@ import canvasStore from 'src/store/canvasStore';
 import Tool from './Tool';
 
 export default class Pencil extends Tool {
-	constructor(canvas: HTMLCanvasElement, socket: WebSocket, id: string) {
-		super(canvas, socket, id);
+	constructor(canvas: HTMLCanvasElement) {
+		super(canvas);
 		this.ctx.lineCap = 'butt';
 		this.ctx.lineJoin = 'miter';
 		this.ctx.lineWidth = 1;

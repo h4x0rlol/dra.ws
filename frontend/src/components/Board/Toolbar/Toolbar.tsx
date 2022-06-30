@@ -28,13 +28,7 @@ const Toolbar: React.FC = (): JSX.Element => {
 				toolStore.tool.destroyEvents();
 				toolStore.setTool(null);
 			} else {
-				toolStore.setTool(
-					new CurrentTool(
-						canvasStore.canvas,
-						lobbyStore.socket,
-						lobbyStore.sessionId
-					)
-				);
+				toolStore.setTool(new CurrentTool(canvasStore.canvas));
 			}
 		}
 	};

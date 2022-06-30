@@ -1,6 +1,7 @@
 import { Figures } from 'src/api/figures';
 import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
+import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
 import { getLineType } from '../helpers';
 import Tool from './Tool';
@@ -16,8 +17,8 @@ export default class Rect extends Tool {
 
 	saved: string;
 
-	constructor(canvas: HTMLCanvasElement, socket: WebSocket, id: string) {
-		super(canvas, socket, id);
+	constructor(canvas: HTMLCanvasElement) {
+		super(canvas);
 		this.ctx.lineCap = 'butt';
 		this.ctx.lineJoin = 'miter';
 		this.ctx.shadowBlur = 0;
@@ -98,10 +99,10 @@ export default class Rect extends Tool {
 
 	mouseUpHandler(): void {
 		this.mouseDown = false;
-		this.socket?.send(
+		lobbyStore.socket?.send(
 			JSON.stringify({
 				method: Methods.DRAW,
-				id: this.id,
+				id: lobbyStore.sessionId,
 				figure: {
 					type: Figures.RECT,
 					x: this.startX,

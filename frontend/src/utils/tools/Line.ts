@@ -8,8 +8,8 @@ export default class Line extends Tool {
 
 	saved: string;
 
-	constructor(canvas: HTMLCanvasElement, socket: WebSocket, id: string) {
-		super(canvas, socket, id);
+	constructor(canvas: HTMLCanvasElement) {
+		super(canvas);
 		this.ctx.lineCap = 'butt';
 		this.ctx.lineJoin = 'miter';
 		this.ctx.lineWidth = 3;
