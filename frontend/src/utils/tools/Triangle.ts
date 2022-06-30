@@ -48,15 +48,6 @@ export default class Triangle extends Tool {
 			};
 			this.mouse = [];
 			this.sendMessage(JSON.stringify(message));
-			setTimeout(() => {
-				this.sendMessage(
-					JSON.stringify({
-						id: lobbyStore.sessionId,
-						method: Methods.UPDATE,
-						image: canvasStore.canvas?.toDataURL(),
-					})
-				);
-			});
 		}
 		this.draw();
 	}
@@ -107,5 +98,13 @@ export default class Triangle extends Tool {
 			ctx.fillStyle = color;
 			ctx.fill();
 		}
+
+		lobbyStore.socket?.send(
+			JSON.stringify({
+				id: lobbyStore.sessionId,
+				method: Methods.UPDATE,
+				image: canvasStore.canvas?.toDataURL(),
+			})
+		);
 	}
 }

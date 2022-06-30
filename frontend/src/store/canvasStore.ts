@@ -111,6 +111,7 @@ class CanvasStore {
 		this.pushToUndo(this.canvas?.toDataURL());
 		if (this.canvas) {
 			ctx?.clearRect(0, 0, this.canvas.width, this.canvas.height);
+			this.setBackground(this.background);
 		}
 	}
 }
