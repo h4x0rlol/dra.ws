@@ -54,6 +54,10 @@ export default class Tool {
 		lobbyStore.socket?.send(message);
 	};
 
+	getDistance = (start: number, end: number): number => {
+		return end - start;
+	};
+
 	destroyEvents(): void {
 		this.canvas.onmouseup = null;
 		this.canvas.onmousedown = null;

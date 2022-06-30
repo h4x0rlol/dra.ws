@@ -14,6 +14,7 @@ import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import Brush from 'src/utils/tools/Brush';
 import Rect from 'src/utils/tools/Rect';
+import Circle from 'src/utils/tools/Circle';
 import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 import styles from './Lobby.module.scss';
 
@@ -21,8 +22,18 @@ const Lobby: React.FC = (): JSX.Element => {
 	const params = useParams();
 
 	const drawHandler = (msg: Message): void => {
-		const { type, x, y, width, height, fill, lineType, lineWidth, color } =
-			msg.figure;
+		const {
+			type,
+			x,
+			y,
+			width,
+			height,
+			radius,
+			fill,
+			lineType,
+			lineWidth,
+			color,
+		} = msg.figure;
 		const ctx = canvasStore.canvas?.getContext('2d', {
 			alpha: false,
 		}) as unknown as CanvasRenderingContext2D;
@@ -37,6 +48,19 @@ const Lobby: React.FC = (): JSX.Element => {
 					y,
 					width,
 					height,
+					fill,
+					lineWidth,
+					lineType,
+					color
+				);
+				ctx.beginPath();
+				break;
+			case Figures.CIRCLE:
+				Circle.staticDraw(
+					ctx,
+					x,
+					y,
+					radius,
 					fill,
 					lineWidth,
 					lineType,
