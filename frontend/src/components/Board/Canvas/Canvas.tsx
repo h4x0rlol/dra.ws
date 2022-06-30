@@ -10,6 +10,7 @@ import styles from './Canvas.module.scss';
 const Canvas: React.FC = (): JSX.Element => {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const params = useParams();
+
 	useEffect(() => {
 		if (canvasRef.current) {
 			canvasStore.setCanvas(canvasRef.current);

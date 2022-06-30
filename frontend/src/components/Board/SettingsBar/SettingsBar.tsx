@@ -61,48 +61,6 @@ const SettingsBar: React.FC = (): JSX.Element => {
 		}
 	};
 
-	const handleUndo = (): void => {
-		canvasStore.undo();
-
-		setTimeout(() => {
-			lobbyStore.socket?.send(
-				JSON.stringify({
-					id: params.id,
-					method: Methods.UNDO,
-					image: canvasStore.canvas?.toDataURL(),
-				})
-			);
-		});
-	};
-
-	const handleRedo = (): void => {
-		canvasStore.redo();
-
-		setTimeout(() => {
-			lobbyStore.socket?.send(
-				JSON.stringify({
-					id: params.id,
-					method: Methods.REDO,
-					image: canvasStore.canvas?.toDataURL(),
-				})
-			);
-		});
-	};
-
-	const handleClear = (): void => {
-		canvasStore.clear();
-
-		setTimeout(() => {
-			lobbyStore.socket?.send(
-				JSON.stringify({
-					id: params.id,
-					method: Methods.CLEAR,
-					image: canvasStore.canvas?.toDataURL(),
-				})
-			);
-		});
-	};
-
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.container}>
@@ -172,14 +130,14 @@ const SettingsBar: React.FC = (): JSX.Element => {
 					<button
 						type="button"
 						className={styles.button}
-						onClick={handleUndo}
+						onClick={() => canvasStore.undo()}
 					>
 						<UndoIcon className={styles.svg} />
 					</button>
 					<button
 						type="button"
 						className={styles.button}
-						onClick={handleRedo}
+						onClick={() => canvasStore.redo()}
 					>
 						<RedoIcon className={styles.svg} />
 					</button>
@@ -189,7 +147,7 @@ const SettingsBar: React.FC = (): JSX.Element => {
 					<button
 						type="button"
 						className={styles.button}
-						onClick={handleClear}
+						onClick={() => canvasStore.clear()}
 					>
 						<ClearIcon className={styles.svg} />
 					</button>

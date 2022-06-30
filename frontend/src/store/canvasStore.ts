@@ -1,4 +1,6 @@
 import { makeAutoObservable } from 'mobx';
+import { Methods } from 'src/api/methods';
+import lobbyStore from './lobbyStore';
 
 class CanvasStore {
 	canvas: HTMLCanvasElement | null = null;
@@ -72,6 +74,16 @@ class CanvasStore {
 						);
 					}
 				};
+
+				setTimeout(() => {
+					lobbyStore.socket?.send(
+						JSON.stringify({
+							id: lobbyStore.sessionId,
+							method: Methods.UNDO,
+							image: this.canvas?.toDataURL(),
+						})
+					);
+				});
 			}
 		}
 	}
@@ -103,6 +115,16 @@ class CanvasStore {
 					}
 				};
 			}
+
+			setTimeout(() => {
+				lobbyStore.socket?.send(
+					JSON.stringify({
+						id: lobbyStore.sessionId,
+						method: Methods.REDO,
+						image: this.canvas?.toDataURL(),
+					})
+				);
+			});
 		}
 	}
 
@@ -113,6 +135,16 @@ class CanvasStore {
 			ctx?.clearRect(0, 0, this.canvas.width, this.canvas.height);
 			this.setBackground(this.background);
 		}
+
+		setTimeout(() => {
+			lobbyStore.socket?.send(
+				JSON.stringify({
+					id: lobbyStore.sessionId,
+					method: Methods.CLEAR,
+					image: this.canvas?.toDataURL(),
+				})
+			);
+		});
 	}
 }
 
