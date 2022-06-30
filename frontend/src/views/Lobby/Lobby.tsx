@@ -30,6 +30,9 @@ const Lobby: React.FC = (): JSX.Element => {
 			type,
 			x,
 			y,
+			a,
+			b,
+			c,
 			startX,
 			startY,
 			width,
@@ -92,6 +95,19 @@ const Lobby: React.FC = (): JSX.Element => {
 				break;
 			case Figures.PENCIL:
 				Pencil.draw(ctx, x, y, lineWidth, lineType, color);
+				break;
+			case Figures.TRIANGLE:
+				Triangle.staticDraw(
+					ctx,
+					a,
+					b,
+					c,
+					fill,
+					lineWidth,
+					lineType,
+					color
+				);
+				ctx.beginPath();
 				break;
 			case Figures.FINISH:
 				ctx.beginPath();

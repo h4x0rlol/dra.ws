@@ -1,31 +1,22 @@
+import { Figures } from 'src/api/figures';
+import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
+import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
+import { getLineType } from '../helpers';
 import Tool from './Tool';
 
-interface MouseCoord {
+export interface MouseCoord {
 	x: number;
 	y: number;
-}
-
-interface TriangleCoord {
-	a: MouseCoord;
-	b: MouseCoord;
-	c: MouseCoord;
 }
 
 export default class Triangle extends Tool {
 	mouse: MouseCoord[];
 
-	triangles: TriangleCoord[];
-
 	constructor(canvas: HTMLCanvasElement) {
 		super(canvas);
-		this.ctx.lineCap = 'butt';
-		this.ctx.lineJoin = 'miter';
-		this.ctx.lineWidth = 1;
-		this.ctx.globalAlpha = 1;
 		this.mouse = [];
-		this.triangles = [];
 		this.listen();
 	}
 
@@ -35,36 +26,47 @@ export default class Triangle extends Tool {
 
 	mouseClickHandler(e: MouseEvent): void {
 		canvasStore.pushToUndo(this.canvas?.toDataURL());
-		this.mouse.push({
-			x: (e.offsetX * this.canvas.width) / this.canvas.clientWidth || 0,
-			y: (e.offsetY * this.canvas.height) / this.canvas.clientHeight || 0,
-		});
+		const coordinates = this.getCanvasCoordinates(e.offsetX, e.offsetY);
+		this.mouse.push(coordinates);
 		if (this.mouse.length >= 3) {
-			this.triangles.push({
-				a: this.mouse[0],
-				b: this.mouse[1],
-				c: this.mouse[2],
-			});
+			const message = {
+				method: Methods.DRAW,
+				id: lobbyStore.sessionId,
+				figure: {
+					type: Figures.TRIANGLE,
+					a: this.mouse[0],
+					b: this.mouse[1],
+					c: this.mouse[2],
+					fill: toolStore.fill,
+					lineWidth: toolStore.lineWidth,
+					lineType: getLineType(
+						toolStore.lineType,
+						toolStore.lineWidth
+					),
+					color: toolStore.color,
+				},
+			};
 			this.mouse = [];
+			this.sendMessage(JSON.stringify(message));
+			setTimeout(() => {
+				this.sendMessage(
+					JSON.stringify({
+						id: lobbyStore.sessionId,
+						method: Methods.UPDATE,
+						image: canvasStore.canvas?.toDataURL(),
+					})
+				);
+			});
 		}
 		this.draw();
 	}
 
 	draw(): void {
-		for (let tIndex = 0; tIndex < this.triangles.length; tIndex += 1) {
-			const triangle = this.triangles[tIndex];
-			this.ctx.beginPath();
-			this.ctx.moveTo(triangle.a.x, triangle.a.y);
-			this.ctx.lineTo(triangle.b.x, triangle.b.y);
-			this.ctx.lineTo(triangle.c.x, triangle.c.y);
-			this.ctx.closePath();
-			this.ctx.stroke();
-
-			if (toolStore.fill) {
-				this.ctx.fillStyle = toolStore.color;
-				this.ctx.fill();
-			}
-		}
+		this.ctx.strokeStyle = toolStore.color;
+		this.ctx.lineWidth = toolStore.lineWidth;
+		this.ctx.setLineDash(
+			getLineType(toolStore.lineType, toolStore.lineWidth)
+		);
 
 		if (this.mouse.length > 0) {
 			this.ctx.beginPath();
@@ -76,6 +78,34 @@ export default class Triangle extends Tool {
 		if (this.mouse.length > 0) {
 			this.ctx.stroke();
 		}
-		this.triangles = [];
+	}
+
+	static staticDraw(
+		ctx: CanvasRenderingContext2D,
+		a: MouseCoord,
+		b: MouseCoord,
+		c: MouseCoord,
+		fill: boolean,
+		lineWidth: number,
+		lineType: number[],
+		color: string
+	): void {
+		ctx.lineCap = 'butt';
+		ctx.lineJoin = 'miter';
+		ctx.shadowBlur = 0;
+		ctx.strokeStyle = color;
+		ctx.lineWidth = lineWidth;
+		ctx.setLineDash(lineType);
+		ctx.beginPath();
+		ctx.moveTo(a.x, a.y);
+		ctx.lineTo(b.x, b.y);
+		ctx.lineTo(c.x, c.y);
+		ctx.closePath();
+		ctx.stroke();
+
+		if (fill) {
+			ctx.fillStyle = color;
+			ctx.fill();
+		}
 	}
 }
