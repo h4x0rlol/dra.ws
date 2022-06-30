@@ -17,6 +17,8 @@ import Rect from 'src/utils/tools/Rect';
 import Circle from 'src/utils/tools/Circle';
 import Eraser from 'src/utils/tools/Eraser';
 import Line from 'src/utils/tools/Line';
+import Pencil from 'src/utils/tools/Pencil';
+import Triangle from 'src/utils/tools/Triangle';
 import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 import styles from './Lobby.module.scss';
 
@@ -87,6 +89,9 @@ const Lobby: React.FC = (): JSX.Element => {
 					color
 				);
 				ctx.beginPath();
+				break;
+			case Figures.PENCIL:
+				Pencil.draw(ctx, x, y, lineWidth, lineType, color);
 				break;
 			case Figures.FINISH:
 				ctx.beginPath();

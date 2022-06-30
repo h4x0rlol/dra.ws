@@ -4,6 +4,7 @@ export enum Figures {
 	CIRCLE = 'circle',
 	ERASER = 'eraser',
 	LINE = 'line',
+	PENCIL = 'pencil',
 	FINISH = 'finish',
 }
 
