@@ -1,10 +1,15 @@
+import { Figures } from 'src/api/figures';
+import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
+import lobbyStore from 'src/store/lobbyStore';
+import toolStore from 'src/store/toolStore';
+import { getLineType } from '../helpers';
 import Tool from './Tool';
 
 export default class Line extends Tool {
-	currentX: number;
+	startX: number;
 
-	currentY: number;
+	startY: number;
 
 	saved: string;
 
@@ -12,10 +17,9 @@ export default class Line extends Tool {
 		super(canvas);
 		this.ctx.lineCap = 'butt';
 		this.ctx.lineJoin = 'miter';
-		this.ctx.lineWidth = 3;
-		this.ctx.globalAlpha = 1;
-		this.currentX = 0;
-		this.currentY = 0;
+		this.ctx.shadowBlur = 0;
+		this.startX = 0;
+		this.startY = 0;
 		this.saved = '';
 		this.listen();
 	}
@@ -27,62 +31,91 @@ export default class Line extends Tool {
 
 		this.canvas.ontouchstart = this.touchDownHandler.bind(this);
 		this.canvas.ontouchmove = this.touchMoveHandler.bind(this);
-		this.canvas.ontouchend = this.mouseUpHandler.bind(this);
+		this.canvas.ontouchend = this.touchUpHandler.bind(this);
+	}
+
+	private downHandler(x: number, y: number): void {
+		this.mouseDown = true;
+		const canvasData = this.canvas.toDataURL();
+		const coordinates = this.getCanvasCoordinates(x, y);
+		canvasStore.pushToUndo(canvasData);
+		this.startX = coordinates.x;
+		this.startY = coordinates.y;
+		this.saved = canvasData;
 	}
 
 	mouseDownHandler(e: MouseEvent): void {
-		this.mouseDown = true;
-		canvasStore.pushToUndo(this.canvas?.toDataURL());
-		this.currentX =
-			(e.offsetX * this.canvas.width) / this.canvas.clientWidth || 0;
-		this.currentY =
-			(e.offsetY * this.canvas.height) / this.canvas.clientHeight || 0;
-		this.ctx.moveTo(this.currentX, this.currentY);
-		this.saved = this.canvas.toDataURL();
+		this.downHandler(e.offsetX, e.offsetY);
 	}
 
 	mouseMoveHandler(e: MouseEvent): void {
 		if (this.mouseDown) {
-			this.draw(
-				(e.offsetX * this.canvas.width) / this.canvas.clientWidth || 0,
-				(e.offsetY * this.canvas.height) / this.canvas.clientHeight || 0
-			);
+			const coordinates = this.getCanvasCoordinates(e.offsetX, e.offsetY);
+			this.draw(coordinates.x, coordinates.y);
 		}
 	}
 
 	touchDownHandler(ev: TouchEvent): void {
-		const bcr = (
-			ev as unknown as React.MouseEvent<HTMLElement>
-		).currentTarget.getBoundingClientRect();
-		const x = ev.targetTouches[0].clientX - bcr.x;
-		const y = ev.targetTouches[0].clientY - bcr.y;
-
-		this.mouseDown = true;
-		canvasStore.pushToUndo(this.canvas?.toDataURL());
-		this.currentX = (x * this.canvas.width) / this.canvas.clientWidth || 0;
-		this.currentY =
-			(y * this.canvas.height) / this.canvas.clientHeight || 0;
-		this.ctx.moveTo(this.currentX, this.currentY);
-		this.saved = this.canvas.toDataURL();
+		const touchCoordinates = this.getTouchCoordinates(ev);
+		this.downHandler(touchCoordinates.x, touchCoordinates.y);
 	}
 
 	touchMoveHandler(ev: TouchEvent): void {
 		if (this.mouseDown) {
 			ev.preventDefault();
-			const bcr = (
-				ev as unknown as React.MouseEvent<HTMLElement>
-			).currentTarget.getBoundingClientRect();
-			const x = ev.targetTouches[0].clientX - bcr.x;
-			const y = ev.targetTouches[0].clientY - bcr.y;
-			this.draw(
-				(x * this.canvas.width) / this.canvas.clientWidth || 0,
-				(y * this.canvas.height) / this.canvas.clientHeight || 0
+			const touchCoordinates = this.getTouchCoordinates(ev);
+			const coordinates = this.getCanvasCoordinates(
+				touchCoordinates.x,
+				touchCoordinates.y
 			);
+			this.draw(coordinates.x, coordinates.y);
 		}
 	}
 
-	mouseUpHandler(): void {
+	mouseUpHandler(e: MouseEvent): void {
 		this.mouseDown = false;
+		const coordinates = this.getCanvasCoordinates(e.offsetX, e.offsetY);
+		const message = {
+			method: Methods.DRAW,
+			id: lobbyStore.sessionId,
+			figure: {
+				type: Figures.LINE,
+				x: coordinates.x,
+				y: coordinates.y,
+				startX: this.startX,
+				startY: this.startY,
+				lineWidth: toolStore.lineWidth,
+				lineType: getLineType(toolStore.lineType, toolStore.lineWidth),
+				color: toolStore.color,
+			},
+		};
+		this.sendMessage(JSON.stringify(message));
+	}
+
+	touchUpHandler(ev: TouchEvent): void {
+		this.mouseDown = false;
+		ev.preventDefault();
+		const bcr = (
+			ev as unknown as React.MouseEvent<HTMLElement>
+		).currentTarget.getBoundingClientRect();
+		const x = ev.changedTouches[0].clientX - bcr.x;
+		const y = ev.changedTouches[0].clientY - bcr.y;
+
+		const message = {
+			method: Methods.DRAW,
+			id: lobbyStore.sessionId,
+			figure: {
+				type: Figures.LINE,
+				x,
+				y,
+				startX: this.startX,
+				startY: this.startY,
+				lineWidth: toolStore.lineWidth,
+				lineType: getLineType(toolStore.lineType, toolStore.lineWidth),
+				color: toolStore.color,
+			},
+		};
+		this.sendMessage(JSON.stringify(message));
 	}
 
 	draw(x: number, y: number): void {
@@ -97,10 +130,38 @@ export default class Line extends Tool {
 				this.canvas.width,
 				this.canvas.height
 			);
+			this.ctx.strokeStyle = toolStore.color;
+			this.ctx.lineWidth = toolStore.lineWidth;
+			this.ctx.setLineDash(
+				getLineType(toolStore.lineType, toolStore.lineWidth)
+			);
+
 			this.ctx.beginPath();
-			this.ctx.moveTo(this.currentX, this.currentY);
+			this.ctx.moveTo(this.startX, this.startY);
 			this.ctx.lineTo(x, y);
 			this.ctx.stroke();
 		};
+	}
+
+	static staticDraw(
+		ctx: CanvasRenderingContext2D,
+		x: number,
+		y: number,
+		startX: number,
+		startY: number,
+		lineWidth: number,
+		lineType: number[],
+		color: string
+	): void {
+		ctx.strokeStyle = color;
+		ctx.lineWidth = lineWidth;
+		ctx.setLineDash(lineType);
+		ctx.lineCap = 'butt';
+		ctx.lineJoin = 'miter';
+		ctx.shadowBlur = 0;
+		ctx.beginPath();
+		ctx.moveTo(startX, startY);
+		ctx.lineTo(x, y);
+		ctx.stroke();
 	}
 }

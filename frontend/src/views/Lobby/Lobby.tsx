@@ -16,6 +16,7 @@ import Brush from 'src/utils/tools/Brush';
 import Rect from 'src/utils/tools/Rect';
 import Circle from 'src/utils/tools/Circle';
 import Eraser from 'src/utils/tools/Eraser';
+import Line from 'src/utils/tools/Line';
 import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 import styles from './Lobby.module.scss';
 
@@ -27,6 +28,8 @@ const Lobby: React.FC = (): JSX.Element => {
 			type,
 			x,
 			y,
+			startX,
+			startY,
 			width,
 			height,
 			radius,
@@ -71,6 +74,19 @@ const Lobby: React.FC = (): JSX.Element => {
 				break;
 			case Figures.ERASER:
 				Eraser.draw(ctx, x, y, lineWidth);
+				break;
+			case Figures.LINE:
+				Line.staticDraw(
+					ctx,
+					x,
+					y,
+					startX,
+					startY,
+					lineWidth,
+					lineType,
+					color
+				);
+				ctx.beginPath();
 				break;
 			case Figures.FINISH:
 				ctx.beginPath();
