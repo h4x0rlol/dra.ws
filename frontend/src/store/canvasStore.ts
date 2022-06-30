@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx';
 class CanvasStore {
 	canvas: HTMLCanvasElement | null = null;
 
-	background: string = '#ffffff';
+	background: string = '#fff';
 
 	undoList: string[] = [];
 
@@ -18,7 +18,6 @@ class CanvasStore {
 		canvas.height = 900;
 		canvas.style.width = '1600px';
 		canvas.style.height = '900px';
-		canvas.style.background = '#fff';
 		this.canvas = canvas;
 		this.setBackground(this.background);
 	}
