@@ -2,6 +2,7 @@ export enum Figures {
 	BRUSH = 'brush',
 	RECT = 'rect',
 	CIRCLE = 'circle',
+	ERASER = 'eraser',
 	FINISH = 'finish',
 }
 

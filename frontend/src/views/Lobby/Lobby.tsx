@@ -15,6 +15,7 @@ import lobbyStore from 'src/store/lobbyStore';
 import Brush from 'src/utils/tools/Brush';
 import Rect from 'src/utils/tools/Rect';
 import Circle from 'src/utils/tools/Circle';
+import Eraser from 'src/utils/tools/Eraser';
 import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 import styles from './Lobby.module.scss';
 
@@ -67,6 +68,9 @@ const Lobby: React.FC = (): JSX.Element => {
 					color
 				);
 				ctx.beginPath();
+				break;
+			case Figures.ERASER:
+				Eraser.draw(ctx, x, y, lineWidth);
 				break;
 			case Figures.FINISH:
 				ctx.beginPath();

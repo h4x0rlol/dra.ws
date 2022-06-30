@@ -1,12 +1,13 @@
+import { Figures } from 'src/api/figures';
+import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
+import lobbyStore from 'src/store/lobbyStore';
+import toolStore from 'src/store/toolStore';
 import Tool from './Tool';
 
 export default class Eraser extends Tool {
 	constructor(canvas: HTMLCanvasElement) {
 		super(canvas);
-		this.ctx.lineCap = 'butt';
-		this.ctx.lineJoin = 'miter';
-		this.ctx.globalAlpha = 1;
 		this.listen();
 	}
 
@@ -20,64 +21,83 @@ export default class Eraser extends Tool {
 		this.canvas.ontouchend = this.mouseUpHandler.bind(this);
 	}
 
-	mouseDownHandler(e: MouseEvent): void {
+	private downHandler(x: number, y: number): void {
 		this.mouseDown = true;
 		canvasStore.pushToUndo(this.canvas?.toDataURL());
+		const coordinates = this.getCanvasCoordinates(x, y);
 		this.ctx.beginPath();
-		this.ctx.moveTo(
-			(e.offsetX * this.canvas.width) / this.canvas.clientWidth || 0,
-			(e.offsetY * this.canvas.height) / this.canvas.clientHeight || 0
-		);
+		this.ctx.moveTo(coordinates.x, coordinates.y);
+	}
+
+	mouseDownHandler(e: MouseEvent): void {
+		this.downHandler(e.offsetX, e.offsetY);
 	}
 
 	mouseMoveHandler(e: MouseEvent): void {
 		if (this.mouseDown) {
-			this.draw(
-				(e.offsetX * this.canvas.width) / this.canvas.clientWidth || 0,
-				(e.offsetY * this.canvas.height) / this.canvas.clientHeight || 0
-			);
+			const coordinates = this.getCanvasCoordinates(e.offsetX, e.offsetY);
+			const message = {
+				method: Methods.DRAW,
+				id: lobbyStore.sessionId,
+				figure: {
+					type: Figures.ERASER,
+					x: coordinates.x,
+					y: coordinates.y,
+					lineWidth: toolStore.lineWidth,
+				},
+			};
+			this.sendMessage(JSON.stringify(message));
 		}
 	}
 
 	touchDownHandler(ev: TouchEvent): void {
-		const bcr = (
-			ev as unknown as React.MouseEvent<HTMLElement>
-		).currentTarget.getBoundingClientRect();
-		const x = ev.targetTouches[0].clientX - bcr.x;
-		const y = ev.targetTouches[0].clientY - bcr.y;
-
-		this.mouseDown = true;
-		canvasStore.pushToUndo(this.canvas?.toDataURL());
-		this.ctx.beginPath();
-		this.ctx.moveTo(
-			(x * this.canvas.width) / this.canvas.clientWidth || 0,
-			(y * this.canvas.height) / this.canvas.clientHeight || 0
-		);
+		const touchCoordinates = this.getTouchCoordinates(ev);
+		this.downHandler(touchCoordinates.x, touchCoordinates.y);
 	}
 
 	touchMoveHandler(ev: TouchEvent): void {
 		if (this.mouseDown) {
 			ev.preventDefault();
-			const bcr = (
-				ev as unknown as React.MouseEvent<HTMLElement>
-			).currentTarget.getBoundingClientRect();
-			const x = ev.targetTouches[0].clientX - bcr.x;
-			const y = ev.targetTouches[0].clientY - bcr.y;
-			this.draw(
-				(x * this.canvas.width) / this.canvas.clientWidth || 0,
-				(y * this.canvas.height) / this.canvas.clientHeight || 0
-			);
+			const touchCoordinates = this.getTouchCoordinates(ev);
+			const message = {
+				method: Methods.DRAW,
+				id: lobbyStore.sessionId,
+				figure: {
+					type: Figures.ERASER,
+					x: touchCoordinates.x,
+					y: touchCoordinates.y,
+					lineWidth: toolStore.lineWidth,
+				},
+			};
+			this.sendMessage(JSON.stringify(message));
 		}
 	}
 
 	mouseUpHandler(): void {
 		this.mouseDown = false;
+		const message = {
+			method: Methods.DRAW,
+			id: lobbyStore.sessionId,
+			figure: {
+				type: Figures.FINISH,
+			},
+		};
+		this.sendMessage(JSON.stringify(message));
 	}
 
-	draw(x: number, y: number): void {
-		this.ctx.strokeStyle = 'white';
-		this.ctx.setLineDash([]);
-		this.ctx.lineTo(x, y);
-		this.ctx.stroke();
+	static draw(
+		ctx: CanvasRenderingContext2D,
+		x: number,
+		y: number,
+		lineWidth: number
+	): void {
+		ctx.strokeStyle = 'white';
+		ctx.lineWidth = lineWidth;
+		ctx.lineCap = 'butt';
+		ctx.lineJoin = 'miter';
+		ctx.shadowBlur = 0;
+		ctx.setLineDash([]);
+		ctx.lineTo(x, y);
+		ctx.stroke();
 	}
 }
