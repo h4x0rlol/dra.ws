@@ -8,7 +8,6 @@ import Lobby from './views/Lobby/Lobby';
 
 // TODO
 // Make popups (choose tool, copied link, sure want to leave?)
-// Make brush
 
 const App: React.FC = (): JSX.Element => {
 	const [isLoading, setIsLoading] = useState(true);

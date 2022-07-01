@@ -1,7 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Toast } from 'src/components/Toast/Toast';
 import { useParams } from 'react-router-dom';
+import { ToastContainer, toast, Id, Zoom, Slide } from 'react-toastify';
 import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
@@ -11,11 +13,22 @@ import ClearIcon from '../../Svg/ClearIcon';
 import DownloadIcon from '../../Svg/DownloadIcon';
 import RedoIcon from '../../Svg/RedoIcon';
 import UndoIcon from '../../Svg/UndoIcon';
+
 import styles from './SettingsBar.module.scss';
 
 const SettingsBar: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
-	const params = useParams();
+
+	const toolNotify = (): Id =>
+		toast('Select tool', {
+			toastId: 'toolNotify',
+		});
+
+	const handleNotChosen = (): void => {
+		if (!toolStore.tool) {
+			toolNotify();
+		}
+	};
 
 	const handleColorChange = (
 		e: React.ChangeEvent<HTMLInputElement>
@@ -71,6 +84,7 @@ const SettingsBar: React.FC = (): JSX.Element => {
 						className={styles.color_input}
 						value={toolStore.color}
 						onChange={(e) => handleColorChange(e)}
+						onClick={handleNotChosen}
 					/>
 				</div>
 
@@ -84,6 +98,7 @@ const SettingsBar: React.FC = (): JSX.Element => {
 						className={styles.range_input}
 						value={toolStore.lineWidth}
 						onChange={(e) => handleLineWidthChange(e)}
+						onClick={handleNotChosen}
 					/>
 					<input
 						type="number"
@@ -92,6 +107,7 @@ const SettingsBar: React.FC = (): JSX.Element => {
 						className={styles.input}
 						value={toolStore.lineWidth}
 						onChange={(e) => handleLineWidthChange(e)}
+						onClick={handleNotChosen}
 					/>
 				</div>
 
@@ -100,6 +116,7 @@ const SettingsBar: React.FC = (): JSX.Element => {
 					<select
 						value={toolStore.lineType}
 						onChange={(e) => handleLineTypeChange(e)}
+						onClick={handleNotChosen}
 						name="lineType"
 						id="lineType"
 						className={styles.select}
@@ -122,6 +139,7 @@ const SettingsBar: React.FC = (): JSX.Element => {
 						type="checkbox"
 						checked={toolStore.fill}
 						onChange={(e) => handleFillChange(e)}
+						onClick={handleNotChosen}
 						className={styles.checkbox}
 					/>
 				</div>
@@ -163,6 +181,7 @@ const SettingsBar: React.FC = (): JSX.Element => {
 					</button>
 				</div>
 			</div>
+			<Toast />
 		</div>
 	);
 };

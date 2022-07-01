@@ -19,3 +19,15 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	font-family: 'Source Sans Pro', sans-serif;
 }
+
+:root {
+	--toastify-text-color-dark: var(--color-primary) !important;
+	--toastify-color-dark: var(--bg-tertiary) !important;
+
+	--toastify-text-color-light: var(--color-primary) !important;
+	--toastify-color-light: var(--bg-tertiary) !important;
+}
+
+.Toastify__toast {
+	border-radius: 10px !important;
+}

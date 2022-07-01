@@ -19,6 +19,7 @@
 		"react-i18next": "^11.14.3",
 		"react-router-dom": "^6.3.0",
 		"react-scripts": "4.0.3",
+		"react-toastify": "9.0.3",
 		"unique-names-generator": "^4.7.1",
 		"uuid": "^8.3.2"
 	},
