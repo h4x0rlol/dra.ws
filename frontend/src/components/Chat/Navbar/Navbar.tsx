@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { Id, toast } from 'react-toastify';
 import ExitIcon from 'src/components/Svg/ExitIcon';
 import ShareIcon from 'src/components/Svg/ShareIcon';
 import UserIcon from 'src/components/Svg/UserIcon';
@@ -13,6 +14,16 @@ import styles from './Navbar.module.scss';
 const Navbar: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
+
+	const copyNotify = (): Id =>
+		toast('Copied to clipboard!', {
+			toastId: 'copyNotify',
+		});
+
+	const handleCopy = (): void => {
+		navigator.clipboard.writeText(window.location.href);
+		copyNotify();
+	};
 
 	const handleChangeRoomState = (): void => {
 		if (lobbyStore.roomState === RoomState.CHAT) {
@@ -64,7 +75,11 @@ const Navbar: React.FC = (): JSX.Element => {
 				<div className={styles.hr} />
 
 				<div className={styles.item}>
-					<button type="button" className={styles.button}>
+					<button
+						type="button"
+						className={styles.button}
+						onClick={handleCopy}
+					>
 						<ShareIcon className={styles.svg} />
 					</button>
 				</div>
