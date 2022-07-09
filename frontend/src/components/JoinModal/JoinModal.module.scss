@@ -1,0 +1,12 @@
+.container {
+	position: absolute;
+	inset: 50% auto auto 50%;
+	border: 1px solid var(--border-primary);
+	color: var(--color-primary);
+	background: var(--bg-secondary);
+	overflow: auto;
+	border-radius: 10px;
+	outline: none;
+	padding: 20px;
+	transform: translate(-50%, -50%);
+}

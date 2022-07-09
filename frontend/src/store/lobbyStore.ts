@@ -23,6 +23,8 @@ class LobbyStore {
 
 	isExitModalOpen: boolean = false;
 
+	isJoinModalOpen: boolean = false;
+
 	constructor() {
 		makeAutoObservable(this);
 	}
@@ -66,6 +68,14 @@ class LobbyStore {
 
 	closeExitModal = (): void => {
 		this.isExitModalOpen = false;
+	};
+
+	openJoinModal = (): void => {
+		this.isJoinModalOpen = true;
+	};
+
+	closeJoinModal = (): void => {
+		this.isJoinModalOpen = false;
 	};
 }
 
