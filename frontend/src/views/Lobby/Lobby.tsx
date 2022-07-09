@@ -19,7 +19,7 @@ import Eraser from 'src/utils/tools/Eraser';
 import Line from 'src/utils/tools/Line';
 import Pencil from 'src/utils/tools/Pencil';
 import Triangle from 'src/utils/tools/Triangle';
-import ModalComponent from 'src/components/ModalComponent/ModalComponent';
+import ExitModal from 'src/components/ExitModal/ExitModal';
 import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 import styles from './Lobby.module.scss';
 
@@ -241,6 +241,7 @@ const Lobby: React.FC = (): JSX.Element => {
 		<div className={styles.container}>
 			<Board />
 			<Chat />
+			<ExitModal />
 		</div>
 	);
 };

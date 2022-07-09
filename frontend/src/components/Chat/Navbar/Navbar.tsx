@@ -34,7 +34,7 @@ const Navbar: React.FC = (): JSX.Element => {
 	};
 
 	const openModal = (): void => {
-		lobbyStore.openModal();
+		lobbyStore.openExitModal();
 	};
 
 	return (
