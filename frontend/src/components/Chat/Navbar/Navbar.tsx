@@ -33,6 +33,10 @@ const Navbar: React.FC = (): JSX.Element => {
 		}
 	};
 
+	const openModal = (): void => {
+		lobbyStore.openModal();
+	};
+
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.container}>
@@ -89,9 +93,7 @@ const Navbar: React.FC = (): JSX.Element => {
 					<button
 						type="button"
 						className={styles.button}
-						onClick={() => {
-							navigate(`/`);
-						}}
+						onClick={openModal}
 					>
 						<ExitIcon className={styles.svg} />
 					</button>

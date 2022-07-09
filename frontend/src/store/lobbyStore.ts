@@ -21,6 +21,8 @@ class LobbyStore {
 
 	messages: ChatMessage[] = [];
 
+	isModalOpen: boolean = false;
+
 	constructor() {
 		makeAutoObservable(this);
 	}
@@ -57,6 +59,14 @@ class LobbyStore {
 			this.sessionId = sessionId;
 		}
 	}
+
+	openModal = (): void => {
+		this.isModalOpen = true;
+	};
+
+	closeModal = (): void => {
+		this.isModalOpen = false;
+	};
 }
 
 export default new LobbyStore();
