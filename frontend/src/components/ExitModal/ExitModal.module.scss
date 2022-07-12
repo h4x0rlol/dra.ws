@@ -1,3 +1,6 @@
+@import 'src/styles/breakpoints.scss';
+@import 'src/styles/theme.scss';
+
 .container {
 	position: absolute;
 	inset: 50% auto auto 50%;
@@ -9,4 +12,64 @@
 	outline: none;
 	padding: 20px;
 	transform: translate(-50%, -50%);
+}
+
+.wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-size: 17px;
+	font-variant: all-petite-caps;
+	font-weight: bold;
+}
+
+.description {
+	font-size: 13px;
+	margin-top: 5px;
+}
+
+.buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 15px;
+}
+
+.button {
+	display: flex;
+	font-size: 17px;
+	font-variant: all-petite-caps;
+	font-weight: bold;
+	border: none;
+	cursor: pointer;
+	padding: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+	display: flex;
+	justify-content: center;
+	color: var(--color-primary);
+	background: var(--bg-primary);
+	border: 1px solid var(--color-primary);
+
+	:hover {
+		background: var(--bg-active);
+	}
+
+	:focus-visible {
+		outline: 1px solid var(--color-primary);
+		background: var(--bg-active);
+	}
+	:active {
+		outline: none;
+		border: 1x solidvar(--color-primary);
+	}
+
+	@media (max-width: $mobileL) {
+		font-size: 14px;
+	}
+
+	@media (max-width: $mobileS) {
+		font-size: 12px;
+	}
 }

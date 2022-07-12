@@ -11,7 +11,11 @@
 	"room": {
 		"welcome": "Welcome to chat",
 		"placeholder": "Write a message...",
-		"users": "Currently in lobby:"
+		"users": "Currently in lobby:",
+		"exit_message": "Are you sure you want to leave?",
+		"exit_yes": "Leave",
+		"exit_no": "Stay",
+		"exit_description": "(All unsaved data will be lost)"
 	},
 	"home": {
 		"placeholder": "Your nickname...",

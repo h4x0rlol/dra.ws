@@ -13,7 +13,6 @@ import ClearIcon from '../../Svg/ClearIcon';
 import DownloadIcon from '../../Svg/DownloadIcon';
 import RedoIcon from '../../Svg/RedoIcon';
 import UndoIcon from '../../Svg/UndoIcon';
-
 import styles from './SettingsBar.module.scss';
 
 const SettingsBar: React.FC = (): JSX.Element => {
