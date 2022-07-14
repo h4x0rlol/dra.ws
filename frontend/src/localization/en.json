@@ -19,6 +19,7 @@
 	},
 	"home": {
 		"placeholder": "Your nickname...",
+		"error": "Maximum length must be 8 symbols",
 		"start": "Start drawing",
 		"private": "Private Lobby - ",
 		"empty": "No available lobbies currently",
@@ -26,5 +27,8 @@
 		"list": "Lobby list",
 		"description": "Here you can draw together with your friends",
 		"share": "Just share a link"
+	},
+	"join_modal": {
+		"hint": "Leave it blank to randomize"
 	}
 }

@@ -20,6 +20,7 @@ import Line from 'src/utils/tools/Line';
 import Pencil from 'src/utils/tools/Pencil';
 import Triangle from 'src/utils/tools/Triangle';
 import ExitModal from 'src/components/ExitModal/ExitModal';
+import JoinModal from 'src/components/JoinModal/JoinModal';
 import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 import styles from './Lobby.module.scss';
 
@@ -242,6 +243,7 @@ const Lobby: React.FC = (): JSX.Element => {
 			<Board />
 			<Chat />
 			<ExitModal />
+			<JoinModal />
 		</div>
 	);
 };

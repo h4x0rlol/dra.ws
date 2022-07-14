@@ -46,11 +46,7 @@ const CreateLobby: React.FC = (): JSX.Element => {
 					/>
 				</div>
 
-				{error && (
-					<div className={styles.error}>
-						Maximum length must be 8 symbols
-					</div>
-				)}
+				{error && <div className={styles.error}>{t('home.error')}</div>}
 			</div>
 
 			<div className={styles.buttons}>
