@@ -27,8 +27,5 @@
 		"list": "Lobby list",
 		"description": "Here you can draw together with your friends",
 		"share": "Just share a link"
-	},
-	"join_modal": {
-		"hint": "Leave it blank to randomize"
 	}
 }

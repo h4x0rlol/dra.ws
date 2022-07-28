@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { ChatMessage } from 'src/api/message';
+import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 
 export enum RoomState {
 	CHAT = 'chat',
@@ -23,7 +24,7 @@ class LobbyStore {
 
 	isExitModalOpen: boolean = false;
 
-	isJoinModalOpen: boolean = false;
+	isJoinModalOpen: boolean = true;
 
 	constructor() {
 		makeAutoObservable(this);
@@ -34,7 +35,15 @@ class LobbyStore {
 	}
 
 	setUserName(username: string): void {
-		this.username = username;
+		if (username.length === 0) {
+			const shortName = uniqueNamesGenerator({
+				dictionaries: [animals],
+				length: 1,
+			});
+			this.username = shortName.substring(0, 8);
+		} else {
+			this.username = username;
+		}
 	}
 
 	setMessages(message: ChatMessage): void {

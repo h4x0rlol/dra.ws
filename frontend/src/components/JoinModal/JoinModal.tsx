@@ -2,7 +2,6 @@ import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import lobbyStore from 'src/store/lobbyStore';
-import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 import ModalComponent from '../ModalComponent/ModalComponent';
 import UserIcon from '../Svg/UserIcon';
 import styles from './JoinModal.module.scss';
@@ -14,15 +13,7 @@ const JoinModallContent = observer((): JSX.Element => {
 
 	const handlePress = (): void => {
 		if (username.length <= 8) {
-			if (username.length === 0) {
-				const shortName = uniqueNamesGenerator({
-					dictionaries: [animals],
-					length: 1,
-				});
-				lobbyStore.setUserName(shortName.substring(0, 8));
-			} else {
-				lobbyStore.setUserName(username);
-			}
+			lobbyStore.setUserName(username);
 			lobbyStore.closeJoinModal();
 		}
 	};
@@ -56,11 +47,6 @@ const JoinModallContent = observer((): JSX.Element => {
 						{error && (
 							<div className={styles.error}>
 								{t('home.error')}
-							</div>
-						)}
-						{!error && !username && (
-							<div className={styles.error}>
-								{t('join_modal.hint')}
 							</div>
 						)}
 					</div>

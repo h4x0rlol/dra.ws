@@ -51,7 +51,7 @@ const Room: React.FC = (): JSX.Element => {
 				{lobbyStore.messages.map((m, i) => {
 					return (
 						<Message
-							key={`m.username-${i + 1}`}
+							key={`${m.userId}-${i + 1}`}
 							messageType={m.type}
 							message={m.message}
 							name={m.username}

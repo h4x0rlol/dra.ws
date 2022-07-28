@@ -1,5 +1,3 @@
-import { MouseCoord } from 'src/utils/tools/Triangle';
-
 export enum Figures {
 	BRUSH = 'brush',
 	RECT = 'rect',
@@ -9,6 +7,11 @@ export enum Figures {
 	PENCIL = 'pencil',
 	TRIANGLE = 'triangle',
 	FINISH = 'finish',
+}
+
+export interface MouseCoord {
+	x: number;
+	y: number;
 }
 
 export type Figure = {

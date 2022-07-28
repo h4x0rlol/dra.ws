@@ -2,9 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Toast } from 'src/components/Toast/Toast';
-import { useParams } from 'react-router-dom';
-import { ToastContainer, toast, Id, Zoom, Slide } from 'react-toastify';
-import { Methods } from 'src/api/methods';
+import { toast, Id } from 'react-toastify';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
@@ -42,7 +40,9 @@ const SettingsBar: React.FC = (): JSX.Element => {
 	): void => {
 		if (toolStore.tool) {
 			preventNegativeValue(Number(e.target.value));
-			if (Number(e.target.value) > 50) e.target.value = '50';
+			if (Number(e.target.value) > 50) {
+				e.target.value = '50';
+			}
 			toolStore.setLineWidth(Number(e.target.value));
 		}
 	};

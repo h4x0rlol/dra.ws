@@ -1,15 +1,10 @@
-import { Figures } from 'src/api/figures';
+import { Figures, MouseCoord } from 'src/api/figures';
 import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
 import { getLineType } from '../helpers';
 import Tool from './Tool';
-
-export interface MouseCoord {
-	x: number;
-	y: number;
-}
 
 export default class Triangle extends Tool {
 	mouse: MouseCoord[];
