@@ -6,9 +6,6 @@ import { getTheme } from './utils/themeController';
 import Home from './views/Home/Home';
 import Lobby from './views/Lobby/Lobby';
 
-// TODO
-// Make popups (choose tool, copied link, sure want to leave?)
-
 const App: React.FC = (): JSX.Element => {
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -16,8 +13,6 @@ const App: React.FC = (): JSX.Element => {
 		getTheme();
 		axiosConfig.get('/health').then((res) => {
 			if (res.status === 200) {
-				setIsLoading(false);
-			} else {
 				setIsLoading(false);
 			}
 		});
