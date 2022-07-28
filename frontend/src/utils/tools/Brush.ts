@@ -111,12 +111,6 @@ export default class Brush extends Tool {
 		ctx.lineJoin = 'round';
 		ctx.shadowColor = color;
 		ctx.shadowBlur = lineWidth / 2;
-		// ctx.quadraticCurveTo(
-		// 	x + Number((Math.random() * 10).toFixed()),
-		// 	y + Number((Math.random() * 10).toFixed()),
-		// 	x,
-		// 	y
-		// );
 		ctx.lineTo(x, y);
 		ctx.stroke();
 	}

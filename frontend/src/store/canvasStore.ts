@@ -1,5 +1,14 @@
 import { makeAutoObservable } from 'mobx';
+import { Figures } from 'src/api/figures';
+import { Message } from 'src/api/message';
 import { Methods } from 'src/api/methods';
+import Brush from 'src/utils/tools/Brush';
+import Circle from 'src/utils/tools/Circle';
+import Eraser from 'src/utils/tools/Eraser';
+import Line from 'src/utils/tools/Line';
+import Pencil from 'src/utils/tools/Pencil';
+import Rect from 'src/utils/tools/Rect';
+import Triangle from 'src/utils/tools/Triangle';
 import lobbyStore from './lobbyStore';
 
 class CanvasStore {
@@ -145,6 +154,98 @@ class CanvasStore {
 				})
 			);
 		});
+	}
+
+	draw(msg: Message): void {
+		const {
+			type,
+			x,
+			y,
+			a,
+			b,
+			c,
+			startX,
+			startY,
+			width,
+			height,
+			radius,
+			fill,
+			lineType,
+			lineWidth,
+			color,
+		} = msg.figure;
+		const ctx = this.canvas?.getContext('2d', {
+			alpha: false,
+		}) as unknown as CanvasRenderingContext2D;
+		switch (type) {
+			case Figures.BRUSH:
+				Brush.draw(ctx, x, y, lineWidth, lineType, color);
+				break;
+			case Figures.RECT:
+				Rect.staticDraw(
+					ctx,
+					x,
+					y,
+					width,
+					height,
+					fill,
+					lineWidth,
+					lineType,
+					color
+				);
+				ctx.beginPath();
+				break;
+			case Figures.CIRCLE:
+				Circle.staticDraw(
+					ctx,
+					x,
+					y,
+					radius,
+					fill,
+					lineWidth,
+					lineType,
+					color
+				);
+				ctx.beginPath();
+				break;
+			case Figures.ERASER:
+				Eraser.draw(ctx, x, y, lineWidth);
+				break;
+			case Figures.LINE:
+				Line.staticDraw(
+					ctx,
+					x,
+					y,
+					startX,
+					startY,
+					lineWidth,
+					lineType,
+					color
+				);
+				ctx.beginPath();
+				break;
+			case Figures.PENCIL:
+				Pencil.draw(ctx, x, y, lineWidth, lineType, color);
+				break;
+			case Figures.TRIANGLE:
+				Triangle.staticDraw(
+					ctx,
+					a,
+					b,
+					c,
+					fill,
+					lineWidth,
+					lineType,
+					color
+				);
+				ctx.beginPath();
+				break;
+			case Figures.FINISH:
+				ctx.beginPath();
+				break;
+			default:
+				break;
+		}
 	}
 }
 

@@ -1,12 +1,13 @@
 import React from 'react';
+import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
-import './Loader.scss';
+import styles from './Loader.module.scss';
 
 const Loader: React.FC = (): JSX.Element => {
 	return (
-		<div className="wrapper">
-			<div className="loader">
-				<div className="wave top-wave">
+		<div className={styles.wrapper}>
+			<div className={styles.loader}>
+				<div className={cn(styles.wave, styles.top_wave)}>
 					<div />
 					<div />
 					<div />
@@ -18,7 +19,7 @@ const Loader: React.FC = (): JSX.Element => {
 					<div />
 					<div />
 				</div>
-				<div className="wave bottom-wave">
+				<div className={cn(styles.wave, styles.bottom_wave)}>
 					<div />
 					<div />
 					<div />

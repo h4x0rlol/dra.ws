@@ -10,10 +10,11 @@ import styles from './CreateLobby.module.scss';
 const CreateLobby: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
+	const [username, setUsername] = useState(lobbyStore.username);
 	const [error, setError] = useState(false);
 
 	const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>): void => {
-		lobbyStore.setUserName(e.target.value);
+		setUsername(e.target.value);
 		if (e.target.value.length > 8) {
 			setError(true);
 		} else {
@@ -22,7 +23,8 @@ const CreateLobby: React.FC = (): JSX.Element => {
 	};
 
 	const createHandler = (): void => {
-		if (lobbyStore.username.length <= 8) {
+		if (username.length <= 8) {
+			lobbyStore.setUserName(username);
 			const uuid = uuidv4();
 			navigate(`/lobby/f${uuid}`);
 		}
@@ -40,7 +42,7 @@ const CreateLobby: React.FC = (): JSX.Element => {
 					<input
 						type="text"
 						placeholder={t('home.placeholder')}
-						value={lobbyStore.username}
+						value={username}
 						onChange={(e) => handleChangeName(e)}
 						className={styles.input}
 					/>

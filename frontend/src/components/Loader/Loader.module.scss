@@ -50,23 +50,23 @@
 	border-radius: 50%;
 }
 
-.top-wave > div::before {
+.top_wave > div::before {
 	background-color: #ca0018;
 }
 
-.top-wave > div {
+.top_wave > div {
 	animation: move 3s ease-in-out infinite reverse;
 }
 
-.top-wave > div::before {
+.top_wave > div::before {
 	animation: grow 3s linear infinite reverse;
 }
 
-.bottom-wave > div {
+.bottom_wave > div {
 	animation: move 3s ease-in-out infinite;
 }
 
-.bottom-wave > div::before {
+.bottom_wave > div::before {
 	animation: grow 3s linear infinite;
 }
 
@@ -101,34 +101,34 @@
 	animation-delay: -0.9s;
 }
 
-.bottom-wave > div:nth-child(10) {
+.bottom_wave > div:nth-child(10) {
 	animation-delay: 0.75s;
 }
-.bottom-wave > div:nth-child(9) {
+.bottom_wave > div:nth-child(9) {
 	animation-delay: 0.65s;
 }
-.bottom-wave > div:nth-child(8) {
+.bottom_wave > div:nth-child(8) {
 	animation-delay: 0.55s;
 }
-.bottom-wave > div:nth-child(7) {
+.bottom_wave > div:nth-child(7) {
 	animation-delay: 0.45s;
 }
-.bottom-wave > div:nth-child(6) {
+.bottom_wave > div:nth-child(6) {
 	animation-delay: 0.35s;
 }
-.bottom-wave > div:nth-child(5) {
+.bottom_wave > div:nth-child(5) {
 	animation-delay: 0.25s;
 }
-.bottom-wave > div:nth-child(4) {
+.bottom_wave > div:nth-child(4) {
 	animation-delay: 0.15s;
 }
-.bottom-wave > div:nth-child(3) {
+.bottom_wave > div:nth-child(3) {
 	animation-delay: 0.05s;
 }
-.bottom-wave > div:nth-child(2) {
+.bottom_wave > div:nth-child(2) {
 	animation-delay: -0.05s;
 }
-.bottom-wave > div:nth-child(1) {
+.bottom_wave > div:nth-child(1) {
 	animation-delay: -0.15s;
 }
 

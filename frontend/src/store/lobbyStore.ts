@@ -24,7 +24,7 @@ class LobbyStore {
 
 	isExitModalOpen: boolean = false;
 
-	isJoinModalOpen: boolean = true;
+	isJoinModalOpen: boolean = false;
 
 	constructor() {
 		makeAutoObservable(this);
@@ -46,7 +46,7 @@ class LobbyStore {
 		}
 	}
 
-	setMessages(message: ChatMessage): void {
+	setMessage(message: ChatMessage): void {
 		if (this.messages.length > 100) {
 			this.messages.splice(0, 50);
 		}

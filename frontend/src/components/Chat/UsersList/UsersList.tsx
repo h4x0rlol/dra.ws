@@ -11,6 +11,7 @@ const UsersList: React.FC = (): JSX.Element => {
 	const params = useParams();
 	const [users, setUsers] = useState<string[]>([]);
 
+	// TODO MOVE TO WS
 	useEffect(() => {
 		axiosConfig.get('/users', { params: { id: params.id } }).then((res) => {
 			setUsers(res.data?.users);

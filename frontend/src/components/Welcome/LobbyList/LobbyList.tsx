@@ -9,6 +9,7 @@ const LobbyList: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
 	const [list, setList] = useState<string[]>([]);
 
+	// TODO MOVE TO WS
 	useEffect(() => {
 		axiosConfig.get('/lobbies').then((res) => {
 			if (res.status === 200) {

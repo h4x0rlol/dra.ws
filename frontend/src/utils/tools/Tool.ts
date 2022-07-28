@@ -1,5 +1,5 @@
+import { MouseCoord } from 'src/api/figures';
 import lobbyStore from 'src/store/lobbyStore';
-import { Coordinates } from '../types';
 
 export default class Tool {
 	canvas: HTMLCanvasElement;
@@ -29,7 +29,7 @@ export default class Tool {
 		this.ctx.setLineDash(type);
 	}
 
-	getCanvasCoordinates(xCord: number, yCord: number): Coordinates {
+	getCanvasCoordinates(xCord: number, yCord: number): MouseCoord {
 		const x = (xCord * this.canvas.width) / this.canvas.clientWidth || 0;
 		const y = (yCord * this.canvas.height) / this.canvas.clientHeight || 0;
 		return {
@@ -38,7 +38,7 @@ export default class Tool {
 		};
 	}
 
-	getTouchCoordinates = (ev: TouchEvent): Coordinates => {
+	getTouchCoordinates = (ev: TouchEvent): MouseCoord => {
 		const bcr = (
 			ev as unknown as React.MouseEvent<HTMLElement>
 		).currentTarget.getBoundingClientRect();

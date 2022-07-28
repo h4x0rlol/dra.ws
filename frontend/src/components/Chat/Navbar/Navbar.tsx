@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import { Id, toast } from 'react-toastify';
 import ExitIcon from 'src/components/Svg/ExitIcon';
 import ShareIcon from 'src/components/Svg/ShareIcon';
@@ -13,7 +12,6 @@ import styles from './Navbar.module.scss';
 
 const Navbar: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
-	const navigate = useNavigate();
 
 	const copyNotify = (): Id =>
 		toast('Copied to clipboard!', {
