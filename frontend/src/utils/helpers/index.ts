@@ -28,15 +28,9 @@ export const Colors = {
 };
 
 export const getRandomColor = (): string => {
-	let res = '#a52a2a';
-	let count = 0;
-	Object.keys(Colors).forEach((color) => {
-		count += 1;
-		if (Math.random() < 1 / count) {
-			res = color;
-		}
-	});
-	return res;
+	const keys = Object.keys(Colors);
+
+	return keys[Math.floor(Math.random() * keys.length)];
 };
 
 export const getLineType = (type: string, width: number): number[] => {
