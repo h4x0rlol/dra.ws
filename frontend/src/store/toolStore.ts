@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import Tool from 'src/utils/tools/Tool';
 
-class ToolState {
+class ToolStore {
 	tool: Tool | null = null;
 
 	color: string = '#000000';
@@ -73,4 +73,4 @@ class ToolState {
 	}
 }
 
-export default new ToolState();
+export default new ToolStore();

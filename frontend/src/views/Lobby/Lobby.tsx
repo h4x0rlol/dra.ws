@@ -13,7 +13,6 @@ import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import ExitModal from 'src/components/ExitModal/ExitModal';
 import JoinModal from 'src/components/JoinModal/JoinModal';
-import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 import styles from './Lobby.module.scss';
 
 const Lobby: React.FC = (): JSX.Element => {

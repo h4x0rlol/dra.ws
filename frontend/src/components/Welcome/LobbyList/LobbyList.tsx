@@ -1,8 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+import { Link } from 'react-router-dom';
 import { axiosConfig } from 'src/api/axios.config';
 import lobbyStore from 'src/store/lobbyStore';
 import { uniqueNamesGenerator, animals } from 'unique-names-generator';
@@ -10,7 +9,6 @@ import styles from './LobbyList.module.scss';
 
 const LobbyList: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
-	const navigate = useNavigate();
 	const [list, setList] = useState<string[]>([]);
 
 	const handlePress = (): void => {
@@ -23,8 +21,6 @@ const LobbyList: React.FC = (): JSX.Element => {
 		}
 
 		lobbyStore.setIsJoinFromLobby(true);
-		const uuid = uuidv4();
-		navigate(`/lobby/f${uuid}`);
 	};
 
 	// TODO MOVE TO WS
