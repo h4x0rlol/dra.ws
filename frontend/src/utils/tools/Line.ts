@@ -11,6 +11,10 @@ export default class Line extends Tool {
 
 	startY: number;
 
+	offsetX: number;
+
+	offsetY: number;
+
 	saved: string;
 
 	constructor(canvas: HTMLCanvasElement) {
@@ -20,6 +24,8 @@ export default class Line extends Tool {
 		this.ctx.shadowBlur = 0;
 		this.startX = 0;
 		this.startY = 0;
+		this.offsetX = 0;
+		this.offsetY = 0;
 		this.saved = '';
 		this.listen();
 	}
@@ -51,6 +57,8 @@ export default class Line extends Tool {
 	mouseMoveHandler(e: MouseEvent): void {
 		if (this.mouseDown) {
 			const coordinates = this.getCanvasCoordinates(e.offsetX, e.offsetY);
+			this.offsetX = e.offsetX;
+			this.offsetY = e.offsetY;
 			this.draw(coordinates.x, coordinates.y);
 		}
 	}
@@ -72,9 +80,12 @@ export default class Line extends Tool {
 		}
 	}
 
-	mouseUpHandler(e: MouseEvent): void {
+	mouseUpHandler(): void {
 		this.mouseDown = false;
-		const coordinates = this.getCanvasCoordinates(e.offsetX, e.offsetY);
+		const coordinates = this.getCanvasCoordinates(
+			this.offsetX,
+			this.offsetY
+		);
 		const message = {
 			method: Methods.DRAW,
 			id: lobbyStore.sessionId,
