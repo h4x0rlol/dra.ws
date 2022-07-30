@@ -25,6 +25,7 @@ const CreateLobby: React.FC = (): JSX.Element => {
 	const createHandler = (): void => {
 		if (username.length <= 8) {
 			lobbyStore.setUserName(username);
+			lobbyStore.setIsJoinFromLobby(true);
 			const uuid = uuidv4();
 			navigate(`/lobby/f${uuid}`);
 		}

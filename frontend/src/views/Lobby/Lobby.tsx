@@ -52,24 +52,11 @@ const Lobby: React.FC = (): JSX.Element => {
 		}
 	};
 
-	useEffect(() => {
-		getImageData();
-	}, []);
-
-	useEffect(() => {
-		if (lobbyStore.username.length === 0) {
-			const shortName = uniqueNamesGenerator({
-				dictionaries: [animals],
-				length: 1,
-			});
-			lobbyStore.setUserName(shortName.substring(0, 8));
-		}
-
+	const connectionHandler = (): void => {
 		const socket: WebSocket = new WebSocket(WS_URL);
 		lobbyStore.setSocket(socket);
 		lobbyStore.setSessionId(params.id);
 		lobbyStore.setUserId(uuidv4());
-
 		socket.onopen = () => {
 			socket.send(
 				JSON.stringify({
@@ -115,6 +102,16 @@ const Lobby: React.FC = (): JSX.Element => {
 				}
 			};
 		};
+	};
+
+	useEffect(() => {
+		getImageData();
+	}, [lobbyStore.isJoinFromLobby]);
+
+	useEffect(() => {
+		if (lobbyStore.isJoinFromLobby) {
+			connectionHandler();
+		}
 
 		return () => {
 			lobbyStore.socket?.send(
@@ -124,9 +121,9 @@ const Lobby: React.FC = (): JSX.Element => {
 					method: Methods.CLOSE,
 				})
 			);
-			socket.close();
+			lobbyStore.socket?.close();
 		};
-	}, []);
+	}, [lobbyStore.isJoinFromLobby]);
 
 	useBeforeunload(() => {
 		lobbyStore.socket?.send(
@@ -138,6 +135,7 @@ const Lobby: React.FC = (): JSX.Element => {
 		);
 		lobbyStore.socket?.close();
 	});
+
 	return (
 		<div className={styles.container}>
 			<Board />

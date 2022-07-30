@@ -18,16 +18,20 @@ class LobbyStore {
 
 	isPublic: boolean = false;
 
+	isJoinFromLobby: boolean = false;
+
 	roomState: RoomState = RoomState.CHAT;
 
 	messages: ChatMessage[] = [];
 
 	isExitModalOpen: boolean = false;
 
-	isJoinModalOpen: boolean = false;
-
 	constructor() {
 		makeAutoObservable(this);
+	}
+
+	get isJoinModalOpen(): boolean {
+		return !this.isJoinFromLobby;
 	}
 
 	setUserId(id: string): void {
@@ -61,6 +65,10 @@ class LobbyStore {
 		this.isPublic = isPublic;
 	}
 
+	setIsJoinFromLobby(isJoinFromLobby: boolean): void {
+		this.isJoinFromLobby = isJoinFromLobby;
+	}
+
 	setSocket(socket: WebSocket): void {
 		this.socket = socket;
 	}
@@ -77,14 +85,6 @@ class LobbyStore {
 
 	closeExitModal = (): void => {
 		this.isExitModalOpen = false;
-	};
-
-	openJoinModal = (): void => {
-		this.isJoinModalOpen = true;
-	};
-
-	closeJoinModal = (): void => {
-		this.isJoinModalOpen = false;
 	};
 }
 

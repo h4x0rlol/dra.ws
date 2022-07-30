@@ -14,7 +14,7 @@ const JoinModallContent = observer((): JSX.Element => {
 	const handlePress = (): void => {
 		if (username.length <= 8) {
 			lobbyStore.setUserName(username);
-			lobbyStore.closeJoinModal();
+			lobbyStore.setIsJoinFromLobby(true);
 		}
 	};
 

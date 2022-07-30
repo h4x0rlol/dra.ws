@@ -1,13 +1,31 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import { axiosConfig } from 'src/api/axios.config';
+import lobbyStore from 'src/store/lobbyStore';
+import { uniqueNamesGenerator, animals } from 'unique-names-generator';
 import styles from './LobbyList.module.scss';
 
 const LobbyList: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
+	const navigate = useNavigate();
 	const [list, setList] = useState<string[]>([]);
+
+	const handlePress = (): void => {
+		if (lobbyStore.username.length === 0) {
+			const shortName = uniqueNamesGenerator({
+				dictionaries: [animals],
+				length: 1,
+			});
+			lobbyStore.setUserName(shortName.substring(0, 8));
+		}
+
+		lobbyStore.setIsJoinFromLobby(true);
+		const uuid = uuidv4();
+		navigate(`/lobby/f${uuid}`);
+	};
 
 	// TODO MOVE TO WS
 	useEffect(() => {
@@ -24,7 +42,11 @@ const LobbyList: React.FC = (): JSX.Element => {
 				{list?.map((lobby) => {
 					return (
 						<li className={styles.item} key={lobby}>
-							<Link to={`lobby/${lobby}`} className={styles.link}>
+							<Link
+								to={`lobby/${lobby}`}
+								className={styles.link}
+								onClick={handlePress}
+							>
 								{lobby}
 							</Link>
 						</li>
