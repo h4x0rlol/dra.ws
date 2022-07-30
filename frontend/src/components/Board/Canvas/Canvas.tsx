@@ -65,7 +65,7 @@ const Canvas: React.FC = (): JSX.Element => {
 	const outOfBoundsMouseHandler = (
 		e: React.MouseEvent<HTMLDivElement, MouseEvent> | React.TouchEvent
 	): void => {
-		if (e.target === e.currentTarget && canvasStore.canvas) {
+		if (e.target === e.currentTarget) {
 			if (toolStore.tool != null) {
 				if (
 					toolStore.tool instanceof Brush ||
