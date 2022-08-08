@@ -87,23 +87,7 @@ app.ws("/", (ws, req) => {
         broadcastConnection(ws, msg);
         break;
       case "close":
-        console.log(`clos ${msg?.username}`);
-        if (LOBBIES[msg?.id]) {
-          const newClients = LOBBIES[msg?.id].filter(
-            (user) => user !== msg?.username
-          );
-          LOBBIES[msg?.id] = newClients;
-
-          if (newClients.length === 0) {
-            deleteImage(msg);
-            console.log(LOBBIES);
-            delete LOBBIES[msg?.id];
-
-            PUBLIC_LOBBIES = PUBLIC_LOBBIES.filter(
-              (lobby) => lobby !== msg?.id
-            );
-          }
-        }
+        closeConnectionHandler(ws, msg);
         break;
       default:
         break;
@@ -114,6 +98,29 @@ app.ws("/", (ws, req) => {
     console.log(ws);
   });
 });
+
+const closeConnectionHandler = (ws, msg) => {
+  if (LOBBIES[msg?.id]) {
+    const newClients = LOBBIES[msg?.id].filter(
+      (user) => user !== msg?.username
+    );
+    LOBBIES[msg?.id] = newClients;
+
+    if (newClients.length === 0) {
+      deleteImage(msg);
+      delete LOBBIES[msg?.id];
+
+      PUBLIC_LOBBIES = PUBLIC_LOBBIES.filter((lobby) => lobby !== msg?.id);
+    } else {
+      const message = {
+        id: msg?.id,
+        method: "close",
+        users: LOBBIES[msg.id] ?? [],
+      };
+      broadcastConnection(ws, message);
+    }
+  }
+};
 
 const connectionHandler = (ws, msg) => {
   try {
@@ -126,7 +133,13 @@ const connectionHandler = (ws, msg) => {
     if (msg?.public && !PUBLIC_LOBBIES.includes(msg?.id)) {
       PUBLIC_LOBBIES.push(msg?.id);
     }
-    broadcastConnection(ws, msg);
+
+    const message = {
+      id: msg?.id,
+      method: "connection",
+      users: LOBBIES[msg.id] ?? [],
+    };
+    broadcastConnection(ws, message);
   } catch (e) {
     console.log(e);
   }

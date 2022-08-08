@@ -69,6 +69,10 @@ const Lobby: React.FC = (): JSX.Element => {
 				const msg: Message = JSON.parse(e.data);
 				switch (msg.method) {
 					case Methods.CONNECTION:
+						console.log(msg);
+						break;
+					case Methods.CLOSE:
+						console.log(msg);
 						break;
 					case Methods.DRAW:
 						drawHandler(msg);
