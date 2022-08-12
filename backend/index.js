@@ -40,19 +40,6 @@ app.get("/lobbies", async (req, res) => {
   }
 });
 
-app.get("/users", async (req, res) => {
-  try {
-    const id = req.query.id;
-    if (LOBBIES[id]) {
-      return res.status(200).json({ users: LOBBIES[id] });
-    } else {
-      return res.status(200).json({ users: [] });
-    }
-  } catch (e) {
-    return res.status(500).json({ message: e.message });
-  }
-});
-
 app.get("/image", async (req, res) => {
   try {
     const file = fs.readFileSync(

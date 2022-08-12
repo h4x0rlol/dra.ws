@@ -12,9 +12,10 @@ export type Message = {
 	userId: string;
 	method: Methods;
 	figure: Figure;
-	message?: string;
-	date?: string;
-	type?: MessageTypes;
+	users: string[];
+	message: string;
+	date: string;
+	type: MessageTypes;
 };
 
 export type ChatMessage = {
@@ -22,7 +23,7 @@ export type ChatMessage = {
 	userId: string;
 	username: string;
 	method: Methods;
-	message?: string;
-	date?: string;
-	type?: MessageTypes;
+	message: string;
+	date: string;
+	type: MessageTypes;
 };

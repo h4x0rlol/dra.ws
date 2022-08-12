@@ -11,7 +11,6 @@ import Eraser from 'src/utils/tools/Eraser';
 import Line from 'src/utils/tools/Line';
 import Pencil from 'src/utils/tools/Pencil';
 import Rect from 'src/utils/tools/Rect';
-import Triangle from 'src/utils/tools/Triangle';
 import styles from './Canvas.module.scss';
 
 const Canvas: React.FC = (): JSX.Element => {

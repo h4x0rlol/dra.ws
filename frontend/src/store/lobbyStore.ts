@@ -22,6 +22,8 @@ class LobbyStore {
 
 	roomState: RoomState = RoomState.CHAT;
 
+	users: string[] = [];
+
 	messages: ChatMessage[] = [];
 
 	isExitModalOpen: boolean = false;
@@ -59,6 +61,10 @@ class LobbyStore {
 
 	setRoomState(roomState: RoomState): void {
 		this.roomState = roomState;
+	}
+
+	setUsers(users: string[]): void {
+		this.users = users;
 	}
 
 	setIsPublic(isPublic: boolean): void {

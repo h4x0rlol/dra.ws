@@ -51,6 +51,10 @@ const Lobby: React.FC = (): JSX.Element => {
 		}
 	};
 
+	const setUsers = (users: string[]): void => {
+		lobbyStore.setUsers(users);
+	};
+
 	const connectionHandler = (): void => {
 		const socket: WebSocket = new WebSocket(WS_URL);
 		lobbyStore.setSocket(socket);
@@ -69,10 +73,10 @@ const Lobby: React.FC = (): JSX.Element => {
 				const msg: Message = JSON.parse(e.data);
 				switch (msg.method) {
 					case Methods.CONNECTION:
-						console.log(msg);
+						setUsers(msg.users);
 						break;
 					case Methods.CLOSE:
-						console.log(msg);
+						setUsers(msg.users);
 						break;
 					case Methods.DRAW:
 						drawHandler(msg);
