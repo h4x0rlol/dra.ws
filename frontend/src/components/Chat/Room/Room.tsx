@@ -1,12 +1,12 @@
+import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { observer } from 'mobx-react-lite';
+import { useParams } from 'react-router-dom';
+import { Methods } from 'src/api/methods';
 import SendIcon from 'src/components/Svg/SendIcon';
 import lobbyStore from 'src/store/lobbyStore';
-import { Methods } from 'src/api/methods';
-import { useParams } from 'react-router-dom';
+import { getLocalTime, getUtcTime } from 'src/utils/helpers';
 import Message from '../Message/Message';
-
 import styles from './Room.module.scss';
 
 const Room: React.FC = (): JSX.Element => {
@@ -14,7 +14,10 @@ const Room: React.FC = (): JSX.Element => {
 	const params = useParams();
 	const [message, setMessage] = useState<string>('');
 
+	const getCurrentTime = (): string => getLocalTime(getUtcTime());
+
 	const handleSend = (): void => {
+		console.log(lobbyStore.socket?.readyState);
 		lobbyStore.socket?.send(
 			JSON.stringify({
 				id: params.id,
@@ -22,11 +25,7 @@ const Room: React.FC = (): JSX.Element => {
 				username: lobbyStore.username,
 				method: Methods.MESSAGE,
 				message,
-				date: new Date().toLocaleTimeString('en-US', {
-					hour12: false,
-					hour: 'numeric',
-					minute: 'numeric',
-				}),
+				date: getUtcTime(),
 			})
 		);
 		setMessage('');
@@ -37,13 +36,7 @@ const Room: React.FC = (): JSX.Element => {
 			<div className={styles.container}>
 				<div className={styles.message}>
 					<p className={styles.welcome}>{t('room.welcome')}</p>
-					<p className={styles.start_time}>
-						{new Date().toLocaleTimeString('en-US', {
-							hour12: false,
-							hour: 'numeric',
-							minute: 'numeric',
-						})}
-					</p>
+					<p className={styles.start_time}>{getCurrentTime()}</p>
 				</div>
 			</div>
 
@@ -55,7 +48,7 @@ const Room: React.FC = (): JSX.Element => {
 							messageType={m.type}
 							message={m.message}
 							name={m.username}
-							date={m.date}
+							date={getLocalTime(m.date)}
 						/>
 					);
 				})}

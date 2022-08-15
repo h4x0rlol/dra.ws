@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const preventNegativeValue = (n: number): number | null =>
 	!!n && Math.abs(n) >= 0 ? Math.abs(n) : null;
 
@@ -45,3 +47,8 @@ export const getLineType = (type: string, width: number): number[] => {
 			return [];
 	}
 };
+
+export const getUtcTime = (): string => moment.utc().format();
+
+export const getLocalTime = (UtcTime: string): string =>
+	moment.utc(UtcTime).local().format('HH:mm');
