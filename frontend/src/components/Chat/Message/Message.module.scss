@@ -6,6 +6,7 @@
 	flex-direction: column;
 	width: 50%;
 	height: fit-content;
+	overflow-wrap: break-word;
 	word-wrap: break-word;
 	border: 1px solid var(--border-secondary);
 	padding: 5px;

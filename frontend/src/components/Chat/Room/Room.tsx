@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Methods } from 'src/api/methods';
@@ -13,8 +13,22 @@ const Room: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
 	const params = useParams();
 	const [message, setMessage] = useState<string>('');
+	const listRef = useRef<HTMLDivElement>(null);
 
 	const getCurrentTime = (): string => getLocalTime(getUtcTime());
+
+	const scrollToLastMessage = (): void => {
+		const lastChild = listRef.current?.lastElementChild;
+		lastChild?.scrollIntoView({
+			block: 'end',
+			inline: 'nearest',
+			behavior: 'smooth',
+		});
+	};
+
+	useEffect(() => {
+		scrollToLastMessage();
+	}, [lobbyStore.messages]);
 
 	const handleSend = (): void => {
 		console.log(lobbyStore.socket?.readyState);
@@ -40,7 +54,7 @@ const Room: React.FC = (): JSX.Element => {
 				</div>
 			</div>
 
-			<div className={styles.messages}>
+			<div className={styles.messages} ref={listRef}>
 				{lobbyStore.messages.map((m, i) => {
 					return (
 						<Message
