@@ -6,6 +6,10 @@
   "author": "h4x0rlol <mazafaker.com@gmail.com>",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "npm": "8.11.0",
+    "node": "16.16.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
