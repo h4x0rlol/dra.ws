@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
@@ -14,6 +14,7 @@ import Rect from 'src/utils/tools/Rect';
 import styles from './Canvas.module.scss';
 
 const Canvas: React.FC = (): JSX.Element => {
+	const [isOutOfBounds, setIsOutOfBounds] = useState<boolean>(true);
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const params = useParams();
 
@@ -49,6 +50,10 @@ const Canvas: React.FC = (): JSX.Element => {
 		};
 	}, []);
 
+	const handleMouseOver = (): void => {
+		setIsOutOfBounds(false);
+	};
+
 	const mouseUpHandler = (): void => {
 		if (lobbyStore.socket && canvasStore.canvas) {
 			lobbyStore.socket?.send(
@@ -65,7 +70,7 @@ const Canvas: React.FC = (): JSX.Element => {
 		e: React.MouseEvent<HTMLDivElement, MouseEvent> | React.TouchEvent
 	): void => {
 		if (e.target === e.currentTarget) {
-			if (toolStore.tool != null) {
+			if (toolStore.tool != null && !isOutOfBounds) {
 				if (
 					toolStore.tool instanceof Brush ||
 					toolStore.tool instanceof Circle ||
@@ -74,6 +79,7 @@ const Canvas: React.FC = (): JSX.Element => {
 					toolStore.tool instanceof Rect ||
 					toolStore.tool instanceof Line
 				) {
+					setIsOutOfBounds(true);
 					toolStore.tool.mouseUpHandler();
 					mouseUpHandler();
 				}
@@ -88,7 +94,11 @@ const Canvas: React.FC = (): JSX.Element => {
 			onTouchMove={(e) => outOfBoundsMouseHandler(e)}
 		>
 			<div className={styles.wrapper}>
-				<canvas ref={canvasRef} onMouseUp={mouseUpHandler} />
+				<canvas
+					ref={canvasRef}
+					onMouseDown={handleMouseOver}
+					onMouseUp={mouseUpHandler}
+				/>
 			</div>
 		</div>
 	);
