@@ -1,16 +1,21 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const fs = require("fs");
-const path = require("path");
+const {
+  getPicture,
+  updatePicture,
+  deletePicture,
+} = require("./utils/helplers");
+const { Methods } = require("./utils/types");
 
 const app = express();
 const WSServer = require("express-ws")(app);
 const aWss = WSServer.getWss();
-
 const PORT = process.env.PORT || 5000;
+
 const LOBBIES = {};
 let PUBLIC_LOBBIES = [];
+
 app.use(cors());
 app.use(express.json());
 
@@ -24,7 +29,7 @@ const main = () => {
   }
 };
 
-app.get("/health", async (req, res) => {
+app.get("/health", async (_, res) => {
   try {
     return res.status(200).json({ message: "Up" });
   } catch (e) {
@@ -32,7 +37,7 @@ app.get("/health", async (req, res) => {
   }
 });
 
-app.get("/lobbies", async (req, res) => {
+app.get("/lobbies", async (_, res) => {
   try {
     return res.status(200).json({ lobbies: PUBLIC_LOBBIES });
   } catch (e) {
@@ -42,10 +47,7 @@ app.get("/lobbies", async (req, res) => {
 
 app.get("/image", async (req, res) => {
   try {
-    const file = fs.readFileSync(
-      path.resolve(__dirname, "files", `${req.query.id}.jpg`)
-    );
-    const data = `data:image/png;base64,` + file.toString("base64");
+    const data = getPicture(req.query.id);
     res.json(data);
   } catch (e) {
     console.log(e);
@@ -53,40 +55,36 @@ app.get("/image", async (req, res) => {
   }
 });
 
-app.ws("/", (ws, req) => {
+app.ws("/", (ws, _) => {
   ws.on("message", (msg) => {
     msg = JSON.parse(msg);
     switch (msg.method) {
-      case "connection":
+      case Methods.CONNECTION:
         connectionHandler(ws, msg);
         break;
-      case "draw":
-      case "message":
-        broadcastConnection(ws, msg);
+      case Methods.DRAW:
+      case Methods.MESSAGE:
+        broadcastConnection(msg);
         break;
-      case "update":
+      case Methods.UPDATE:
         updateImage(msg);
         break;
-      case "undo":
-      case "redo":
-      case "clear":
+      case Methods.UNDO:
+      case Methods.REDO:
+      case Methods.CLEAR:
         updateImage(msg);
-        broadcastConnection(ws, msg);
+        broadcastConnection(msg);
         break;
-      case "close":
+      case Methods.CLOSE:
         closeConnectionHandler(ws, msg);
         break;
       default:
         break;
     }
   });
-  ws.on("close", (ws, msg) => {
-    console.log("CLOSING");
-    console.log(ws);
-  });
 });
 
-const closeConnectionHandler = (ws, msg) => {
+const closeConnectionHandler = (_, msg) => {
   if (LOBBIES[msg?.id]) {
     const newClients = LOBBIES[msg?.id].filter(
       (user) => user !== msg?.username
@@ -102,9 +100,9 @@ const closeConnectionHandler = (ws, msg) => {
       const message = {
         id: msg?.id,
         method: "close",
-        users: LOBBIES[msg.id] ?? [],
+        users: LOBBIES[msg?.id] ?? [],
       };
-      broadcastConnection(ws, message);
+      broadcastConnection(message);
     }
   }
 };
@@ -124,15 +122,15 @@ const connectionHandler = (ws, msg) => {
     const message = {
       id: msg?.id,
       method: "connection",
-      users: LOBBIES[msg.id] ?? [],
+      users: LOBBIES[msg?.id] ?? [],
     };
-    broadcastConnection(ws, message);
+    broadcastConnection(message);
   } catch (e) {
     console.log(e);
   }
 };
 
-const broadcastConnection = (ws, msg) => {
+const broadcastConnection = (msg) => {
   aWss.clients.forEach((client) => {
     if (client.id === msg.id) {
       client.send(JSON.stringify(msg));
@@ -142,13 +140,7 @@ const broadcastConnection = (ws, msg) => {
 
 const updateImage = (msg) => {
   try {
-    console.log("update");
-    const data = msg.image.replace(`data:image/png;base64,`, "");
-    fs.writeFileSync(
-      path.resolve(__dirname, "files", `${msg.id}.jpg`),
-      data,
-      "base64"
-    );
+    updatePicture(msg);
   } catch (e) {
     console.log(e);
   }
@@ -156,8 +148,7 @@ const updateImage = (msg) => {
 
 const deleteImage = (msg) => {
   try {
-    console.log("delete");
-    fs.unlinkSync(path.resolve(__dirname, "files", `${msg?.id}.jpg`));
+    deletePicture(msg?.id);
   } catch (e) {
     console.log(e);
   }
