@@ -31,7 +31,6 @@ const Room: React.FC = (): JSX.Element => {
 	}, [lobbyStore.messages]);
 
 	const handleSend = (): void => {
-		console.log(lobbyStore.socket?.readyState);
 		lobbyStore.socket?.send(
 			JSON.stringify({
 				id: params.id,

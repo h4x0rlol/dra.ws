@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { axiosConfig } from 'src/api/axios.config';
 import lobbyStore from 'src/store/lobbyStore';
-import { uniqueNamesGenerator, animals } from 'unique-names-generator';
+import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 import styles from './LobbyList.module.scss';
 
 const LobbyList: React.FC = (): JSX.Element => {
@@ -23,7 +23,6 @@ const LobbyList: React.FC = (): JSX.Element => {
 		lobbyStore.setIsJoinFromLobby(true);
 	};
 
-	// TODO MOVE TO WS
 	useEffect(() => {
 		axiosConfig.get('/lobbies').then((res) => {
 			if (res.status === 200) {
