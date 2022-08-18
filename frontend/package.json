@@ -2,6 +2,7 @@
 	"name": "frontend",
 	"version": "0.1.0",
 	"private": true,
+	"homepage": "https://h4x0rlol.github.io/dra.ws",
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^6.1.1",
 		"@fortawesome/free-brands-svg-icons": "^6.1.1",
@@ -10,6 +11,7 @@
 		"@types/react-modal": "^3.13.1",
 		"axios": "^0.27.2",
 		"classnames": "^2.3.1",
+		"gh-pages": "^4.0.0",
 		"i18next": "^21.5.4",
 		"mobx": "^6.5.0",
 		"mobx-react-lite": "^3.4.0",
@@ -28,7 +30,9 @@
 	},
 	"scripts": {
 		"start": "react-scripts start",
-		"build": "react-scripts build"
+		"build": "react-scripts build",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d build"
 	},
 	"eslintConfig": {
 		"extends": [
