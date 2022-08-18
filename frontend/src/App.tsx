@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { axiosConfig } from './api/axios.config';
 import Loader from './components/Loader/Loader';
 import { getTheme } from './utils/themeController';
@@ -23,13 +23,13 @@ const App: React.FC = (): JSX.Element => {
 	}
 
 	return (
-		<BrowserRouter>
+		<HashRouter>
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/lobby/:id" element={<Lobby />} />
 				<Route path="*" element={<Navigate to="/" replace />} />
 			</Routes>
-		</BrowserRouter>
+		</HashRouter>
 	);
 };
 
