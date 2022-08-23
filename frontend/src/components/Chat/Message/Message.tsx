@@ -1,7 +1,7 @@
-import React from 'react';
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
-import { MessageTypes } from 'src/api/message';
+import React from 'react';
+import { MessageTypes } from 'src/api/types';
 import styles from './Message.module.scss';
 
 interface MessageProps {

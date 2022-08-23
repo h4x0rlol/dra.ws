@@ -1,4 +1,3 @@
-import { Figures } from 'src/api/figures';
 import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
@@ -17,8 +16,8 @@ export default class Rect extends Tool {
 
 	saved: string;
 
-	constructor(canvas: HTMLCanvasElement) {
-		super(canvas);
+	constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+		super(canvas, ctx);
 		this.ctx.lineCap = 'butt';
 		this.ctx.lineJoin = 'miter';
 		this.ctx.shadowBlur = 0;
@@ -40,14 +39,17 @@ export default class Rect extends Tool {
 		this.canvas.ontouchend = this.mouseUpHandler.bind(this);
 	}
 
-	mouseDownHandler(e: MouseEvent): void {
+	private downHandler(x: number, y: number): void {
 		this.mouseDown = true;
-		canvasStore.pushToUndo(this.canvas?.toDataURL());
-		this.startX =
-			(e.offsetX * this.canvas.width) / this.canvas.clientWidth || 0;
-		this.startY =
-			(e.offsetY * this.canvas.height) / this.canvas.clientHeight || 0;
-		this.saved = this.canvas.toDataURL();
+		const canvasData = this.canvas.toDataURL();
+		canvasStore.pushToUndo(canvasData);
+		this.startX = (x * this.canvas.width) / this.canvas.clientWidth || 0;
+		this.startY = (y * this.canvas.height) / this.canvas.clientHeight || 0;
+		this.saved = canvasData;
+	}
+
+	mouseDownHandler(e: MouseEvent): void {
+		this.downHandler(e.offsetX, e.offsetY);
 	}
 
 	mouseMoveHandler(e: MouseEvent): void {
@@ -71,11 +73,7 @@ export default class Rect extends Tool {
 		const x = ev.targetTouches[0].clientX - bcr.x;
 		const y = ev.targetTouches[0].clientY - bcr.y;
 
-		this.mouseDown = true;
-		canvasStore.pushToUndo(this.canvas?.toDataURL());
-		this.startX = (x * this.canvas.width) / this.canvas.clientWidth || 0;
-		this.startY = (y * this.canvas.height) / this.canvas.clientHeight || 0;
-		this.saved = this.canvas.toDataURL();
+		this.downHandler(x, y);
 	}
 
 	touchMoveHandler(ev: TouchEvent): void {
@@ -103,19 +101,8 @@ export default class Rect extends Tool {
 			JSON.stringify({
 				method: Methods.DRAW,
 				id: lobbyStore.sessionId,
-				figure: {
-					type: Figures.RECT,
-					x: this.startX,
-					y: this.startY,
-					fill: toolStore.fill,
-					width: this.width,
-					height: this.height,
-					lineWidth: toolStore.lineWidth,
-					lineType: getLineType(
-						toolStore.lineType,
-						toolStore.lineWidth
-					),
-					color: toolStore.color,
+				image: {
+					src: this.canvas.toDataURL(),
 				},
 			})
 		);
@@ -149,33 +136,5 @@ export default class Rect extends Tool {
 
 			this.ctx.stroke();
 		};
-	}
-
-	static staticDraw(
-		ctx: CanvasRenderingContext2D,
-		x: number,
-		y: number,
-		w: number,
-		h: number,
-		fill: boolean,
-		lineWidth: number,
-		lineType: number[],
-		color: string
-	): void {
-		ctx.strokeStyle = color;
-		ctx.lineWidth = lineWidth;
-		ctx.setLineDash(lineType);
-		ctx.lineCap = 'butt';
-		ctx.lineJoin = 'miter';
-		ctx.shadowBlur = 0;
-		ctx.beginPath();
-		ctx.rect(x, y, w, h);
-
-		if (fill) {
-			ctx.fillStyle = color;
-			ctx.fill();
-		}
-
-		ctx.stroke();
 	}
 }

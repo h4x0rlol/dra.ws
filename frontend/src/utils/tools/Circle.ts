@@ -1,4 +1,3 @@
-import { Figures } from 'src/api/figures';
 import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
@@ -15,8 +14,8 @@ export default class Circle extends Tool {
 
 	saved: string;
 
-	constructor(canvas: HTMLCanvasElement) {
-		super(canvas);
+	constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+		super(canvas, ctx);
 		this.ctx.lineCap = 'round';
 		this.ctx.lineJoin = 'round';
 		this.ctx.shadowBlur = 0;
@@ -54,8 +53,8 @@ export default class Circle extends Tool {
 	mouseMoveHandler(e: MouseEvent): void {
 		if (this.mouseDown) {
 			const coordinates = this.getCanvasCoordinates(e.offsetX, e.offsetY);
-			const width = coordinates.x - this.startX;
-			const height = coordinates.y - this.startY;
+			const width = this.getDistance(coordinates.x, this.startX);
+			const height = this.getDistance(coordinates.y, this.startY);
 			this.radius = Math.sqrt(width ** 2 + height ** 2);
 			this.draw(this.startX, this.startY, this.radius);
 		}
@@ -86,15 +85,8 @@ export default class Circle extends Tool {
 		const message = {
 			method: Methods.DRAW,
 			id: lobbyStore.sessionId,
-			figure: {
-				type: Figures.CIRCLE,
-				x: this.startX,
-				y: this.startY,
-				fill: toolStore.fill,
-				radius: this.radius,
-				lineWidth: toolStore.lineWidth,
-				lineType: getLineType(toolStore.lineType, toolStore.lineWidth),
-				color: toolStore.color,
+			image: {
+				src: this.canvas.toDataURL(),
 			},
 		};
 		this.sendMessage(JSON.stringify(message));
@@ -126,32 +118,5 @@ export default class Circle extends Tool {
 			}
 			this.ctx.stroke();
 		};
-	}
-
-	static staticDraw(
-		ctx: CanvasRenderingContext2D,
-		x: number,
-		y: number,
-		radius: number,
-		fill: boolean,
-		lineWidth: number,
-		lineType: number[],
-		color: string
-	): void {
-		ctx.strokeStyle = color;
-		ctx.lineWidth = lineWidth;
-		ctx.setLineDash(lineType);
-		ctx.lineCap = 'round';
-		ctx.lineJoin = 'round';
-		ctx.shadowBlur = 0;
-		ctx.beginPath();
-		ctx.arc(x, y, radius, 0, 2 * Math.PI);
-
-		if (fill) {
-			ctx.fillStyle = color;
-			ctx.fill();
-		}
-
-		ctx.stroke();
 	}
 }

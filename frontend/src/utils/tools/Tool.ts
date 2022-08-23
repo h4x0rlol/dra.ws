@@ -1,4 +1,5 @@
-import { MouseCoord } from 'src/api/figures';
+import { MouseCoord } from 'src/api/types';
+import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 
 export default class Tool {
@@ -8,11 +9,9 @@ export default class Tool {
 
 	mouseDown: boolean;
 
-	constructor(canvas: HTMLCanvasElement) {
+	constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
 		this.canvas = canvas;
-		this.ctx = canvas.getContext('2d', {
-			alpha: false,
-		}) as unknown as CanvasRenderingContext2D;
+		this.ctx = ctx;
 		this.mouseDown = false;
 		this.destroyEvents();
 	}
@@ -57,6 +56,28 @@ export default class Tool {
 	getDistance = (start: number, end: number): number => {
 		return end - start;
 	};
+
+	static staticDraw(ctx: CanvasRenderingContext2D, src: string): void {
+		const img = new Image();
+		img.src = src;
+		img.onload = () => {
+			if (canvasStore.canvas) {
+				ctx.clearRect(
+					0,
+					0,
+					canvasStore.canvas.width,
+					canvasStore.canvas.height
+				);
+				ctx.drawImage(
+					img,
+					0,
+					0,
+					canvasStore.canvas.width,
+					canvasStore.canvas.height
+				);
+			}
+		};
+	}
 
 	destroyEvents(): void {
 		this.canvas.onmouseup = null;

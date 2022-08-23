@@ -1,18 +1,18 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { useBeforeunload } from 'react-beforeunload';
 import { useParams } from 'react-router-dom';
 import { axiosConfig } from 'src/api/axios.config';
-import { WS_URL } from 'src/api/urls';
-import { v4 as uuidv4 } from 'uuid';
-import { Message, MessageTypes } from 'src/api/message';
 import { Methods } from 'src/api/methods';
-import { useBeforeunload } from 'react-beforeunload';
+import { Message, MessageTypes } from 'src/api/types';
+import { WS_URL } from 'src/api/urls';
 import Board from 'src/components/Board/Board';
 import Chat from 'src/components/Chat/Chat';
-import canvasStore from 'src/store/canvasStore';
-import lobbyStore from 'src/store/lobbyStore';
 import ExitModal from 'src/components/ExitModal/ExitModal';
 import JoinModal from 'src/components/JoinModal/JoinModal';
+import canvasStore from 'src/store/canvasStore';
+import lobbyStore from 'src/store/lobbyStore';
+import { v4 as uuidv4 } from 'uuid';
 import styles from './Lobby.module.scss';
 
 const Lobby: React.FC = (): JSX.Element => {
@@ -22,7 +22,7 @@ const Lobby: React.FC = (): JSX.Element => {
 		canvasStore.draw(msg);
 	};
 
-	const getImageData = (): void => {
+	const getImageData: () => void = useCallback(() => {
 		if (canvasStore.canvas) {
 			const ctx = canvasStore.canvas.getContext(
 				'2d'
@@ -49,13 +49,13 @@ const Lobby: React.FC = (): JSX.Element => {
 				};
 			});
 		}
-	};
+	}, [params.id]);
 
 	const setUsers = (users: string[]): void => {
 		lobbyStore.setUsers(users);
 	};
 
-	const connectionHandler = (): void => {
+	const connectionHandler: () => void = useCallback(() => {
 		const socket: WebSocket = new WebSocket(WS_URL);
 		lobbyStore.setSocket(socket);
 		lobbyStore.setSessionId(params.id);
@@ -109,11 +109,11 @@ const Lobby: React.FC = (): JSX.Element => {
 				}
 			};
 		};
-	};
+	}, [getImageData, params.id]);
 
 	useEffect(() => {
 		getImageData();
-	}, [lobbyStore.isJoinFromLobby]);
+	}, [lobbyStore.isJoinFromLobby, getImageData]);
 
 	useEffect(() => {
 		if (lobbyStore.isJoinFromLobby) {
@@ -130,7 +130,7 @@ const Lobby: React.FC = (): JSX.Element => {
 			);
 			lobbyStore.socket?.close();
 		};
-	}, [lobbyStore.isJoinFromLobby]);
+	}, [lobbyStore.isJoinFromLobby, connectionHandler, params.id]);
 
 	useBeforeunload(() => {
 		lobbyStore.socket?.send(

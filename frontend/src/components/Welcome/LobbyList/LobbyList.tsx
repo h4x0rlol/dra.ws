@@ -11,6 +11,7 @@ const LobbyList: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
 	const [list, setList] = useState<string[]>([]);
 
+	// TODO
 	const handlePress = (): void => {
 		if (lobbyStore.username.length === 0) {
 			const shortName = uniqueNamesGenerator({

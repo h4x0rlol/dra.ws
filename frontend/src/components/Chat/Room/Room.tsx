@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Methods } from 'src/api/methods';
@@ -17,18 +17,18 @@ const Room: React.FC = (): JSX.Element => {
 
 	const getCurrentTime = (): string => getLocalTime(getUtcTime());
 
-	const scrollToLastMessage = (): void => {
+	const scrollToLastMessage: () => void = useCallback(() => {
 		const lastChild = listRef.current?.lastElementChild;
 		lastChild?.scrollIntoView({
 			block: 'end',
 			inline: 'nearest',
 			behavior: 'smooth',
 		});
-	};
+	}, []);
 
 	useEffect(() => {
 		scrollToLastMessage();
-	}, [lobbyStore.messages]);
+	}, [lobbyStore.messages, scrollToLastMessage]);
 
 	const handleSend = (): void => {
 		lobbyStore.socket?.send(

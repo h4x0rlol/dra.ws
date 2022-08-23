@@ -1,18 +1,15 @@
 import { makeAutoObservable } from 'mobx';
-import { Figures } from 'src/api/figures';
-import { Message } from 'src/api/message';
 import { Methods } from 'src/api/methods';
-import Brush from 'src/utils/tools/Brush';
-import Circle from 'src/utils/tools/Circle';
-import Eraser from 'src/utils/tools/Eraser';
-import Line from 'src/utils/tools/Line';
-import Pencil from 'src/utils/tools/Pencil';
-import Rect from 'src/utils/tools/Rect';
-import Triangle from 'src/utils/tools/Triangle';
+import { Message } from 'src/api/types';
+import Tool from 'src/utils/tools/Tool';
 import lobbyStore from './lobbyStore';
 
 class CanvasStore {
 	canvas: HTMLCanvasElement | null = null;
+
+	ctx: CanvasRenderingContext2D | null = null;
+
+	src: string = '';
 
 	background: string = '#fff';
 
@@ -30,18 +27,19 @@ class CanvasStore {
 		canvas.style.width = '1600px';
 		canvas.style.height = '900px';
 		this.canvas = canvas;
+		const ctx = this.canvas?.getContext(
+			'2d'
+		) as unknown as CanvasRenderingContext2D;
+		this.ctx = ctx;
 		this.setBackground(this.background);
 	}
 
 	setBackground(color: string): void {
-		if (this.canvas) {
-			const ctx = this.canvas?.getContext(
-				'2d'
-			) as unknown as CanvasRenderingContext2D;
-			ctx.globalCompositeOperation = 'destination-over';
-			ctx.fillStyle = color;
-			ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-			ctx.globalCompositeOperation = 'source-over';
+		if (this.canvas && this.ctx) {
+			this.ctx.globalCompositeOperation = 'destination-over';
+			this.ctx.fillStyle = color;
+			this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+			this.ctx.globalCompositeOperation = 'source-over';
 		}
 	}
 
@@ -59,7 +57,6 @@ class CanvasStore {
 
 	undo(): void {
 		if (this.undoList.length > 0) {
-			const ctx = this.canvas?.getContext('2d');
 			const dataUrl = this.undoList.pop();
 			this.pushToRedo(this.canvas?.toDataURL());
 
@@ -68,13 +65,13 @@ class CanvasStore {
 				img.src = dataUrl;
 				img.onload = () => {
 					if (this.canvas) {
-						ctx?.clearRect(
+						this.ctx?.clearRect(
 							0,
 							0,
 							this.canvas.width,
 							this.canvas?.height
 						);
-						ctx?.drawImage(
+						this.ctx?.drawImage(
 							img,
 							0,
 							0,
@@ -99,7 +96,6 @@ class CanvasStore {
 
 	redo(): void {
 		if (this.redoList.length > 0) {
-			const ctx = this.canvas?.getContext('2d');
 			const dataUrl = this.redoList.pop();
 			this.pushToUndo(this.canvas?.toDataURL());
 
@@ -108,13 +104,13 @@ class CanvasStore {
 				img.src = dataUrl;
 				img.onload = () => {
 					if (this.canvas) {
-						ctx?.clearRect(
+						this.ctx?.clearRect(
 							0,
 							0,
 							this.canvas.width,
 							this.canvas.height
 						);
-						ctx?.drawImage(
+						this.ctx?.drawImage(
 							img,
 							0,
 							0,
@@ -138,10 +134,9 @@ class CanvasStore {
 	}
 
 	clear(): void {
-		const ctx = this.canvas?.getContext('2d');
 		this.pushToUndo(this.canvas?.toDataURL());
 		if (this.canvas) {
-			ctx?.clearRect(0, 0, this.canvas.width, this.canvas.height);
+			this.ctx?.clearRect(0, 0, this.canvas.width, this.canvas.height);
 			this.setBackground(this.background);
 		}
 
@@ -157,94 +152,10 @@ class CanvasStore {
 	}
 
 	draw(msg: Message): void {
-		const {
-			type,
-			x,
-			y,
-			a,
-			b,
-			c,
-			startX,
-			startY,
-			width,
-			height,
-			radius,
-			fill,
-			lineType,
-			lineWidth,
-			color,
-		} = msg.figure;
-		const ctx = this.canvas?.getContext('2d', {
-			alpha: false,
-		}) as unknown as CanvasRenderingContext2D;
-		switch (type) {
-			case Figures.BRUSH:
-				Brush.draw(ctx, x, y, lineWidth, lineType, color);
-				break;
-			case Figures.RECT:
-				Rect.staticDraw(
-					ctx,
-					x,
-					y,
-					width,
-					height,
-					fill,
-					lineWidth,
-					lineType,
-					color
-				);
-				ctx.beginPath();
-				break;
-			case Figures.CIRCLE:
-				Circle.staticDraw(
-					ctx,
-					x,
-					y,
-					radius,
-					fill,
-					lineWidth,
-					lineType,
-					color
-				);
-				ctx.beginPath();
-				break;
-			case Figures.ERASER:
-				Eraser.draw(ctx, x, y, lineWidth);
-				break;
-			case Figures.LINE:
-				Line.staticDraw(
-					ctx,
-					x,
-					y,
-					startX,
-					startY,
-					lineWidth,
-					lineType,
-					color
-				);
-				ctx.beginPath();
-				break;
-			case Figures.PENCIL:
-				Pencil.draw(ctx, x, y, lineWidth, lineType, color);
-				break;
-			case Figures.TRIANGLE:
-				Triangle.staticDraw(
-					ctx,
-					a,
-					b,
-					c,
-					fill,
-					lineWidth,
-					lineType,
-					color
-				);
-				ctx.beginPath();
-				break;
-			case Figures.FINISH:
-				ctx.beginPath();
-				break;
-			default:
-				break;
+		const { src } = msg.image;
+		this.src = src;
+		if (this.ctx) {
+			Tool.staticDraw(this.ctx, this.src);
 		}
 	}
 }

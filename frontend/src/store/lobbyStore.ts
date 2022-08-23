@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { ChatMessage } from 'src/api/message';
+import { ChatMessage } from 'src/api/types';
 import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 
 export enum RoomState {

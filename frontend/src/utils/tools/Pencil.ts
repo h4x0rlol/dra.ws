@@ -1,4 +1,3 @@
-import { Figures } from 'src/api/figures';
 import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
@@ -7,8 +6,8 @@ import { getLineType } from '../helpers';
 import Tool from './Tool';
 
 export default class Pencil extends Tool {
-	constructor(canvas: HTMLCanvasElement) {
-		super(canvas);
+	constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+		super(canvas, ctx);
 		this.listen();
 	}
 
@@ -24,7 +23,7 @@ export default class Pencil extends Tool {
 
 	private downHandler(x: number, y: number): void {
 		this.mouseDown = true;
-		canvasStore.pushToUndo(this.canvas?.toDataURL());
+		canvasStore.pushToUndo(this.canvas.toDataURL());
 		const coordinates = this.getCanvasCoordinates(x, y);
 		this.ctx.beginPath();
 		this.ctx.moveTo(coordinates.x, coordinates.y);
@@ -37,22 +36,7 @@ export default class Pencil extends Tool {
 	mouseMoveHandler(e: MouseEvent): void {
 		if (this.mouseDown) {
 			const coordinates = this.getCanvasCoordinates(e.offsetX, e.offsetY);
-			const message = {
-				method: Methods.DRAW,
-				id: lobbyStore.sessionId,
-				figure: {
-					type: Figures.PENCIL,
-					x: coordinates.x,
-					y: coordinates.y,
-					lineWidth: toolStore.lineWidth,
-					lineType: getLineType(
-						toolStore.lineType,
-						toolStore.lineWidth
-					),
-					color: toolStore.color,
-				},
-			};
-			this.sendMessage(JSON.stringify(message));
+			this.draw(coordinates.x, coordinates.y);
 		}
 	}
 
@@ -65,22 +49,7 @@ export default class Pencil extends Tool {
 		if (this.mouseDown) {
 			ev.preventDefault();
 			const touchCoordinates = this.getTouchCoordinates(ev);
-			const message = {
-				method: Methods.DRAW,
-				id: lobbyStore.sessionId,
-				figure: {
-					type: Figures.PENCIL,
-					x: touchCoordinates.x,
-					y: touchCoordinates.y,
-					lineWidth: toolStore.lineWidth,
-					lineType: getLineType(
-						toolStore.lineType,
-						toolStore.lineWidth
-					),
-					color: toolStore.color,
-				},
-			};
-			this.sendMessage(JSON.stringify(message));
+			this.draw(touchCoordinates.x, touchCoordinates.y);
 		}
 	}
 
@@ -89,28 +58,23 @@ export default class Pencil extends Tool {
 		const message = {
 			method: Methods.DRAW,
 			id: lobbyStore.sessionId,
-			figure: {
-				type: Figures.FINISH,
+			image: {
+				src: this.canvas.toDataURL(),
 			},
 		};
 		this.sendMessage(JSON.stringify(message));
 	}
 
-	static draw(
-		ctx: CanvasRenderingContext2D,
-		x: number,
-		y: number,
-		lineWidth: number,
-		lineType: number[],
-		color: string
-	): void {
-		ctx.strokeStyle = color;
-		ctx.lineWidth = lineWidth;
-		ctx.setLineDash(lineType);
-		ctx.lineCap = 'butt';
-		ctx.lineJoin = 'miter';
-		ctx.shadowBlur = 0;
-		ctx.lineTo(x, y);
-		ctx.stroke();
+	draw(x: number, y: number): void {
+		this.ctx.strokeStyle = this.color;
+		this.ctx.lineWidth = this.lineWidth;
+		this.ctx.setLineDash(
+			getLineType(toolStore.lineType, toolStore.lineWidth)
+		);
+		this.ctx.lineCap = 'butt';
+		this.ctx.lineJoin = 'miter';
+		this.ctx.shadowBlur = 0;
+		this.ctx.lineTo(x, y);
+		this.ctx.stroke();
 	}
 }

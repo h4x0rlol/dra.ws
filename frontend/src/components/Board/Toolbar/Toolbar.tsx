@@ -1,34 +1,41 @@
-import React from 'react';
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
-import toolStore from 'src/store/toolStore';
-import canvasStore from 'src/store/canvasStore';
-import Pencil from 'src/utils/tools/Pencil';
-import PencilIcon from 'src/components/Svg/PencilIcon';
-import Brush from 'src/utils/tools/Brush';
+import React from 'react';
 import BrushIcon from 'src/components/Svg/BrushIcon';
-import Line from 'src/utils/tools/Line';
-import LineIcon from 'src/components/Svg/LineIcon';
-import Tool from 'src/utils/tools/Tool';
-import Rect from 'src/utils/tools/Rect';
-import RectIcon from 'src/components/Svg/RectIcon';
-import Triangle from 'src/utils/tools/Triangle';
-import TriangleIcon from 'src/components/Svg/TriangleIcon';
-import Circle from 'src/utils/tools/Circle';
 import CircleIcon from 'src/components/Svg/CircleIcon';
-import Eraser from 'src/utils/tools/Eraser';
 import EraserIcon from 'src/components/Svg/EraserIcon';
+import LineIcon from 'src/components/Svg/LineIcon';
+import PencilIcon from 'src/components/Svg/PencilIcon';
+import RectIcon from 'src/components/Svg/RectIcon';
+import TriangleIcon from 'src/components/Svg/TriangleIcon';
+import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
+import toolStore from 'src/store/toolStore';
+import Brush from 'src/utils/tools/Brush';
+import Circle from 'src/utils/tools/Circle';
+import Eraser from 'src/utils/tools/Eraser';
+import Line from 'src/utils/tools/Line';
+import Pencil from 'src/utils/tools/Pencil';
+import Rect from 'src/utils/tools/Rect';
+import Tool from 'src/utils/tools/Tool';
+import Triangle from 'src/utils/tools/Triangle';
 import styles from './Toolbar.module.scss';
 
 const Toolbar: React.FC = (): JSX.Element => {
 	const onSelect = (CurrentTool: typeof Tool): void => {
-		if (canvasStore.canvas && lobbyStore.socket && lobbyStore.sessionId) {
+		if (
+			canvasStore.canvas &&
+			canvasStore.ctx &&
+			lobbyStore.socket &&
+			lobbyStore.sessionId
+		) {
 			if (toolStore.tool instanceof CurrentTool) {
 				toolStore.tool.destroyEvents();
 				toolStore.setTool(null);
 			} else {
-				toolStore.setTool(new CurrentTool(canvasStore.canvas));
+				toolStore.setTool(
+					new CurrentTool(canvasStore.canvas, canvasStore.ctx)
+				);
 			}
 		}
 	};

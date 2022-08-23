@@ -1,4 +1,3 @@
-import { Figures } from 'src/api/figures';
 import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
@@ -17,8 +16,8 @@ export default class Line extends Tool {
 
 	saved: string;
 
-	constructor(canvas: HTMLCanvasElement) {
-		super(canvas);
+	constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+		super(canvas, ctx);
 		this.ctx.lineCap = 'butt';
 		this.ctx.lineJoin = 'miter';
 		this.ctx.shadowBlur = 0;
@@ -82,22 +81,12 @@ export default class Line extends Tool {
 
 	mouseUpHandler(): void {
 		this.mouseDown = false;
-		const coordinates = this.getCanvasCoordinates(
-			this.offsetX,
-			this.offsetY
-		);
+
 		const message = {
 			method: Methods.DRAW,
 			id: lobbyStore.sessionId,
-			figure: {
-				type: Figures.LINE,
-				x: coordinates.x,
-				y: coordinates.y,
-				startX: this.startX,
-				startY: this.startY,
-				lineWidth: toolStore.lineWidth,
-				lineType: getLineType(toolStore.lineType, toolStore.lineWidth),
-				color: toolStore.color,
+			image: {
+				src: this.canvas.toDataURL(),
 			},
 		};
 		this.sendMessage(JSON.stringify(message));
@@ -106,24 +95,12 @@ export default class Line extends Tool {
 	touchUpHandler(ev: TouchEvent): void {
 		this.mouseDown = false;
 		ev.preventDefault();
-		const bcr = (
-			ev as unknown as React.MouseEvent<HTMLElement>
-		).currentTarget.getBoundingClientRect();
-		const x = ev.changedTouches[0].clientX - bcr.x;
-		const y = ev.changedTouches[0].clientY - bcr.y;
 
 		const message = {
 			method: Methods.DRAW,
 			id: lobbyStore.sessionId,
-			figure: {
-				type: Figures.LINE,
-				x,
-				y,
-				startX: this.startX,
-				startY: this.startY,
-				lineWidth: toolStore.lineWidth,
-				lineType: getLineType(toolStore.lineType, toolStore.lineWidth),
-				color: toolStore.color,
+			image: {
+				src: this.canvas.toDataURL(),
 			},
 		};
 		this.sendMessage(JSON.stringify(message));
@@ -152,27 +129,5 @@ export default class Line extends Tool {
 			this.ctx.lineTo(x, y);
 			this.ctx.stroke();
 		};
-	}
-
-	static staticDraw(
-		ctx: CanvasRenderingContext2D,
-		x: number,
-		y: number,
-		startX: number,
-		startY: number,
-		lineWidth: number,
-		lineType: number[],
-		color: string
-	): void {
-		ctx.strokeStyle = color;
-		ctx.lineWidth = lineWidth;
-		ctx.setLineDash(lineType);
-		ctx.lineCap = 'butt';
-		ctx.lineJoin = 'miter';
-		ctx.shadowBlur = 0;
-		ctx.beginPath();
-		ctx.moveTo(startX, startY);
-		ctx.lineTo(x, y);
-		ctx.stroke();
 	}
 }

@@ -1,4 +1,3 @@
-import { Figures } from 'src/api/figures';
 import { Methods } from 'src/api/methods';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
@@ -7,8 +6,8 @@ import { getLineType } from '../helpers';
 import Tool from './Tool';
 
 export default class Brush extends Tool {
-	constructor(canvas: HTMLCanvasElement) {
-		super(canvas);
+	constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+		super(canvas, ctx);
 		this.listen();
 	}
 
@@ -37,22 +36,7 @@ export default class Brush extends Tool {
 	mouseMoveHandler(e: MouseEvent): void {
 		if (this.mouseDown) {
 			const coordinates = this.getCanvasCoordinates(e.offsetX, e.offsetY);
-			const message = {
-				method: Methods.DRAW,
-				id: lobbyStore.sessionId,
-				figure: {
-					type: Figures.BRUSH,
-					x: coordinates.x,
-					y: coordinates.y,
-					lineWidth: toolStore.lineWidth,
-					lineType: getLineType(
-						toolStore.lineType,
-						toolStore.lineWidth
-					),
-					color: toolStore.color,
-				},
-			};
-			this.sendMessage(JSON.stringify(message));
+			this.draw(coordinates.x, coordinates.y);
 		}
 	}
 
@@ -65,22 +49,7 @@ export default class Brush extends Tool {
 		if (this.mouseDown) {
 			ev.preventDefault();
 			const touchCoordinates = this.getTouchCoordinates(ev);
-			const message = {
-				method: Methods.DRAW,
-				id: lobbyStore.sessionId,
-				figure: {
-					type: Figures.BRUSH,
-					x: touchCoordinates.x,
-					y: touchCoordinates.y,
-					lineWidth: toolStore.lineWidth,
-					lineType: getLineType(
-						toolStore.lineType,
-						toolStore.lineWidth
-					),
-					color: toolStore.color,
-				},
-			};
-			this.sendMessage(JSON.stringify(message));
+			this.draw(touchCoordinates.x, touchCoordinates.y);
 		}
 	}
 
@@ -89,29 +58,23 @@ export default class Brush extends Tool {
 		const message = {
 			method: Methods.DRAW,
 			id: lobbyStore.sessionId,
-			figure: {
-				type: Figures.FINISH,
+			image: {
+				src: this.canvas.toDataURL(),
 			},
 		};
 		this.sendMessage(JSON.stringify(message));
 	}
 
-	static draw(
-		ctx: CanvasRenderingContext2D,
-		x: number,
-		y: number,
-		lineWidth: number,
-		lineType: number[],
-		color: string
-	): void {
-		ctx.strokeStyle = color;
-		ctx.lineWidth = lineWidth;
-		ctx.setLineDash(lineType);
-		ctx.lineCap = 'round';
-		ctx.lineJoin = 'round';
-		ctx.shadowColor = color;
-		ctx.shadowBlur = lineWidth / 2;
-		ctx.lineTo(x, y);
-		ctx.stroke();
+	draw(x: number, y: number): void {
+		this.ctx.strokeStyle = this.color;
+		this.ctx.lineWidth = this.lineWidth;
+		this.ctx.shadowBlur = this.lineWidth / 2;
+		this.ctx.setLineDash(
+			getLineType(toolStore.lineType, toolStore.lineWidth)
+		);
+		this.ctx.lineCap = 'round';
+		this.ctx.lineJoin = 'round';
+		this.ctx.lineTo(x, y);
+		this.ctx.stroke();
 	}
 }
