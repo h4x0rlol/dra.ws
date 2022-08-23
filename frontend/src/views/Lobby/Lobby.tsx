@@ -30,6 +30,7 @@ const Lobby: React.FC = (): JSX.Element => {
 			axiosConfig.get(`/image?id=${params.id}`).then((response) => {
 				const img = new Image();
 				img.src = response.data;
+				canvasStore.setSrc(response.data);
 				img.onload = () => {
 					if (canvasStore.canvas) {
 						ctx.clearRect(

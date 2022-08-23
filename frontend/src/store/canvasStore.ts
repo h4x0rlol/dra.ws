@@ -34,6 +34,10 @@ class CanvasStore {
 		this.setBackground(this.background);
 	}
 
+	setSrc(src: string): void {
+		this.src = src;
+	}
+
 	setBackground(color: string): void {
 		if (this.canvas && this.ctx) {
 			this.ctx.globalCompositeOperation = 'destination-over';
@@ -153,7 +157,7 @@ class CanvasStore {
 
 	draw(msg: Message): void {
 		const { src } = msg.image;
-		this.src = src;
+		this.setSrc(src);
 		if (this.ctx) {
 			Tool.staticDraw(this.ctx, this.src);
 		}

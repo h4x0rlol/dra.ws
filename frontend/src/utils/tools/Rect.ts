@@ -14,8 +14,6 @@ export default class Rect extends Tool {
 
 	height: number;
 
-	saved: string;
-
 	constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
 		super(canvas, ctx);
 		this.ctx.lineCap = 'butt';
@@ -25,7 +23,6 @@ export default class Rect extends Tool {
 		this.startY = 0;
 		this.width = 0;
 		this.height = 0;
-		this.saved = '';
 		this.listen();
 	}
 
@@ -41,11 +38,9 @@ export default class Rect extends Tool {
 
 	private downHandler(x: number, y: number): void {
 		this.mouseDown = true;
-		const canvasData = this.canvas.toDataURL();
-		canvasStore.pushToUndo(canvasData);
+		canvasStore.pushToUndo(this.canvas.toDataURL());
 		this.startX = (x * this.canvas.width) / this.canvas.clientWidth || 0;
 		this.startY = (y * this.canvas.height) / this.canvas.clientHeight || 0;
-		this.saved = canvasData;
 	}
 
 	mouseDownHandler(e: MouseEvent): void {
@@ -110,7 +105,7 @@ export default class Rect extends Tool {
 
 	draw(x: number, y: number, w: number, h: number): void {
 		const img = new Image();
-		img.src = this.saved;
+		img.src = canvasStore.src;
 		img.onload = () => {
 			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 			this.ctx.drawImage(
