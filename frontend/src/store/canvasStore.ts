@@ -22,10 +22,10 @@ class CanvasStore {
 	}
 
 	setCanvas(canvas: HTMLCanvasElement): void {
-		canvas.width = 1600;
-		canvas.height = 900;
-		canvas.style.width = '1600px';
-		canvas.style.height = '900px';
+		canvas.width = 1280;
+		canvas.height = 960;
+		canvas.style.width = '1280px';
+		canvas.style.height = '960px';
 		this.canvas = canvas;
 		const ctx = this.canvas?.getContext(
 			'2d'

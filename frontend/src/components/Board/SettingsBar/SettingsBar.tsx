@@ -62,7 +62,7 @@ const SettingsBar: React.FC = (): JSX.Element => {
 	};
 
 	const download = (): void => {
-		const dataUrl = canvasStore.canvas?.toDataURL('image/jpeg', 0.85);
+		const dataUrl = canvasStore.canvas?.toDataURL('image/jpeg');
 		const a = document.createElement('a');
 		if (dataUrl) {
 			a.href = dataUrl;
