@@ -95,7 +95,7 @@ class CanvasStore {
 							},
 						})
 					);
-				});
+				}, 50);
 			}
 		}
 	}
@@ -137,7 +137,7 @@ class CanvasStore {
 						},
 					})
 				);
-			});
+			}, 50);
 		}
 	}
 
@@ -158,7 +158,7 @@ class CanvasStore {
 					},
 				})
 			);
-		});
+		}, 50);
 	}
 
 	draw(msg: Message): void {
