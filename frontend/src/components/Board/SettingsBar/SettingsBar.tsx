@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Id, toast } from 'react-toastify';
 import { Toast } from 'src/components/Toast/Toast';
-import { toast, Id } from 'react-toastify';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
@@ -62,7 +62,7 @@ const SettingsBar: React.FC = (): JSX.Element => {
 	};
 
 	const download = (): void => {
-		const dataUrl = canvasStore.canvas?.toDataURL();
+		const dataUrl = canvasStore.canvas?.toDataURL('image/jpeg', 0.85);
 		const a = document.createElement('a');
 		if (dataUrl) {
 			a.href = dataUrl;

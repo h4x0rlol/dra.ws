@@ -40,7 +40,7 @@ export default class Line extends Tool {
 	private downHandler(x: number, y: number): void {
 		this.mouseDown = true;
 		const coordinates = this.getCanvasCoordinates(x, y);
-		canvasStore.pushToUndo(this.canvas.toDataURL());
+		canvasStore.pushToUndo(this.canvas.toDataURL('image/jpeg', 0.85));
 		this.startX = coordinates.x;
 		this.startY = coordinates.y;
 	}
@@ -82,7 +82,7 @@ export default class Line extends Tool {
 			method: Methods.DRAW,
 			id: lobbyStore.sessionId,
 			image: {
-				src: this.canvas.toDataURL(),
+				src: this.canvas.toDataURL('image/jpeg', 0.85),
 			},
 		};
 		this.sendMessage(JSON.stringify(message));
@@ -96,7 +96,7 @@ export default class Line extends Tool {
 			method: Methods.DRAW,
 			id: lobbyStore.sessionId,
 			image: {
-				src: this.canvas.toDataURL(),
+				src: this.canvas.toDataURL('image/jpeg', 0.85),
 			},
 		};
 		this.sendMessage(JSON.stringify(message));

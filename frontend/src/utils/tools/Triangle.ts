@@ -20,7 +20,7 @@ export default class Triangle extends Tool {
 	}
 
 	mouseClickHandler(e: MouseEvent): void {
-		canvasStore.pushToUndo(this.canvas?.toDataURL());
+		canvasStore.pushToUndo(this.canvas?.toDataURL('image/jpeg', 0.85));
 		const coordinates = this.getCanvasCoordinates(e.offsetX, e.offsetY);
 		this.mouse.push(coordinates);
 		this.draw();
@@ -29,7 +29,7 @@ export default class Triangle extends Tool {
 				method: Methods.DRAW,
 				id: lobbyStore.sessionId,
 				image: {
-					src: this.canvas.toDataURL(),
+					src: this.canvas.toDataURL('image/jpeg', 0.85),
 				},
 			};
 			this.mouse = [];

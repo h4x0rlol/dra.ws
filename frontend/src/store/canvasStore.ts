@@ -62,7 +62,7 @@ class CanvasStore {
 	undo(): void {
 		if (this.undoList.length > 0) {
 			const dataUrl = this.undoList.pop();
-			this.pushToRedo(this.canvas?.toDataURL());
+			this.pushToRedo(this.canvas?.toDataURL('image/jpeg', 0.85));
 
 			if (dataUrl) {
 				const img: HTMLImageElement = new Image();
@@ -89,8 +89,10 @@ class CanvasStore {
 					lobbyStore.socket?.send(
 						JSON.stringify({
 							id: lobbyStore.sessionId,
-							method: Methods.UNDO,
-							image: this.canvas?.toDataURL(),
+							method: Methods.DRAW,
+							image: {
+								src: this.canvas?.toDataURL('image/jpeg', 0.85),
+							},
 						})
 					);
 				});
@@ -101,7 +103,7 @@ class CanvasStore {
 	redo(): void {
 		if (this.redoList.length > 0) {
 			const dataUrl = this.redoList.pop();
-			this.pushToUndo(this.canvas?.toDataURL());
+			this.pushToUndo(this.canvas?.toDataURL('image/jpeg', 0.85));
 
 			if (dataUrl) {
 				const img = new Image();
@@ -129,8 +131,10 @@ class CanvasStore {
 				lobbyStore.socket?.send(
 					JSON.stringify({
 						id: lobbyStore.sessionId,
-						method: Methods.REDO,
-						image: this.canvas?.toDataURL(),
+						method: Methods.DRAW,
+						image: {
+							src: this.canvas?.toDataURL('image/jpeg', 0.85),
+						},
 					})
 				);
 			});
@@ -138,7 +142,7 @@ class CanvasStore {
 	}
 
 	clear(): void {
-		this.pushToUndo(this.canvas?.toDataURL());
+		this.pushToUndo(this.canvas?.toDataURL('image/jpeg', 0.85));
 		if (this.canvas) {
 			this.ctx?.clearRect(0, 0, this.canvas.width, this.canvas.height);
 			this.setBackground(this.background);
@@ -148,8 +152,10 @@ class CanvasStore {
 			lobbyStore.socket?.send(
 				JSON.stringify({
 					id: lobbyStore.sessionId,
-					method: Methods.CLEAR,
-					image: this.canvas?.toDataURL(),
+					method: Methods.DRAW,
+					image: {
+						src: this.canvas?.toDataURL('image/jpeg', 0.85),
+					},
 				})
 			);
 		});

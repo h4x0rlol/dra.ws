@@ -38,7 +38,7 @@ export default class Rect extends Tool {
 
 	private downHandler(x: number, y: number): void {
 		this.mouseDown = true;
-		canvasStore.pushToUndo(this.canvas.toDataURL());
+		canvasStore.pushToUndo(this.canvas.toDataURL('image/jpeg', 0.85));
 		this.startX = (x * this.canvas.width) / this.canvas.clientWidth || 0;
 		this.startY = (y * this.canvas.height) / this.canvas.clientHeight || 0;
 	}
@@ -97,7 +97,7 @@ export default class Rect extends Tool {
 				method: Methods.DRAW,
 				id: lobbyStore.sessionId,
 				image: {
-					src: this.canvas.toDataURL(),
+					src: this.canvas.toDataURL('image/jpeg', 0.85),
 				},
 			})
 		);

@@ -23,7 +23,7 @@ export default class Brush extends Tool {
 
 	private downHandler(x: number, y: number): void {
 		this.mouseDown = true;
-		canvasStore.pushToUndo(this.canvas?.toDataURL());
+		canvasStore.pushToUndo(this.canvas?.toDataURL('image/jpeg', 0.85));
 		const coordinates = this.getCanvasCoordinates(x, y);
 		this.ctx.beginPath();
 		this.ctx.moveTo(coordinates.x, coordinates.y);
@@ -59,7 +59,7 @@ export default class Brush extends Tool {
 			method: Methods.DRAW,
 			id: lobbyStore.sessionId,
 			image: {
-				src: this.canvas.toDataURL(),
+				src: this.canvas.toDataURL('image/jpeg', 0.85),
 			},
 		};
 		this.sendMessage(JSON.stringify(message));

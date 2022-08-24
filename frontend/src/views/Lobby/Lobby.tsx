@@ -82,15 +82,6 @@ const Lobby: React.FC = (): JSX.Element => {
 					case Methods.DRAW:
 						drawHandler(msg);
 						break;
-					case Methods.UNDO:
-						getImageData();
-						break;
-					case Methods.REDO:
-						getImageData();
-						break;
-					case Methods.CLEAR:
-						getImageData();
-						break;
 					case Methods.MESSAGE:
 						lobbyStore.setMessage({
 							id: msg.id,
