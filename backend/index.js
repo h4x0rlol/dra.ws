@@ -47,7 +47,7 @@ app.get("/lobbies", async (_, res) => {
 
 app.get("/image", async (req, res) => {
   try {
-    const data = getPicture(req.query.id);
+    const data = await getPicture(req.query.id);
     res.json(data);
   } catch (e) {
     console.log(e);
@@ -63,16 +63,9 @@ app.ws("/", (ws, _) => {
         connectionHandler(ws, msg);
         break;
       case Methods.DRAW:
-      case Methods.MESSAGE:
         broadcastConnection(msg);
-        break;
-      case Methods.UPDATE:
         updateImage(msg);
-        break;
-      case Methods.UNDO:
-      case Methods.REDO:
-      case Methods.CLEAR:
-        updateImage(msg);
+      case Methods.MESSAGE:
         broadcastConnection(msg);
         break;
       case Methods.CLOSE:
@@ -138,17 +131,17 @@ const broadcastConnection = (msg) => {
   });
 };
 
-const updateImage = (msg) => {
+const updateImage = async (msg) => {
   try {
-    updatePicture(msg);
+    await updatePicture(msg);
   } catch (e) {
     console.log(e);
   }
 };
 
-const deleteImage = (msg) => {
+const deleteImage = async (msg) => {
   try {
-    deletePicture(msg?.id);
+    await deletePicture(msg?.id);
   } catch (e) {
     console.log(e);
   }

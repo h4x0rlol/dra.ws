@@ -1,25 +1,37 @@
-const fs = require("fs");
+const fs = require("fs/promises");
 const path = require("path");
 
-const getPicture = (id) => {
-  const file = fs.readFileSync(
-    path.resolve(__dirname, "../files", `${id}.jpg`)
-  );
-  const data = `data:image/png;base64,` + file.toString("base64");
-  return data;
+const getPicture = async (id) => {
+  try {
+    const file = await fs.readFile(
+      path.resolve(__dirname, "../files", `${id}.jpg`)
+    );
+    const data = `data:image/jpeg;base64,` + file.toString("base64");
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
-const updatePicture = (msg) => {
-  const data = msg?.image?.replace(`data:image/png;base64,`, "");
-  fs.writeFileSync(
-    path.resolve(__dirname, "../files", `${msg?.id}.jpg`),
-    data,
-    "base64"
-  );
+const updatePicture = async (msg) => {
+  try {
+    const data = msg?.image?.src?.replace(`data:image/jpeg;base64,`, "");
+    await fs.writeFile(
+      path.resolve(__dirname, "../files", `${msg?.id}.jpg`),
+      data,
+      "base64"
+    );
+  } catch (e) {
+    console.log(e);
+  }
 };
 
-const deletePicture = (id) => {
-  fs.unlinkSync(path.resolve(__dirname, "../files", `${id}.jpg`));
+const deletePicture = async (id) => {
+  try {
+    await fs.unlink(path.resolve(__dirname, "../files", `${id}.jpg`));
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 module.exports = {
