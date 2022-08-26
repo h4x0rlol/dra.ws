@@ -9,11 +9,11 @@ import styles from './JoinModal.module.scss';
 const JoinModallContent = observer((): JSX.Element => {
 	const { t } = useTranslation();
 	const [username, setUsername] = useState('');
-	const [error, setError] = useState(false);
+	const [error, setError] = useState(lobbyStore.username.length > 8);
 
 	const handlePress = (): void => {
 		if (username.length <= 8) {
-			lobbyStore.setUserName(username);
+			lobbyStore.checkUserName(username);
 			lobbyStore.setIsJoinFromLobby(true);
 		}
 	};

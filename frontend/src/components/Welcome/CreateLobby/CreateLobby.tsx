@@ -1,20 +1,19 @@
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import UserIcon from 'src/components/Svg/UserIcon';
 import lobbyStore from 'src/store/lobbyStore';
+import { v4 as uuidv4 } from 'uuid';
 import styles from './CreateLobby.module.scss';
 
 const CreateLobby: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
-	const [username, setUsername] = useState(lobbyStore.username);
-	const [error, setError] = useState(false);
+	const [error, setError] = useState(lobbyStore.username.length > 8);
 
 	const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>): void => {
-		setUsername(e.target.value);
+		lobbyStore.setUsername(e.target.value);
 		if (e.target.value.length > 8) {
 			setError(true);
 		} else {
@@ -23,8 +22,8 @@ const CreateLobby: React.FC = (): JSX.Element => {
 	};
 
 	const createHandler = (): void => {
-		if (username.length <= 8) {
-			lobbyStore.setUserName(username);
+		if (lobbyStore.username.length <= 8) {
+			lobbyStore.checkUserName(lobbyStore.username);
 			lobbyStore.setIsJoinFromLobby(true);
 			const uuid = uuidv4();
 			navigate(`/lobby/f${uuid}`);
@@ -43,7 +42,7 @@ const CreateLobby: React.FC = (): JSX.Element => {
 					<input
 						type="text"
 						placeholder={t('home.placeholder')}
-						value={username}
+						value={lobbyStore.username}
 						onChange={(e) => handleChangeName(e)}
 						className={styles.input}
 					/>

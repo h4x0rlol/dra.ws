@@ -40,15 +40,19 @@ class LobbyStore {
 		this.userId = id;
 	}
 
-	setUserName(username: string): void {
+	setUsername(username: string): void {
+		this.username = username;
+	}
+
+	checkUserName(username: string): void {
 		if (username.length === 0) {
 			const shortName = uniqueNamesGenerator({
 				dictionaries: [animals],
 				length: 1,
 			});
-			this.username = shortName.substring(0, 8);
+			this.setUsername(shortName.substring(0, 8));
 		} else {
-			this.username = username;
+			this.setUsername(username);
 		}
 	}
 

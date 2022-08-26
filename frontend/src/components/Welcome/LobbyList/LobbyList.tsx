@@ -4,23 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { axiosConfig } from 'src/api/axios.config';
 import lobbyStore from 'src/store/lobbyStore';
-import { animals, uniqueNamesGenerator } from 'unique-names-generator';
 import styles from './LobbyList.module.scss';
 
 const LobbyList: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
 	const [list, setList] = useState<string[]>([]);
 
-	// TODO
 	const handlePress = (): void => {
-		if (lobbyStore.username.length === 0) {
-			const shortName = uniqueNamesGenerator({
-				dictionaries: [animals],
-				length: 1,
-			});
-			lobbyStore.setUserName(shortName.substring(0, 8));
-		}
-
+		lobbyStore.checkUserName(lobbyStore.username);
 		lobbyStore.setIsJoinFromLobby(true);
 	};
 
