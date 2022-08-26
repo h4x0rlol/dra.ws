@@ -13,13 +13,12 @@
 .background {
 	position: absolute;
 	z-index: -1;
-	background: url('../../assets//img/background.svg');
-	background-repeat: repeat;
+	background: url('../../assets//img/background.svg') repeat 0 0;
 	width: 100%;
-	height: 10000px;
+	height: 100vh;
 	top: 0;
 	left: 0;
-	animation: slide 100s linear infinite;
+	animation: slide 30s linear infinite;
 
 	@media (max-width: $tablet) {
 		background: url('../../assets//img/background_low.svg');
@@ -27,10 +26,7 @@
 
 	@keyframes slide {
 		0% {
-			transform: translate3d(0, 0, 0);
-		}
-		100% {
-			transform: translate3d(0, -400px, 0);
+			background-position: 0 100vh;
 		}
 	}
 }
@@ -39,8 +35,6 @@
 	background-color: var(--bg-secondary);
 	display: flex;
 	flex-direction: column;
-	/* max-height: 50vh; */
-	/* max-width: 60vh; */
 	border: 1px solid var(--color-primary);
 	box-shadow: 0.1rem 0.1rem 0.3rem var(--color-secondary);
 	border-radius: 1%;
