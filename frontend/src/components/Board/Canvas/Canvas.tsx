@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import canvasStore from 'src/store/canvasStore';
 import toolStore from 'src/store/toolStore';
 import Brush from 'src/utils/tools/Brush';
@@ -14,7 +13,6 @@ import styles from './Canvas.module.scss';
 const Canvas: React.FC = (): JSX.Element => {
 	const [isOutOfBounds, setIsOutOfBounds] = useState<boolean>(true);
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
-	const params = useParams();
 
 	useEffect(() => {
 		if (canvasRef.current) {

@@ -101,7 +101,7 @@ const Lobby: React.FC = (): JSX.Element => {
 				}
 			};
 		};
-	}, [getImageData, params.id]);
+	}, [params.id]);
 
 	useEffect(() => {
 		getImageData();

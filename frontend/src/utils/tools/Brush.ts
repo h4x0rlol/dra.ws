@@ -68,7 +68,6 @@ export default class Brush extends Tool {
 	draw(x: number, y: number): void {
 		this.ctx.strokeStyle = this.color;
 		this.ctx.lineWidth = this.lineWidth;
-		this.ctx.shadowBlur = this.lineWidth / 2;
 		this.ctx.setLineDash(
 			getLineType(toolStore.lineType, toolStore.lineWidth)
 		);

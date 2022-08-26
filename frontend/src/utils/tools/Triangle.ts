@@ -48,7 +48,6 @@ export default class Triangle extends Tool {
 		);
 
 		if (this.mouse.length >= 3) {
-			console.log('s');
 			this.ctx.beginPath();
 			this.ctx.moveTo(this.mouse[0].x, this.mouse[0].y);
 			this.ctx.lineTo(this.mouse[1].x, this.mouse[1].y);
