@@ -1,11 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const {
-  getPicture,
-  updatePicture,
-  deletePicture,
-} = require("./utils/helplers");
+const { getPicture, updatePicture, deletePicture } = require("./utils/helpers");
 const { Methods } = require("./utils/types");
 
 const app = express();
