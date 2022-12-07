@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { axiosConfig } from './api';
-import { Error } from './components/Error/Error';
+import Error from './components/Error/Error';
 import Loader from './components/Loader/Loader';
 import { getTheme } from './utils/themeController';
 import Home from './views/Home/Home';
