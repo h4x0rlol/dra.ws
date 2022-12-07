@@ -1,5 +1,8 @@
 FROM node:16
 
+ARG PORT
+ENV PORT=$PORT
+
 WORKDIR /app
 
 COPY ["package.json", "yarn.lock", "./"]
