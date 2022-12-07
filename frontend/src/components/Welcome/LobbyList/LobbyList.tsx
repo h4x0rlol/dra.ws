@@ -9,6 +9,7 @@ import styles from './LobbyList.module.scss';
 const LobbyList: React.FC = (): JSX.Element => {
 	const { t } = useTranslation();
 	const [list, setList] = useState<string[]>([]);
+	const [error, setError] = useState('');
 
 	const handlePress = (): void => {
 		lobbyStore.checkUserName(lobbyStore.username);
@@ -16,33 +17,39 @@ const LobbyList: React.FC = (): JSX.Element => {
 	};
 
 	useEffect(() => {
-		axiosConfig.get('/lobbies').then((res) => {
-			if (res.status === 200) {
-				setList(res.data?.lobbies);
-			}
-		});
+		axiosConfig
+			.get('/lobbies')
+			.then((res) => {
+				if (res.status === 200) {
+					setList(res.data?.lobbies);
+				}
+			})
+			.catch((e: Error) => {
+				setError(e.message);
+			});
 	}, []);
 
 	return (
 		<div className={styles.wrapper}>
-			<ul>
-				{list?.map((lobby) => {
-					return (
-						<li className={styles.item} key={lobby}>
-							<Link
-								to={`lobby/${lobby}`}
-								className={styles.link}
-								onClick={handlePress}
-							>
-								{lobby}
-							</Link>
-						</li>
-					);
-				})}
-			</ul>
-			{list.length === 0 && (
+			{list.length > 0 ? (
+				<ul>
+					{list?.map((lobby) => {
+						return (
+							<li className={styles.item} key={lobby}>
+								<Link
+									to={`lobby/${lobby}`}
+									className={styles.link}
+									onClick={handlePress}
+								>
+									{lobby}
+								</Link>
+							</li>
+						);
+					})}
+				</ul>
+			) : (
 				<div className={styles.empty}>
-					<div>{t('home.empty')}</div>
+					{error ? <div>{error}</div> : <div>{t('home.empty')}</div>}
 				</div>
 			)}
 		</div>
