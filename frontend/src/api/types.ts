@@ -26,12 +26,7 @@ export type Message = {
 	type: MessageTypes;
 };
 
-export type ChatMessage = {
-	id: string;
-	userId: string;
-	username: string;
-	method: Methods;
-	message: string;
-	date: string;
-	type: MessageTypes;
-};
+export type ChatMessage = Pick<
+	Message,
+	'id' | 'userId' | 'username' | 'method' | 'message' | 'date' | 'type'
+>;
