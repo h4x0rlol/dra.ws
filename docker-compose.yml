@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    image: "dra.ws/backend"
+    ports:
+      - "5000:5000"
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    image: "dra.ws/frontend"
+    ports:
+      - "3000:3000"

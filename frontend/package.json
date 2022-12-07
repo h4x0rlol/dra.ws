@@ -2,7 +2,6 @@
 	"name": "frontend",
 	"version": "0.1.0",
 	"private": true,
-	"homepage": "https://h4x0rlol.github.io/dra.ws",
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^6.1.1",
 		"@fortawesome/free-brands-svg-icons": "^6.1.1",
@@ -40,8 +39,7 @@
 		]
 	},
 	"engines": {
-		"npm": "8.11.0",
-		"node": "16.16.0"
+		"node": "16.18.1"
 	},
 	"browserslist": {
 		"production": [
