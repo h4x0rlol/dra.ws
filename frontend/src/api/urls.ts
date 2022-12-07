@@ -1,5 +1,2 @@
-// export const HTTP_URL = 'https://draws-backend.herokuapp.com';
-// export const WS_URL = 'wss://draws-backend.herokuapp.com';
-
-export const HTTP_URL = 'http://localhost:5000';
-export const WS_URL = 'ws://localhost:5000';
+export const HTTP_URL = process.env.REACT_APP_HTTP_URL as string;
+export const WS_URL = process.env.REACT_APP_WS_URL as string;
