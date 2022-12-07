@@ -20,6 +20,7 @@
 	"plugins": ["react", "@typescript-eslint", "react-hooks"],
 	"rules": {
 		"react/require-default-props": "off",
+		"react/react-in-jsx-scope": "off",
 		"jsx-a11y/label-has-associated-control": [
 			"error",
 			{

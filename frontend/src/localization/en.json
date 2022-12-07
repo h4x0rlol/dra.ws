@@ -27,5 +27,8 @@
 		"list": "Lobby list",
 		"description": "Here you can draw together with your friends",
 		"share": "Just share a link"
+	},
+	"error": {
+		"routerError": "Sorry, an unexpected error has occurred."
 	}
 }
