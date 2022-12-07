@@ -74,25 +74,29 @@ app.ws("/", (ws, _) => {
 });
 
 const closeConnectionHandler = (_, msg) => {
-  if (LOBBIES[msg?.id]) {
-    const newClients = LOBBIES[msg?.id].filter(
-      (user) => user !== msg?.username
-    );
-    LOBBIES[msg?.id] = newClients;
+  try {
+    if (LOBBIES[msg?.id]) {
+      const newClients = LOBBIES[msg?.id].filter(
+        (user) => user !== msg?.username
+      );
+      LOBBIES[msg?.id] = newClients;
 
-    if (newClients.length === 0) {
-      deleteImage(msg);
-      delete LOBBIES[msg?.id];
+      if (newClients.length === 0) {
+        deleteImage(msg);
+        delete LOBBIES[msg?.id];
 
-      PUBLIC_LOBBIES = PUBLIC_LOBBIES.filter((lobby) => lobby !== msg?.id);
-    } else {
-      const message = {
-        id: msg?.id,
-        method: "close",
-        users: LOBBIES[msg?.id] ?? [],
-      };
-      broadcastConnection(message);
+        PUBLIC_LOBBIES = PUBLIC_LOBBIES.filter((lobby) => lobby !== msg?.id);
+      } else {
+        const message = {
+          id: msg?.id,
+          method: "close",
+          users: LOBBIES[msg?.id] ?? [],
+        };
+        broadcastConnection(message);
+      }
     }
+  } catch (e) {
+    console.log(e);
   }
 };
 
