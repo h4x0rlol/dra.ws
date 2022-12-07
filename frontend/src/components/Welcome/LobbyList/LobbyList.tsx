@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { axiosConfig } from 'src/api/axios.config';
+import { axiosConfig } from 'src/api';
 import lobbyStore from 'src/store/lobbyStore';
 import styles from './LobbyList.module.scss';
 

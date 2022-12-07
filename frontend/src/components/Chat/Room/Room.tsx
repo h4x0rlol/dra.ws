@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { Methods } from 'src/api/methods';
+import { Methods } from 'src/api';
 import SendIcon from 'src/components/Svg/SendIcon';
 import lobbyStore from 'src/store/lobbyStore';
 import { getLocalTime, getUtcTime } from 'src/utils/helpers';

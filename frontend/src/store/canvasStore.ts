@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { Methods } from 'src/api/methods';
+import { Methods } from 'src/api';
 import { Message } from 'src/api/types';
 import Tool from 'src/utils/tools/Tool';
 import lobbyStore from './lobbyStore';

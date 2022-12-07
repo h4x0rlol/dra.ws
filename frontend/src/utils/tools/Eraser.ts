@@ -1,4 +1,4 @@
-import { Methods } from 'src/api/methods';
+import { Methods } from 'src/api';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import Tool from './Tool';
