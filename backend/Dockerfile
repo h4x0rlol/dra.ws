@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:16.18.1
 
 ARG PORT
 ENV PORT=$PORT
