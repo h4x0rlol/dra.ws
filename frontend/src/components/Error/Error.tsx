@@ -7,7 +7,7 @@ const Error = ({ message }: { message: string }): JSX.Element => {
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.container}>
-				<p>{t('error.routerError')}</p>
+				<p>{t('error.message')}</p>
 				<p>{message}</p>
 			</div>
 		</div>

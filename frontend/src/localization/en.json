@@ -29,6 +29,7 @@
 		"share": "Just share a link"
 	},
 	"error": {
-		"routerError": "Sorry, an unexpected error has occurred."
+		"message": "Sorry, an unexpected error has occurred.",
+		"retry": "Try again"
 	}
 }

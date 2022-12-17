@@ -1,0 +1,62 @@
+@import 'src/styles/breakpoints.scss';
+@import 'src/styles/theme.scss';
+
+.wrapper {
+	display: flex;
+	width: 100%;
+	height: 100vh;
+	justify-content: center;
+
+	align-items: center;
+	flex-direction: column;
+
+	background: url('../../assets//img/background.svg');
+
+	@media (max-width: 768px) {
+		background: url('../../assets//img/background_low.svg');
+	}
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-size: 25px;
+	color: var(--color-primary);
+
+	@media (max-width: 768px) {
+		font-size: 17px;
+	}
+}
+
+.button {
+	border: none;
+	cursor: pointer;
+	height: 40px;
+	font-size: 25px;
+	justify-content: center;
+	margin-top: 15px;
+	padding: 5px;
+	border-radius: 5px;
+	color: var(--bg-secondary);
+	background: var(--color-primary);
+	border: 1px solid var(--color-primary);
+
+	:hover {
+		background: var(--bg-active);
+	}
+
+	:focus-visible {
+		outline: 1px solid var(--color-primary);
+		background: var(--bg-active);
+	}
+	:active {
+		outline: none;
+		border: 1x solidvar(--color-primary);
+	}
+
+	@media (max-width: $laptop) {
+		font-size: 14px;
+	}
+}
