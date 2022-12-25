@@ -109,7 +109,9 @@ const Lobby: React.FC = (): JSX.Element => {
 		if (lobbyStore.isJoinFromLobby) {
 			connectionHandler();
 		}
+	}, [lobbyStore.isJoinFromLobby, connectionHandler, params.id]);
 
+	useEffect(() => {
 		return () => {
 			lobbyStore.socket?.send(
 				JSON.stringify({
@@ -120,7 +122,7 @@ const Lobby: React.FC = (): JSX.Element => {
 			);
 			lobbyStore.socket?.close();
 		};
-	}, [lobbyStore.isJoinFromLobby, connectionHandler, params.id]);
+	}, []);
 
 	useBeforeunload(() => {
 		lobbyStore.socket?.send(
