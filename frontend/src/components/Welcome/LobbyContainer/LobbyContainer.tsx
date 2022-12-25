@@ -3,15 +3,15 @@ import cn from 'classnames';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './LobbyContainer.module.scss';
-import CreateLobby from '../CreateLobby/CreateLobby';
-import LobbyList from '../LobbyList/LobbyList';
+import { CreateLobby } from '../CreateLobby';
+import { LobbyList } from '../LobbyList';
 
 enum Options {
 	CREATE = 'CREATE',
 	LIST = 'LIST',
 }
 
-const LobbyContainer: React.FC = (): JSX.Element => {
+export const LobbyContainer: React.FC = observer((): JSX.Element => {
 	const { t } = useTranslation();
 	const [isCreateLobby, setIsCreateLobby] = useState(Options.CREATE);
 
@@ -43,6 +43,4 @@ const LobbyContainer: React.FC = (): JSX.Element => {
 			{isCreateLobby === Options.CREATE ? <CreateLobby /> : <LobbyList />}
 		</>
 	);
-};
-
-export default observer(LobbyContainer);
+});

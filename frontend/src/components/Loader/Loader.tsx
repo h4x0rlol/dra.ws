@@ -1,9 +1,8 @@
 import React from 'react';
 import cn from 'classnames';
-import { observer } from 'mobx-react-lite';
 import styles from './Loader.module.scss';
 
-const Loader: React.FC = (): JSX.Element => {
+export const Loader: React.FC = (): JSX.Element => {
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.loader}>
@@ -35,5 +34,3 @@ const Loader: React.FC = (): JSX.Element => {
 		</div>
 	);
 };
-
-export default observer(Loader);

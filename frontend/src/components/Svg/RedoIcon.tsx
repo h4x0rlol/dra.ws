@@ -1,6 +1,6 @@
 import React, { SVGProps } from 'react';
 
-const RedoIcon: React.FC<SVGProps<SVGElement>> = ({
+export const RedoIcon: React.FC<SVGProps<SVGElement>> = ({
 	className,
 	onClick,
 }): JSX.Element => {
@@ -17,5 +17,3 @@ const RedoIcon: React.FC<SVGProps<SVGElement>> = ({
 		</svg>
 	);
 };
-
-export default RedoIcon;

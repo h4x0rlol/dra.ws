@@ -1,4 +1,3 @@
-import { Params } from 'react-router-dom';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import Tool from 'src/utils/tools/Tool';
@@ -18,9 +17,11 @@ const setUsers = (users: string[]): void => {
 
 export const connectionHandler = (id: string | undefined): void => {
 	const socket: WebSocket = new WebSocket(WS_URL);
+
 	lobbyStore.setSocket(socket);
 	lobbyStore.setSessionId(id);
 	lobbyStore.setUserId(v4());
+
 	socket.onopen = () => {
 		socket.send(
 			JSON.stringify({

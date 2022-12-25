@@ -21,6 +21,7 @@
 	"rules": {
 		"react/require-default-props": "off",
 		"react/react-in-jsx-scope": "off",
+		"@typescript-eslint/no-non-null-assertion": "off",
 		"jsx-a11y/label-has-associated-control": [
 			"error",
 			{

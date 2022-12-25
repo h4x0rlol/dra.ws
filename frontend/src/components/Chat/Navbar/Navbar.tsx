@@ -2,15 +2,12 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Id, toast } from 'react-toastify';
-import ExitIcon from 'src/components/Svg/ExitIcon';
-import ShareIcon from 'src/components/Svg/ShareIcon';
-import UserIcon from 'src/components/Svg/UserIcon';
-import UsersIcon from 'src/components/Svg/UsersIcon';
-import ThemeToggle from 'src/components/ThemeToggle/ThemeToggle';
+import { ExitIcon, ShareIcon, UserIcon, UsersIcon } from 'src/components/Svg';
+import { ThemeToggle } from 'src/components/ThemeToggle';
 import lobbyStore, { RoomState } from 'src/store/lobbyStore';
 import styles from './Navbar.module.scss';
 
-const Navbar: React.FC = (): JSX.Element => {
+export const Navbar: React.FC = observer((): JSX.Element => {
 	const { t } = useTranslation();
 
 	const copyNotify = (): Id =>
@@ -99,6 +96,4 @@ const Navbar: React.FC = (): JSX.Element => {
 			</div>
 		</div>
 	);
-};
-
-export default observer(Navbar);
+});

@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import lobbyStore from 'src/store/lobbyStore';
-import ModalComponent from '../ModalComponent/ModalComponent';
+import { ModalComponent } from '../ModalComponent';
 import styles from './ExitModal.module.scss';
 
 const ExitModalContent = observer((): JSX.Element => {
@@ -43,7 +43,7 @@ const ExitModalContent = observer((): JSX.Element => {
 	);
 });
 
-const ExitModal = (): JSX.Element => {
+export const ExitModal = observer((): JSX.Element => {
 	return (
 		<ModalComponent
 			className={styles.container}
@@ -52,6 +52,4 @@ const ExitModal = (): JSX.Element => {
 			child={<ExitModalContent />}
 		/>
 	);
-};
-
-export default observer(ExitModal);
+});

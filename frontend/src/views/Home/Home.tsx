@@ -1,9 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import Welcome from 'src/components/Welcome/Welcome';
+import { Welcome } from 'src/components/Welcome';
 
-const Home: React.FC = (): JSX.Element => {
+export const Home: React.FC = observer((): JSX.Element => {
 	return <Welcome />;
-};
-
-export default observer(Home);
+});

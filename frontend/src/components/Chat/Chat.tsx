@@ -1,12 +1,13 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import Navbar from 'src/components/Chat/Navbar/Navbar';
-import Room from 'src/components/Chat/Room/Room';
-import UsersList from 'src/components/Chat/UsersList/UsersList';
 import lobbyStore, { RoomState } from 'src/store/lobbyStore';
+import { Navbar } from './Navbar';
+import { Room } from './Room';
+import { UsersList } from './UsersList';
+
 import styles from './Chat.module.scss';
 
-const Chat: React.FC = (): JSX.Element => {
+export const Chat: React.FC = observer((): JSX.Element => {
 	return (
 		<div className={styles.container}>
 			<Navbar />
@@ -17,6 +18,4 @@ const Chat: React.FC = (): JSX.Element => {
 			)}
 		</div>
 	);
-};
-
-export default observer(Chat);
+});

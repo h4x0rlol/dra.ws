@@ -4,8 +4,8 @@ import GitHubButton from 'react-github-btn';
 import { useTranslation } from 'react-i18next';
 import themeStore from 'src/store/themeStore';
 import { getRandomColor } from 'src/utils/helpers';
-import ThemeToggle from '../ThemeToggle/ThemeToggle';
-import LobbyContainer from './LobbyContainer/LobbyContainer';
+import { ThemeToggle } from 'src/components/ThemeToggle';
+import { LobbyContainer } from './LobbyContainer/LobbyContainer';
 import styles from './Welcome.module.scss';
 
 const NAME = Array.from('Welcome to dra.ws');
@@ -26,7 +26,7 @@ const Letter: React.FC<{ letter: string }> = ({
 	);
 };
 
-const Welcome: React.FC = (): JSX.Element => {
+export const Welcome: React.FC = observer((): JSX.Element => {
 	const { t } = useTranslation();
 
 	return (
@@ -77,6 +77,4 @@ const Welcome: React.FC = (): JSX.Element => {
 			</div>
 		</div>
 	);
-};
-
-export default observer(Welcome);
+});

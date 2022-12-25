@@ -4,8 +4,8 @@ import { ErrorBoundary } from 'react-error-boundary';
 import 'src/i18n';
 import 'src/styles/index.scss';
 import App from './App';
-import { ErrorFallback } from './components/ErrorFallback/ErrorFallback';
-import Loader from './components/Loader/Loader';
+import { ErrorFallback } from './components/ErrorFallback';
+import { Loader } from './components/Loader';
 
 const UI = (): JSX.Element => {
 	return (

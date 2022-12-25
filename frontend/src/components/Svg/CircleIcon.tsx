@@ -1,6 +1,6 @@
 import React, { SVGProps } from 'react';
 
-const CircleIcon: React.FC<SVGProps<SVGElement>> = ({
+export const CircleIcon: React.FC<SVGProps<SVGElement>> = ({
 	className,
 	onClick,
 }): JSX.Element => {
@@ -17,5 +17,3 @@ const CircleIcon: React.FC<SVGProps<SVGElement>> = ({
 		</svg>
 	);
 };
-
-export default CircleIcon;

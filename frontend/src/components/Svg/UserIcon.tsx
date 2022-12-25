@@ -1,6 +1,6 @@
 import React, { SVGProps } from 'react';
 
-const UserIcon: React.FC<SVGProps<SVGElement>> = ({
+export const UserIcon: React.FC<SVGProps<SVGElement>> = ({
 	className,
 	onClick,
 	width,
@@ -19,5 +19,3 @@ const UserIcon: React.FC<SVGProps<SVGElement>> = ({
 		</svg>
 	);
 };
-
-export default UserIcon;

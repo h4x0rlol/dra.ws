@@ -1,13 +1,15 @@
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import BrushIcon from 'src/components/Svg/BrushIcon';
-import CircleIcon from 'src/components/Svg/CircleIcon';
-import EraserIcon from 'src/components/Svg/EraserIcon';
-import LineIcon from 'src/components/Svg/LineIcon';
-import PencilIcon from 'src/components/Svg/PencilIcon';
-import RectIcon from 'src/components/Svg/RectIcon';
-import TriangleIcon from 'src/components/Svg/TriangleIcon';
+import {
+	BrushIcon,
+	CircleIcon,
+	EraserIcon,
+	LineIcon,
+	PencilIcon,
+	RectIcon,
+	TriangleIcon,
+} from 'src/components/Svg/';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
@@ -21,7 +23,7 @@ import Tool from 'src/utils/tools/Tool';
 import Triangle from 'src/utils/tools/Triangle';
 import styles from './Toolbar.module.scss';
 
-const Toolbar: React.FC = (): JSX.Element => {
+export const Toolbar: React.FC = observer((): JSX.Element => {
 	const onSelect = (CurrentTool: typeof Tool): void => {
 		if (
 			canvasStore.canvas &&
@@ -115,6 +117,4 @@ const Toolbar: React.FC = (): JSX.Element => {
 			</div>
 		</div>
 	);
-};
-
-export default observer(Toolbar);
+});

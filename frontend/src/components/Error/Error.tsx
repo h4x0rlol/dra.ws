@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import styles from './Error.module.scss';
 
-const Error = ({ message }: { message: string }): JSX.Element => {
+export const Error = ({ message }: { message: string }): JSX.Element => {
 	const { t } = useTranslation();
 
 	return (
@@ -13,5 +13,3 @@ const Error = ({ message }: { message: string }): JSX.Element => {
 		</div>
 	);
 };
-
-export default Error;

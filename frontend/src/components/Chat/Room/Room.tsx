@@ -3,13 +3,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Methods } from 'src/api';
-import SendIcon from 'src/components/Svg/SendIcon';
+import { SendIcon } from 'src/components/Svg';
 import lobbyStore from 'src/store/lobbyStore';
 import { getLocalTime, getUtcTime } from 'src/utils/helpers';
-import Message from '../Message/Message';
+import { Message } from '../Message';
 import styles from './Room.module.scss';
 
-const Room: React.FC = (): JSX.Element => {
+export const Room: React.FC = observer((): JSX.Element => {
 	const { t } = useTranslation();
 	const params = useParams();
 	const [message, setMessage] = useState<string>('');
@@ -100,6 +100,4 @@ const Room: React.FC = (): JSX.Element => {
 			</div>
 		</>
 	);
-};
-
-export default observer(Room);
+});

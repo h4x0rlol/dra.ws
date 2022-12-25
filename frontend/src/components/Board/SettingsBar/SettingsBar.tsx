@@ -7,13 +7,15 @@ import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
 import { preventNegativeValue } from 'src/utils/helpers';
-import ClearIcon from '../../Svg/ClearIcon';
-import DownloadIcon from '../../Svg/DownloadIcon';
-import RedoIcon from '../../Svg/RedoIcon';
-import UndoIcon from '../../Svg/UndoIcon';
+import {
+	ClearIcon,
+	DownloadIcon,
+	RedoIcon,
+	UndoIcon,
+} from 'src/components/Svg';
 import styles from './SettingsBar.module.scss';
 
-const SettingsBar: React.FC = (): JSX.Element => {
+export const SettingsBar: React.FC = observer((): JSX.Element => {
 	const { t } = useTranslation();
 
 	const toolNotify = (): Id =>
@@ -183,6 +185,4 @@ const SettingsBar: React.FC = (): JSX.Element => {
 			<Toast />
 		</div>
 	);
-};
-
-export default observer(SettingsBar);
+});

@@ -2,11 +2,11 @@ import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import lobbyStore from 'src/store/lobbyStore';
-import ModalComponent from '../ModalComponent/ModalComponent';
-import UserIcon from '../Svg/UserIcon';
+import { UserIcon } from 'src/components/Svg';
+import { ModalComponent } from '../ModalComponent';
 import styles from './JoinModal.module.scss';
 
-const JoinModallContent = observer((): JSX.Element => {
+const JoinModalContent = observer((): JSX.Element => {
 	const { t } = useTranslation();
 	const [username, setUsername] = useState('');
 	const [error, setError] = useState(lobbyStore.username.length > 8);
@@ -65,7 +65,7 @@ const JoinModallContent = observer((): JSX.Element => {
 	);
 });
 
-const JoinModal = (): JSX.Element => {
+export const JoinModal = observer((): JSX.Element => {
 	const onRequestClose = (): null => {
 		return null;
 	};
@@ -75,9 +75,7 @@ const JoinModal = (): JSX.Element => {
 			className={styles.container}
 			isOpen={lobbyStore.isJoinModalOpen}
 			onClose={onRequestClose}
-			child={<JoinModallContent />}
+			child={<JoinModalContent />}
 		/>
 	);
-};
-
-export default observer(JoinModal);
+});

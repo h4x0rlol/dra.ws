@@ -2,12 +2,12 @@ import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import UserIcon from 'src/components/Svg/UserIcon';
+import { UserIcon } from 'src/components/Svg';
 import lobbyStore from 'src/store/lobbyStore';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './CreateLobby.module.scss';
 
-const CreateLobby: React.FC = (): JSX.Element => {
+export const CreateLobby: React.FC = observer((): JSX.Element => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const [error, setError] = useState(lobbyStore.username.length > 8);
@@ -73,6 +73,4 @@ const CreateLobby: React.FC = (): JSX.Element => {
 			</div>
 		</div>
 	);
-};
-
-export default observer(CreateLobby);
+});

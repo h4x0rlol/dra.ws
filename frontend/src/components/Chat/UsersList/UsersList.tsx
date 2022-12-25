@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import lobbyStore from 'src/store/lobbyStore';
 import styles from './UsersList.module.scss';
 
-const UsersList: React.FC = (): JSX.Element => {
+export const UsersList: React.FC = observer((): JSX.Element => {
 	const { t } = useTranslation();
 
 	return (
@@ -23,6 +23,4 @@ const UsersList: React.FC = (): JSX.Element => {
 			</div>
 		</div>
 	);
-};
-
-export default observer(UsersList);
+});

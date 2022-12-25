@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useBeforeunload } from 'react-beforeunload';
 import { useParams } from 'react-router-dom';
 import {
@@ -7,14 +7,14 @@ import {
 	connectionHandler,
 	getImageData,
 } from 'src/api';
-import Board from 'src/components/Board/Board';
-import Chat from 'src/components/Chat/Chat';
-import ExitModal from 'src/components/ExitModal/ExitModal';
-import JoinModal from 'src/components/JoinModal/JoinModal';
+import { Board } from 'src/components/Board';
+import { Chat } from 'src/components/Chat';
+import { ExitModal } from 'src/components/ExitModal';
+import { JoinModal } from 'src/components/JoinModal';
 import lobbyStore from 'src/store/lobbyStore';
 import styles from './Lobby.module.scss';
 
-const Lobby: React.FC = (): JSX.Element => {
+export const Lobby: React.FC = observer((): JSX.Element => {
 	const params = useParams();
 
 	useEffect(() => {
@@ -45,6 +45,4 @@ const Lobby: React.FC = (): JSX.Element => {
 			<JoinModal />
 		</div>
 	);
-};
-
-export default observer(Lobby);
+});

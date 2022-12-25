@@ -6,7 +6,7 @@ import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './ThemeToggle.scss';
 
-const ThemeToggle: React.FC = (): JSX.Element => {
+export const ThemeToggle: React.FC = observer((): JSX.Element => {
 	const activeTheme: string = themeStore.theme;
 	const inactiveTheme: string = activeTheme === 'light' ? 'dark' : 'light';
 
@@ -47,6 +47,4 @@ const ThemeToggle: React.FC = (): JSX.Element => {
 			</label>
 		</>
 	);
-};
-
-export default observer(ThemeToggle);
+});

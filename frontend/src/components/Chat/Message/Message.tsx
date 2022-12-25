@@ -11,26 +11,26 @@ interface MessageProps {
 	message?: string;
 }
 
-const Message: React.FC<MessageProps> = ({
-	messageType = MessageTypes.OUTCOMING,
-	name = '',
-	date = '',
-	message = '',
-}: MessageProps): JSX.Element => {
-	return (
-		<div
-			className={cn(styles.wrapper, {
-				[styles.incoming]: messageType === MessageTypes.INCOMING,
-				[styles.outcoming]: messageType === MessageTypes.OUTCOMING,
-			})}
-		>
-			<div className={styles.info}>
-				<div className={styles.name}>{name}</div>
-				<span className={styles.time}>{date}</span>
+export const Message: React.FC<MessageProps> = observer(
+	({
+		messageType = MessageTypes.OUTCOMING,
+		name = '',
+		date = '',
+		message = '',
+	}: MessageProps): JSX.Element => {
+		return (
+			<div
+				className={cn(styles.wrapper, {
+					[styles.incoming]: messageType === MessageTypes.INCOMING,
+					[styles.outcoming]: messageType === MessageTypes.OUTCOMING,
+				})}
+			>
+				<div className={styles.info}>
+					<div className={styles.name}>{name}</div>
+					<span className={styles.time}>{date}</span>
+				</div>
+				{message}
 			</div>
-			{message}
-		</div>
-	);
-};
-
-export default observer(Message);
+		);
+	}
+);

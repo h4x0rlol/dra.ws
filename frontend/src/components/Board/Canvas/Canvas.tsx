@@ -10,7 +10,7 @@ import Pencil from 'src/utils/tools/Pencil';
 import Rect from 'src/utils/tools/Rect';
 import styles from './Canvas.module.scss';
 
-const Canvas: React.FC = (): JSX.Element => {
+export const Canvas: React.FC = observer((): JSX.Element => {
 	const [isOutOfBounds, setIsOutOfBounds] = useState<boolean>(true);
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -81,6 +81,4 @@ const Canvas: React.FC = (): JSX.Element => {
 			</div>
 		</div>
 	);
-};
-
-export default observer(Canvas);
+});

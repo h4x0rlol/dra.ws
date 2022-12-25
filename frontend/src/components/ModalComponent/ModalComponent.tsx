@@ -12,24 +12,24 @@ interface ModalComponentProps {
 	child: ReactNode;
 }
 
-const ModalComponent = ({
-	isOpen,
-	onClose,
-	className,
-	child,
-}: ModalComponentProps): JSX.Element => {
-	return (
-		<Modal
-			isOpen={Boolean(isOpen)}
-			onRequestClose={onClose}
-			contentLabel="Modal window"
-			shouldCloseOnEsc={Boolean(true)}
-			className={className}
-			overlayClassName={styles.overlay}
-		>
-			{child}
-		</Modal>
-	);
-};
-
-export default observer(ModalComponent);
+export const ModalComponent = observer(
+	({
+		isOpen,
+		onClose,
+		className,
+		child,
+	}: ModalComponentProps): JSX.Element => {
+		return (
+			<Modal
+				isOpen={Boolean(isOpen)}
+				onRequestClose={onClose}
+				contentLabel="Modal window"
+				shouldCloseOnEsc={Boolean(true)}
+				className={className}
+				overlayClassName={styles.overlay}
+			>
+				{child}
+			</Modal>
+		);
+	}
+);

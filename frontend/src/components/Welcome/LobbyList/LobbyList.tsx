@@ -6,7 +6,7 @@ import { axiosConfig } from 'src/api';
 import lobbyStore from 'src/store/lobbyStore';
 import styles from './LobbyList.module.scss';
 
-const LobbyList: React.FC = (): JSX.Element => {
+export const LobbyList: React.FC = observer((): JSX.Element => {
 	const { t } = useTranslation();
 	const [list, setList] = useState<string[]>([]);
 	const [error, setError] = useState('');
@@ -54,6 +54,4 @@ const LobbyList: React.FC = (): JSX.Element => {
 			)}
 		</div>
 	);
-};
-
-export default observer(LobbyList);
+});
