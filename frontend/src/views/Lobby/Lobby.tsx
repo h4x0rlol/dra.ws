@@ -22,9 +22,7 @@ const Lobby: React.FC = (): JSX.Element => {
 
 	const getImageData: () => void = useCallback(() => {
 		if (canvasStore.canvas) {
-			const ctx = canvasStore.canvas.getContext(
-				'2d'
-			) as unknown as CanvasRenderingContext2D;
+			const ctx = canvasStore.canvas.getContext('2d');
 			axiosConfig.get(`/image?id=${params.id}`).then((response) => {
 				const img = new Image();
 				img.src = response.data;
@@ -109,7 +107,7 @@ const Lobby: React.FC = (): JSX.Element => {
 		if (lobbyStore.isJoinFromLobby) {
 			connectionHandler();
 		}
-	}, [lobbyStore.isJoinFromLobby, connectionHandler, params.id]);
+	}, [lobbyStore.isJoinFromLobby, connectionHandler]);
 
 	useEffect(() => {
 		return () => {
@@ -122,7 +120,7 @@ const Lobby: React.FC = (): JSX.Element => {
 			);
 			lobbyStore.socket?.close();
 		};
-	}, []);
+	}, [params.id]);
 
 	useBeforeunload(() => {
 		lobbyStore.socket?.send(
