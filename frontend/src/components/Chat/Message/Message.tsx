@@ -5,10 +5,10 @@ import { MessageTypes } from 'src/api/types';
 import styles from './Message.module.scss';
 
 interface MessageProps {
-	messageType?: MessageTypes;
-	name?: string;
-	date?: string;
-	message?: string;
+	messageType: MessageTypes;
+	name: string;
+	date: string;
+	message: string;
 }
 
 export const Message: React.FC<MessageProps> = observer(
