@@ -2,6 +2,7 @@ import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { MessageTypes } from 'src/api/types';
+import { getLocalTime } from 'src/utils/helpers';
 import styles from './Message.module.scss';
 
 interface MessageProps {
@@ -27,7 +28,7 @@ export const Message: React.FC<MessageProps> = observer(
 			>
 				<div className={styles.info}>
 					<div className={styles.name}>{name}</div>
-					<span className={styles.time}>{date}</span>
+					<span className={styles.time}>{getLocalTime(date)}</span>
 				</div>
 				{message}
 			</div>

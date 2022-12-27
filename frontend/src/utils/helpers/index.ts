@@ -1,5 +1,8 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { COLORS, WELCOMEMESSAGE } from '../constants';
+
+dayjs.extend(utc);
 
 export const preventNegativeValue = (n: number): number =>
 	Math.abs(n) >= 1 ? Math.abs(n) : 1;
@@ -23,10 +26,10 @@ export const getLineType = (type: string, width: number): number[] => {
 	}
 };
 
-export const getUtcTime = (): string => moment.utc().format();
+export const getUtcTime = (): string => dayjs.utc().format();
 
 export const getLocalTime = (UtcTime: string): string =>
-	moment.utc(UtcTime).local().format('HH:mm');
+	dayjs.utc(UtcTime).local().format('HH:mm');
 
 export const getCurrentTime = (): string => getLocalTime(getUtcTime());
 

@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Methods, sendMessage } from 'src/api';
 import { SendIcon } from 'src/components/Svg';
 import lobbyStore from 'src/store/lobbyStore';
-import { getCurrentTime, getLocalTime, getUtcTime } from 'src/utils/helpers';
+import { getCurrentTime, getUtcTime } from 'src/utils/helpers';
 import { Message } from '../Message';
 import styles from './Room.module.scss';
 
@@ -60,7 +60,7 @@ export const Room: React.FC = observer((): JSX.Element => {
 							messageType={m.type}
 							message={m.message}
 							name={m.username}
-							date={getLocalTime(m.date)}
+							date={m.date}
 						/>
 					);
 				})}
