@@ -41,11 +41,11 @@ export const SettingsBar: React.FC = observer((): JSX.Element => {
 		e: React.ChangeEvent<HTMLInputElement>
 	): void => {
 		if (toolStore.tool) {
-			preventNegativeValue(Number(e.target.value));
-			if (Number(e.target.value) > 50) {
-				e.target.value = '50';
+			let value = preventNegativeValue(Number(e.target.value));
+			if (value > 50) {
+				value = 50;
 			}
-			toolStore.setLineWidth(Number(e.target.value));
+			toolStore.setLineWidth(value);
 		}
 	};
 
@@ -103,7 +103,7 @@ export const SettingsBar: React.FC = observer((): JSX.Element => {
 					/>
 					<input
 						type="number"
-						min={0}
+						min={1}
 						max={50}
 						className={styles.input}
 						value={toolStore.lineWidth}

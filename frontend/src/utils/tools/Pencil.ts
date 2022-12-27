@@ -40,6 +40,7 @@ export default class Pencil extends Tool {
 		if (this.mouseDown) {
 			const coordinates = this.getCanvasCoordinates(e.offsetX, e.offsetY);
 			this.draw(coordinates.x, coordinates.y);
+			console.log(this.ctx.lineWidth);
 		}
 	}
 
@@ -70,11 +71,6 @@ export default class Pencil extends Tool {
 	}
 
 	draw(x: number, y: number): void {
-		this.ctx.strokeStyle = this.color;
-		this.ctx.lineWidth = this.lineWidth;
-		this.ctx.setLineDash(
-			getLineType(toolStore.lineType, toolStore.lineWidth)
-		);
 		this.ctx.lineCap = 'butt';
 		this.ctx.lineJoin = 'miter';
 		this.ctx.shadowBlur = 0;

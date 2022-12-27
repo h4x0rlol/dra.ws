@@ -1,8 +1,8 @@
 import moment from 'moment';
 import { COLORS, WELCOMEMESSAGE } from '../constants';
 
-export const preventNegativeValue = (n: number): number | null =>
-	!!n && Math.abs(n) >= 0 ? Math.abs(n) : null;
+export const preventNegativeValue = (n: number): number =>
+	Math.abs(n) >= 1 ? Math.abs(n) : 1;
 
 export const getRandomColor = (): string => {
 	const keys = Object.keys(COLORS);

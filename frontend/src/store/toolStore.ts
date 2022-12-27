@@ -20,6 +20,7 @@ class ToolStore {
 		this.tool = tool;
 		this.setColor(this.color);
 		this.setLineWidth(this.lineWidth);
+		this.setLineType(this.lineType);
 	}
 
 	setColor(color: string): void {
@@ -34,7 +35,6 @@ class ToolStore {
 		if (this.tool) {
 			this.tool.lineWidth = this.lineWidth;
 		}
-		this.setLineType(this.lineType);
 	}
 
 	setFill(fill: boolean): void {
