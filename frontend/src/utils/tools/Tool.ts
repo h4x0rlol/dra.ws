@@ -2,7 +2,7 @@ import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import { MouseCoord } from '../types';
 
-export default class Tool {
+export class Tool {
 	canvas: HTMLCanvasElement;
 
 	ctx: CanvasRenderingContext2D;

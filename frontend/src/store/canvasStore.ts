@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import { Methods } from 'src/api';
 import { Message } from 'src/api/types';
 import { JPEGQUALITY } from 'src/utils/constants';
-import Tool from 'src/utils/tools/Tool';
+import { Tool } from 'src/utils/tools';
 import lobbyStore from './lobbyStore';
 
 class CanvasStore {

@@ -2,9 +2,9 @@ import { Methods } from 'src/api';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import { JPEGQUALITY } from '../constants';
-import Tool from './Tool';
+import { Tool } from './Tool';
 
-export default class Eraser extends Tool {
+export class Eraser extends Tool {
 	constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
 		super(canvas, ctx);
 		this.listen();

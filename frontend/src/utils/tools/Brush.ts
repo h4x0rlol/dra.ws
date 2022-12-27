@@ -4,9 +4,9 @@ import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
 import { JPEGQUALITY } from '../constants';
 import { getLineType } from '../helpers';
-import Tool from './Tool';
+import { Tool } from './Tool';
 
-export default class Brush extends Tool {
+export class Brush extends Tool {
 	constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
 		super(canvas, ctx);
 		this.listen();

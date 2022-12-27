@@ -4,9 +4,9 @@ import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
 import { JPEGQUALITY } from '../constants';
 import { getLineType } from '../helpers';
-import Tool from './Tool';
+import { Tool } from './Tool';
 
-export default class Rect extends Tool {
+export class Rect extends Tool {
 	startX: number;
 
 	startY: number;

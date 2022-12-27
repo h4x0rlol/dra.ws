@@ -13,14 +13,16 @@ import {
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
-import Brush from 'src/utils/tools/Brush';
-import Circle from 'src/utils/tools/Circle';
-import Eraser from 'src/utils/tools/Eraser';
-import Line from 'src/utils/tools/Line';
-import Pencil from 'src/utils/tools/Pencil';
-import Rect from 'src/utils/tools/Rect';
-import Tool from 'src/utils/tools/Tool';
-import Triangle from 'src/utils/tools/Triangle';
+import {
+	Brush,
+	Circle,
+	Eraser,
+	Line,
+	Pencil,
+	Rect,
+	Tool,
+	Triangle,
+} from 'src/utils/tools';
 import styles from './Toolbar.module.scss';
 
 export const Toolbar: React.FC = observer((): JSX.Element => {

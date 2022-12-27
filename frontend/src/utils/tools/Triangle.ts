@@ -5,9 +5,9 @@ import toolStore from 'src/store/toolStore';
 import { JPEGQUALITY } from '../constants';
 import { getLineType } from '../helpers';
 import { MouseCoord } from '../types';
-import Tool from './Tool';
+import { Tool } from './Tool';
 
-export default class Triangle extends Tool {
+export class Triangle extends Tool {
 	mouse: MouseCoord[];
 
 	constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {

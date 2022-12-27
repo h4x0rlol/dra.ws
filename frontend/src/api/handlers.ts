@@ -1,6 +1,6 @@
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
-import Tool from 'src/utils/tools/Tool';
+import { Tool } from 'src/utils/tools';
 import { v4 } from 'uuid';
 import { axiosConfig } from './axios.config';
 import { Methods } from './methods';

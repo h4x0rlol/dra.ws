@@ -2,12 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef, useState } from 'react';
 import canvasStore from 'src/store/canvasStore';
 import toolStore from 'src/store/toolStore';
-import Brush from 'src/utils/tools/Brush';
-import Circle from 'src/utils/tools/Circle';
-import Eraser from 'src/utils/tools/Eraser';
-import Line from 'src/utils/tools/Line';
-import Pencil from 'src/utils/tools/Pencil';
-import Rect from 'src/utils/tools/Rect';
+import { Brush, Circle, Eraser, Line, Pencil, Rect } from 'src/utils/tools';
 import styles from './Canvas.module.scss';
 
 export const Canvas: React.FC = observer((): JSX.Element => {

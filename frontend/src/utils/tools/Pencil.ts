@@ -4,9 +4,9 @@ import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
 import { JPEGQUALITY } from '../constants';
 import { getLineType } from '../helpers';
-import Tool from './Tool';
+import { Tool } from './Tool';
 
-export default class Pencil extends Tool {
+export class Pencil extends Tool {
 	constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
 		super(canvas, ctx);
 		this.listen();
