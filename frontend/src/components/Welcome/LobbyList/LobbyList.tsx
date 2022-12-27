@@ -12,7 +12,9 @@ export const LobbyList: React.FC = observer((): JSX.Element => {
 	const [error, setError] = useState('');
 
 	const handlePress = (): void => {
-		lobbyStore.checkUserName(lobbyStore.username);
+		lobbyStore.checkUserName(
+			lobbyStore.username.length > 8 ? '' : lobbyStore.username
+		);
 		lobbyStore.setIsJoinFromLobby(true);
 	};
 

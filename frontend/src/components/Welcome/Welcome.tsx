@@ -3,12 +3,12 @@ import React from 'react';
 import GitHubButton from 'react-github-btn';
 import { useTranslation } from 'react-i18next';
 import themeStore from 'src/store/themeStore';
-import { getRandomColor } from 'src/utils/helpers';
+import { getRandomColor, getWelcomeMessage } from 'src/utils/helpers';
 import { ThemeToggle } from 'src/components/ThemeToggle';
 import { LobbyContainer } from './LobbyContainer/LobbyContainer';
 import styles from './Welcome.module.scss';
 
-const NAME = Array.from('Welcome to dra.ws');
+const welcomeMessage = getWelcomeMessage();
 
 const Letter: React.FC<{ letter: string }> = ({
 	letter,
@@ -35,7 +35,7 @@ export const Welcome: React.FC = observer((): JSX.Element => {
 			<div className={styles.welcome}>
 				<div className={styles.info_wrapper}>
 					<div className={styles.greeting}>
-						{NAME.map((letter, index) => {
+						{welcomeMessage.map((letter, index) => {
 							return (
 								<Letter
 									key={`${index + 1}-${letter}`}

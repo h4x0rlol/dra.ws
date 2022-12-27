@@ -54,3 +54,6 @@ export const getLocalTime = (UtcTime: string): string =>
 	moment.utc(UtcTime).local().format('HH:mm');
 
 export const getCurrentTime = (): string => getLocalTime(getUtcTime());
+
+export const getWelcomeMessage = (): string[] =>
+	Array.from('Welcome to dra.ws');
