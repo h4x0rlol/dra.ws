@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react-lite';
+import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { UserIcon } from 'src/components/Svg';
 import lobbyStore from 'src/store/lobbyStore';
-import { v4 } from 'uuid';
 import styles from './CreateLobby.module.scss';
 
 export const CreateLobby: React.FC = observer((): JSX.Element => {
@@ -25,7 +25,7 @@ export const CreateLobby: React.FC = observer((): JSX.Element => {
 		if (lobbyStore.username.length <= 8) {
 			lobbyStore.checkUserName(lobbyStore.username);
 			lobbyStore.setIsJoinFromLobby(true);
-			const uuid = v4();
+			const uuid = nanoid();
 			navigate(`/lobby/f${uuid}`);
 		}
 	};

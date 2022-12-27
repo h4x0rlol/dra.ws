@@ -1,7 +1,7 @@
+import { nanoid } from 'nanoid';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import { Tool } from 'src/utils/tools';
-import { v4 } from 'uuid';
 import { axiosConfig } from './axios.config';
 import { Methods } from './methods';
 import { ChatMessage, Message, MessageTypes } from './types';
@@ -34,7 +34,7 @@ export const connectionHandler = (id: string | undefined): void => {
 
 	lobbyStore.setSocket(socket);
 	lobbyStore.setSessionId(id);
-	lobbyStore.setUserId(v4());
+	lobbyStore.setUserId(nanoid());
 
 	socket.onopen = () => {
 		socket.send(
