@@ -5,17 +5,17 @@ import { useParams } from 'react-router-dom';
 import { Methods } from 'src/api';
 import { SendIcon } from 'src/components/Svg';
 import lobbyStore from 'src/store/lobbyStore';
-import { getLocalTime, getUtcTime } from 'src/utils/helpers';
+import { getCurrentTime, getLocalTime, getUtcTime } from 'src/utils/helpers';
 import { Message } from '../Message';
 import styles from './Room.module.scss';
+
+const currentTime = getCurrentTime();
 
 export const Room: React.FC = observer((): JSX.Element => {
 	const { t } = useTranslation();
 	const params = useParams();
 	const [message, setMessage] = useState<string>('');
 	const listRef = useRef<HTMLDivElement>(null);
-
-	const getCurrentTime = (): string => getLocalTime(getUtcTime());
 
 	const scrollToLastMessage: () => void = useCallback(() => {
 		const lastChild = listRef.current?.lastElementChild;
@@ -49,7 +49,7 @@ export const Room: React.FC = observer((): JSX.Element => {
 			<div className={styles.container}>
 				<div className={styles.message}>
 					<p className={styles.welcome}>{t('room.welcome')}</p>
-					<p className={styles.start_time}>{getCurrentTime()}</p>
+					<p className={styles.start_time}>{currentTime}</p>
 				</div>
 			</div>
 

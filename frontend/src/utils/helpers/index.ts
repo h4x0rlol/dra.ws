@@ -52,3 +52,5 @@ export const getUtcTime = (): string => moment.utc().format();
 
 export const getLocalTime = (UtcTime: string): string =>
 	moment.utc(UtcTime).local().format('HH:mm');
+
+export const getCurrentTime = (): string => getLocalTime(getUtcTime());
