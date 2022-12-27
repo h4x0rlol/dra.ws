@@ -4,7 +4,6 @@ import lobbyStore, { RoomState } from 'src/store/lobbyStore';
 import { Navbar } from './Navbar';
 import { Room } from './Room';
 import { UsersList } from './UsersList';
-
 import styles from './Chat.module.scss';
 
 export const Chat: React.FC = observer((): JSX.Element => {

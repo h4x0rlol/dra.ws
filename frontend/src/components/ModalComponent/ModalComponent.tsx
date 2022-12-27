@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import Modal from 'react-modal';
 import styles from './ModalComponent.module.scss';
 

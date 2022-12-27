@@ -15,7 +15,7 @@ export const ErrorFallback = ({
 		<div className={styles.wrapper}>
 			<div className={styles.container} role="alert">
 				<p>{t('error.message')}</p>
-				<p>{error.message}</p>
+				<p>{error?.message}</p>
 				<button
 					type="button"
 					className={styles.button}

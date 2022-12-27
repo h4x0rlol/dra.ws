@@ -41,7 +41,7 @@ const JoinModalContent = observer((): JSX.Element => {
 							type="text"
 							placeholder={t('home.placeholder')}
 							value={username}
-							onChange={(e) => handleChangeName(e)}
+							onChange={handleChangeName}
 							className={styles.input}
 						/>
 						{error && (
