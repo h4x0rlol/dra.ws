@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { axiosConfig } from './api';
 import { Error } from './components/Error';
@@ -11,8 +11,11 @@ const App: React.FC = (): JSX.Element => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState('');
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		getTheme();
+	}, []);
+
+	useEffect(() => {
 		axiosConfig
 			.get('/health')
 			.then((res) => {
