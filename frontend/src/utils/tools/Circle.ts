@@ -2,6 +2,7 @@ import { Methods } from 'src/api';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
+import { JPEGQUALITY } from '../constants';
 import { getLineType } from '../helpers';
 import Tool from './Tool';
 
@@ -36,7 +37,9 @@ export default class Circle extends Tool {
 	private downHandler(x: number, y: number): void {
 		this.mouseDown = true;
 		const coordinates = this.getCanvasCoordinates(x, y);
-		canvasStore.pushToUndo(this.canvas.toDataURL('image/jpeg', 0.85));
+		canvasStore.pushToUndo(
+			this.canvas.toDataURL('image/jpeg', JPEGQUALITY)
+		);
 		this.startX = coordinates.x;
 		this.startY = coordinates.y;
 	}
@@ -81,7 +84,7 @@ export default class Circle extends Tool {
 			method: Methods.DRAW,
 			id: lobbyStore.sessionId,
 			image: {
-				src: this.canvas.toDataURL('image/jpeg', 0.85),
+				src: this.canvas.toDataURL('image/jpeg', JPEGQUALITY),
 			},
 		};
 		this.sendMessage(JSON.stringify(message));

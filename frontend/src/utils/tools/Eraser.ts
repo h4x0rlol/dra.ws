@@ -1,6 +1,7 @@
 import { Methods } from 'src/api';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
+import { JPEGQUALITY } from '../constants';
 import Tool from './Tool';
 
 export default class Eraser extends Tool {
@@ -21,7 +22,9 @@ export default class Eraser extends Tool {
 
 	private downHandler(x: number, y: number): void {
 		this.mouseDown = true;
-		canvasStore.pushToUndo(this.canvas?.toDataURL('image/jpeg', 0.85));
+		canvasStore.pushToUndo(
+			this.canvas?.toDataURL('image/jpeg', JPEGQUALITY)
+		);
 		const coordinates = this.getCanvasCoordinates(x, y);
 		this.ctx.beginPath();
 		this.ctx.moveTo(coordinates.x, coordinates.y);
@@ -57,7 +60,7 @@ export default class Eraser extends Tool {
 			method: Methods.DRAW,
 			id: lobbyStore.sessionId,
 			image: {
-				src: this.canvas.toDataURL('image/jpeg', 0.85),
+				src: this.canvas.toDataURL('image/jpeg', JPEGQUALITY),
 			},
 		};
 		this.sendMessage(JSON.stringify(message));

@@ -3,6 +3,7 @@ import { MouseCoord } from 'src/api/types';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
+import { JPEGQUALITY } from '../constants';
 import { getLineType } from '../helpers';
 import Tool from './Tool';
 
@@ -20,7 +21,9 @@ export default class Triangle extends Tool {
 	}
 
 	mouseClickHandler(e: MouseEvent): void {
-		canvasStore.pushToUndo(this.canvas?.toDataURL('image/jpeg', 0.85));
+		canvasStore.pushToUndo(
+			this.canvas?.toDataURL('image/jpeg', JPEGQUALITY)
+		);
 		const coordinates = this.getCanvasCoordinates(e.offsetX, e.offsetY);
 		this.mouse.push(coordinates);
 		this.draw();
@@ -29,7 +32,7 @@ export default class Triangle extends Tool {
 				method: Methods.DRAW,
 				id: lobbyStore.sessionId,
 				image: {
-					src: this.canvas.toDataURL('image/jpeg', 0.85),
+					src: this.canvas.toDataURL('image/jpeg', JPEGQUALITY),
 				},
 			};
 			this.mouse = [];

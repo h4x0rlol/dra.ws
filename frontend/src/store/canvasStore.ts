@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import { Methods } from 'src/api';
 import { Message } from 'src/api/types';
+import { JPEGQUALITY } from 'src/utils/constants';
 import Tool from 'src/utils/tools/Tool';
 import lobbyStore from './lobbyStore';
 
@@ -62,7 +63,7 @@ class CanvasStore {
 	undo(): void {
 		if (this.undoList.length > 0) {
 			const dataUrl = this.undoList.pop();
-			this.pushToRedo(this.canvas?.toDataURL('image/jpeg', 0.85));
+			this.pushToRedo(this.canvas?.toDataURL('image/jpeg', JPEGQUALITY));
 
 			if (dataUrl) {
 				const img: HTMLImageElement = new Image();
@@ -91,7 +92,10 @@ class CanvasStore {
 							id: lobbyStore.sessionId,
 							method: Methods.DRAW,
 							image: {
-								src: this.canvas?.toDataURL('image/jpeg', 0.85),
+								src: this.canvas?.toDataURL(
+									'image/jpeg',
+									JPEGQUALITY
+								),
 							},
 						})
 					);
@@ -103,7 +107,7 @@ class CanvasStore {
 	redo(): void {
 		if (this.redoList.length > 0) {
 			const dataUrl = this.redoList.pop();
-			this.pushToUndo(this.canvas?.toDataURL('image/jpeg', 0.85));
+			this.pushToUndo(this.canvas?.toDataURL('image/jpeg', JPEGQUALITY));
 
 			if (dataUrl) {
 				const img = new Image();
@@ -133,7 +137,10 @@ class CanvasStore {
 						id: lobbyStore.sessionId,
 						method: Methods.DRAW,
 						image: {
-							src: this.canvas?.toDataURL('image/jpeg', 0.85),
+							src: this.canvas?.toDataURL(
+								'image/jpeg',
+								JPEGQUALITY
+							),
 						},
 					})
 				);
@@ -142,7 +149,7 @@ class CanvasStore {
 	}
 
 	clear(): void {
-		this.pushToUndo(this.canvas?.toDataURL('image/jpeg', 0.85));
+		this.pushToUndo(this.canvas?.toDataURL('image/jpeg', JPEGQUALITY));
 		if (this.canvas) {
 			this.ctx?.clearRect(0, 0, this.canvas.width, this.canvas.height);
 			this.setBackground(this.background);
@@ -154,7 +161,7 @@ class CanvasStore {
 					id: lobbyStore.sessionId,
 					method: Methods.DRAW,
 					image: {
-						src: this.canvas?.toDataURL('image/jpeg', 0.85),
+						src: this.canvas?.toDataURL('image/jpeg', JPEGQUALITY),
 					},
 				})
 			);

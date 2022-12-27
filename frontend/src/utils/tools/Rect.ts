@@ -2,6 +2,7 @@ import { Methods } from 'src/api';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
+import { JPEGQUALITY } from '../constants';
 import { getLineType } from '../helpers';
 import Tool from './Tool';
 
@@ -38,7 +39,9 @@ export default class Rect extends Tool {
 
 	private downHandler(x: number, y: number): void {
 		this.mouseDown = true;
-		canvasStore.pushToUndo(this.canvas.toDataURL('image/jpeg', 0.85));
+		canvasStore.pushToUndo(
+			this.canvas.toDataURL('image/jpeg', JPEGQUALITY)
+		);
 		this.startX = (x * this.canvas.width) / this.canvas.clientWidth || 0;
 		this.startY = (y * this.canvas.height) / this.canvas.clientHeight || 0;
 	}
@@ -97,7 +100,7 @@ export default class Rect extends Tool {
 				method: Methods.DRAW,
 				id: lobbyStore.sessionId,
 				image: {
-					src: this.canvas.toDataURL('image/jpeg', 0.85),
+					src: this.canvas.toDataURL('image/jpeg', JPEGQUALITY),
 				},
 			})
 		);
