@@ -84,7 +84,7 @@ export const SettingsBar: React.FC = observer((): JSX.Element => {
 						type="color"
 						className={styles.color_input}
 						value={toolStore.color}
-						onChange={(e) => handleColorChange(e)}
+						onChange={handleColorChange}
 						onClick={handleNotChosen}
 					/>
 				</div>
@@ -98,7 +98,7 @@ export const SettingsBar: React.FC = observer((): JSX.Element => {
 						step={1}
 						className={styles.range_input}
 						value={toolStore.lineWidth}
-						onChange={(e) => handleLineWidthChange(e)}
+						onChange={handleLineWidthChange}
 						onClick={handleNotChosen}
 					/>
 					<input
@@ -107,7 +107,7 @@ export const SettingsBar: React.FC = observer((): JSX.Element => {
 						max={50}
 						className={styles.input}
 						value={toolStore.lineWidth}
-						onChange={(e) => handleLineWidthChange(e)}
+						onChange={handleLineWidthChange}
 						onClick={handleNotChosen}
 					/>
 				</div>
@@ -116,7 +116,7 @@ export const SettingsBar: React.FC = observer((): JSX.Element => {
 					<p className={styles.p}>{t('settingsBar.lineType')}</p>
 					<select
 						value={toolStore.lineType}
-						onChange={(e) => handleLineTypeChange(e)}
+						onChange={handleLineTypeChange}
 						onClick={handleNotChosen}
 						name="lineType"
 						id="lineType"
@@ -139,7 +139,7 @@ export const SettingsBar: React.FC = observer((): JSX.Element => {
 					<input
 						type="checkbox"
 						checked={toolStore.fill}
-						onChange={(e) => handleFillChange(e)}
+						onChange={handleFillChange}
 						onClick={handleNotChosen}
 						className={styles.checkbox}
 					/>
