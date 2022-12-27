@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { Methods } from 'src/api';
+import { Methods, sendMessage } from 'src/api';
 import { Message } from 'src/api/types';
 import { JPEGQUALITY } from 'src/utils/constants';
 import { Tool } from 'src/utils/tools';
@@ -87,18 +87,17 @@ class CanvasStore {
 				};
 
 				setTimeout(() => {
-					lobbyStore.socket?.send(
-						JSON.stringify({
-							id: lobbyStore.sessionId,
-							method: Methods.DRAW,
-							image: {
-								src: this.canvas?.toDataURL(
-									'image/jpeg',
-									JPEGQUALITY
-								),
-							},
-						})
-					);
+					const message = {
+						id: lobbyStore.sessionId,
+						method: Methods.DRAW,
+						image: {
+							src: this.canvas?.toDataURL(
+								'image/jpeg',
+								JPEGQUALITY
+							),
+						},
+					};
+					sendMessage(JSON.stringify(message));
 				}, 50);
 			}
 		}
@@ -132,18 +131,14 @@ class CanvasStore {
 			}
 
 			setTimeout(() => {
-				lobbyStore.socket?.send(
-					JSON.stringify({
-						id: lobbyStore.sessionId,
-						method: Methods.DRAW,
-						image: {
-							src: this.canvas?.toDataURL(
-								'image/jpeg',
-								JPEGQUALITY
-							),
-						},
-					})
-				);
+				const message = {
+					id: lobbyStore.sessionId,
+					method: Methods.DRAW,
+					image: {
+						src: this.canvas?.toDataURL('image/jpeg', JPEGQUALITY),
+					},
+				};
+				sendMessage(JSON.stringify(message));
 			}, 50);
 		}
 	}
@@ -156,15 +151,14 @@ class CanvasStore {
 		}
 
 		setTimeout(() => {
-			lobbyStore.socket?.send(
-				JSON.stringify({
-					id: lobbyStore.sessionId,
-					method: Methods.DRAW,
-					image: {
-						src: this.canvas?.toDataURL('image/jpeg', JPEGQUALITY),
-					},
-				})
-			);
+			const message = {
+				id: lobbyStore.sessionId,
+				method: Methods.DRAW,
+				image: {
+					src: this.canvas?.toDataURL('image/jpeg', JPEGQUALITY),
+				},
+			};
+			sendMessage(JSON.stringify(message));
 		}, 50);
 	}
 

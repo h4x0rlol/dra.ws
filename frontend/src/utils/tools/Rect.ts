@@ -1,4 +1,4 @@
-import { Methods } from 'src/api';
+import { Methods, sendMessage } from 'src/api';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
@@ -95,15 +95,14 @@ export class Rect extends Tool {
 
 	mouseUpHandler(): void {
 		this.mouseDown = false;
-		lobbyStore.socket?.send(
-			JSON.stringify({
-				method: Methods.DRAW,
-				id: lobbyStore.sessionId,
-				image: {
-					src: this.canvas.toDataURL('image/jpeg', JPEGQUALITY),
-				},
-			})
-		);
+		const message = {
+			method: Methods.DRAW,
+			id: lobbyStore.sessionId,
+			image: {
+				src: this.canvas.toDataURL('image/jpeg', JPEGQUALITY),
+			},
+		};
+		sendMessage(JSON.stringify(message));
 	}
 
 	draw(x: number, y: number, w: number, h: number): void {

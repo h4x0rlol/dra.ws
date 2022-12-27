@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { Methods } from 'src/api';
+import { Methods, sendMessage } from 'src/api';
 import { SendIcon } from 'src/components/Svg';
 import lobbyStore from 'src/store/lobbyStore';
 import { getCurrentTime, getLocalTime, getUtcTime } from 'src/utils/helpers';
@@ -31,16 +31,15 @@ export const Room: React.FC = observer((): JSX.Element => {
 	}, [lobbyStore.messages, scrollToLastMessage]);
 
 	const handleSend = (): void => {
-		lobbyStore.socket?.send(
-			JSON.stringify({
-				id: params.id,
-				userId: lobbyStore.userId,
-				username: lobbyStore.username,
-				method: Methods.MESSAGE,
-				message,
-				date: getUtcTime(),
-			})
-		);
+		const messageToSend = {
+			id: params.id,
+			userId: lobbyStore.userId,
+			username: lobbyStore.username,
+			method: Methods.MESSAGE,
+			message,
+			date: getUtcTime(),
+		};
+		sendMessage(JSON.stringify(messageToSend));
 		setMessage('');
 	};
 

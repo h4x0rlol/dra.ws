@@ -84,12 +84,11 @@ export const getImageData = (id: string | undefined): void => {
 };
 
 export const closeConnectionHandler = (id: string | undefined): void => {
-	lobbyStore.socket?.send(
-		JSON.stringify({
-			id,
-			username: lobbyStore.username,
-			method: Methods.CLOSE,
-		})
-	);
+	const message = {
+		id,
+		username: lobbyStore.username,
+		method: Methods.CLOSE,
+	};
+	sendMessage(JSON.stringify(message));
 	lobbyStore.socket?.close();
 };
