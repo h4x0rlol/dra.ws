@@ -23,7 +23,7 @@ export const Canvas: React.FC = observer((): JSX.Element => {
 	}, []);
 
 	useEffect(() => {
-		document.addEventListener('keydown', (e) => {
+		const handleKeyboardActions = (e: KeyboardEvent): void => {
 			if (e.ctrlKey && e.key === 'z') {
 				canvasStore.undo();
 			}
@@ -31,18 +31,12 @@ export const Canvas: React.FC = observer((): JSX.Element => {
 			if (e.ctrlKey && e.key === 'y') {
 				canvasStore.redo();
 			}
-		});
+		};
+
+		document.addEventListener('keydown', handleKeyboardActions);
 
 		return () => {
-			document.removeEventListener('keydown', (e) => {
-				if (e.ctrlKey && e.key === 'z') {
-					canvasStore.undo();
-				}
-
-				if (e.ctrlKey && e.key === 'y') {
-					canvasStore.redo();
-				}
-			});
+			document.removeEventListener('keydown', handleKeyboardActions);
 		};
 	}, []);
 
@@ -73,8 +67,8 @@ export const Canvas: React.FC = observer((): JSX.Element => {
 	return (
 		<div
 			className={styles.container}
-			onMouseMove={(e) => outOfBoundsMouseHandler(e)}
-			onTouchMove={(e) => outOfBoundsMouseHandler(e)}
+			onMouseMove={outOfBoundsMouseHandler}
+			onTouchMove={outOfBoundsMouseHandler}
 		>
 			<div className={styles.wrapper}>
 				<canvas ref={canvasRef} onMouseDown={handleMouseOver} />
