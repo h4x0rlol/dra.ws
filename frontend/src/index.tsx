@@ -1,13 +1,13 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { ErrorBoundary } from 'react-error-boundary';
-import 'src/i18n';
-import 'src/styles/index.scss';
-import App from './App';
 import { ErrorFallback } from './components/ErrorFallback';
 import { Loader } from './components/Loader';
+import App from './App';
+import 'src/i18n';
+import 'src/styles/index.scss';
 
-const UI = (): JSX.Element => {
+const UI: React.FC = (): JSX.Element => {
 	return (
 		<ErrorBoundary
 			FallbackComponent={ErrorFallback}
