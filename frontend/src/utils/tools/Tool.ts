@@ -1,6 +1,6 @@
-import { MouseCoord } from 'src/api/types';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
+import { MouseCoord } from '../types';
 
 export default class Tool {
 	canvas: HTMLCanvasElement;

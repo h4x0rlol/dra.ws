@@ -9,11 +9,6 @@ export interface Image {
 	src: string;
 }
 
-export interface MouseCoord {
-	x: number;
-	y: number;
-}
-
 export type Message = {
 	id: string;
 	username: string;

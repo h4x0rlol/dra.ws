@@ -1,11 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import { ChatMessage } from 'src/api/types';
+import { RoomState } from 'src/utils/types';
 import { animals, uniqueNamesGenerator } from 'unique-names-generator';
-
-export enum RoomState {
-	CHAT = 'chat',
-	USERS = 'users',
-}
 
 class LobbyStore {
 	username: string = '';

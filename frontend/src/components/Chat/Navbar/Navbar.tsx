@@ -3,8 +3,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Id, toast } from 'react-toastify';
 import { ExitIcon, ShareIcon, UserIcon, UsersIcon } from 'src/components/Svg';
+import { RoomState } from 'src/utils/types';
 import { ThemeToggle } from 'src/components/ThemeToggle';
-import lobbyStore, { RoomState } from 'src/store/lobbyStore';
+import lobbyStore from 'src/store/lobbyStore';
 import styles from './Navbar.module.scss';
 
 export const Navbar: React.FC = observer((): JSX.Element => {

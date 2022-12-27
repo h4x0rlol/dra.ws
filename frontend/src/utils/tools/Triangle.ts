@@ -1,10 +1,10 @@
 import { Methods } from 'src/api';
-import { MouseCoord } from 'src/api/types';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
 import { JPEGQUALITY } from '../constants';
 import { getLineType } from '../helpers';
+import { MouseCoord } from '../types';
 import Tool from './Tool';
 
 export default class Triangle extends Tool {
