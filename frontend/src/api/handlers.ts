@@ -4,7 +4,7 @@ import Tool from 'src/utils/tools/Tool';
 import { v4 } from 'uuid';
 import { axiosConfig } from './axios.config';
 import { Methods } from './methods';
-import { Message, MessageTypes } from './types';
+import { ChatMessage, Message, MessageTypes } from './types';
 import { WS_URL } from './urls';
 
 const drawHandler = (msg: Message): void => {
@@ -13,6 +13,16 @@ const drawHandler = (msg: Message): void => {
 
 const setUsers = (users: string[]): void => {
 	lobbyStore.setUsers(users);
+};
+
+const setMessage = (message: ChatMessage): void => {
+	lobbyStore.setMessage({
+		...message,
+		type:
+			message.userId === lobbyStore.userId
+				? MessageTypes.OUTCOMING
+				: MessageTypes.INCOMING,
+	});
 };
 
 export const connectionHandler = (id: string | undefined): void => {
@@ -31,36 +41,26 @@ export const connectionHandler = (id: string | undefined): void => {
 				public: lobbyStore.isPublic,
 			})
 		);
-		socket.onmessage = (e) => {
-			const msg: Message = JSON.parse(e.data);
-			switch (msg.method) {
-				case Methods.CONNECTION:
-					setUsers(msg.users);
-					break;
-				case Methods.CLOSE:
-					setUsers(msg.users);
-					break;
-				case Methods.DRAW:
-					drawHandler(msg);
-					break;
-				case Methods.MESSAGE:
-					lobbyStore.setMessage({
-						id: msg.id,
-						userId: msg.userId,
-						username: msg.username,
-						method: msg.method,
-						message: msg.message,
-						date: msg.date,
-						type:
-							msg.userId === lobbyStore.userId
-								? MessageTypes.OUTCOMING
-								: MessageTypes.INCOMING,
-					});
-					break;
-				default:
-					break;
-			}
-		};
+	};
+
+	socket.onmessage = (message) => {
+		const msg: Message = JSON.parse(message.data);
+		switch (msg.method) {
+			case Methods.CONNECTION:
+				setUsers(msg.users);
+				break;
+			case Methods.CLOSE:
+				setUsers(msg.users);
+				break;
+			case Methods.DRAW:
+				drawHandler(msg);
+				break;
+			case Methods.MESSAGE:
+				setMessage(msg);
+				break;
+			default:
+				break;
+		}
 	};
 };
 
