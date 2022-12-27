@@ -1,5 +1,4 @@
 import canvasStore from 'src/store/canvasStore';
-import lobbyStore from 'src/store/lobbyStore';
 import { MouseCoord } from '../types';
 
 export class Tool {

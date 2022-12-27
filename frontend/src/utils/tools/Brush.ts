@@ -1,14 +1,14 @@
 import { Methods, sendMessage } from 'src/api';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
-import toolStore from 'src/store/toolStore';
 import { JPEGQUALITY } from '../constants';
-import { getLineType } from '../helpers';
 import { Tool } from './Tool';
 
 export class Brush extends Tool {
 	constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
 		super(canvas, ctx);
+		this.ctx.lineCap = 'round';
+		this.ctx.lineJoin = 'round';
 		this.listen();
 	}
 
@@ -69,13 +69,6 @@ export class Brush extends Tool {
 	}
 
 	draw(x: number, y: number): void {
-		this.ctx.strokeStyle = this.color;
-		this.ctx.lineWidth = this.lineWidth;
-		this.ctx.setLineDash(
-			getLineType(toolStore.lineType, toolStore.lineWidth)
-		);
-		this.ctx.lineCap = 'round';
-		this.ctx.lineJoin = 'round';
 		this.ctx.lineTo(x, y);
 		this.ctx.stroke();
 	}

@@ -68,7 +68,6 @@ export class Eraser extends Tool {
 
 	draw(x: number, y: number): void {
 		this.ctx.strokeStyle = 'white';
-		this.ctx.lineWidth = this.lineWidth;
 		this.ctx.setLineDash([]);
 		this.ctx.lineCap = 'butt';
 		this.ctx.lineJoin = 'miter';

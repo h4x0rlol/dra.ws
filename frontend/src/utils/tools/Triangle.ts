@@ -3,7 +3,6 @@ import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
 import { JPEGQUALITY } from '../constants';
-import { getLineType } from '../helpers';
 import { MouseCoord } from '../types';
 import { Tool } from './Tool';
 
@@ -12,6 +11,9 @@ export class Triangle extends Tool {
 
 	constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
 		super(canvas, ctx);
+		this.ctx.lineCap = 'butt';
+		this.ctx.lineJoin = 'miter';
+		this.ctx.shadowBlur = 0;
 		this.mouse = [];
 		this.listen();
 	}
@@ -41,15 +43,6 @@ export class Triangle extends Tool {
 	}
 
 	draw(): void {
-		this.ctx.strokeStyle = toolStore.color;
-		this.ctx.lineWidth = toolStore.lineWidth;
-		this.ctx.lineCap = 'butt';
-		this.ctx.lineJoin = 'miter';
-		this.ctx.shadowBlur = 0;
-		this.ctx.setLineDash(
-			getLineType(toolStore.lineType, toolStore.lineWidth)
-		);
-
 		if (this.mouse.length >= 3) {
 			this.ctx.beginPath();
 			this.ctx.moveTo(this.mouse[0].x, this.mouse[0].y);

@@ -1,9 +1,7 @@
 import { Methods, sendMessage } from 'src/api';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
-import toolStore from 'src/store/toolStore';
 import { JPEGQUALITY } from '../constants';
-import { getLineType } from '../helpers';
 import { Tool } from './Tool';
 
 export class Line extends Tool {
@@ -102,11 +100,6 @@ export class Line extends Tool {
 				0,
 				this.canvas.width,
 				this.canvas.height
-			);
-			this.ctx.strokeStyle = toolStore.color;
-			this.ctx.lineWidth = toolStore.lineWidth;
-			this.ctx.setLineDash(
-				getLineType(toolStore.lineType, toolStore.lineWidth)
 			);
 
 			this.ctx.beginPath();

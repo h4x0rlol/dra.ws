@@ -1,14 +1,15 @@
 import { Methods, sendMessage } from 'src/api';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
-import toolStore from 'src/store/toolStore';
 import { JPEGQUALITY } from '../constants';
-import { getLineType } from '../helpers';
 import { Tool } from './Tool';
 
 export class Pencil extends Tool {
 	constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
 		super(canvas, ctx);
+		this.ctx.lineCap = 'butt';
+		this.ctx.lineJoin = 'miter';
+		this.ctx.shadowBlur = 0;
 		this.listen();
 	}
 
@@ -40,7 +41,6 @@ export class Pencil extends Tool {
 		if (this.mouseDown) {
 			const coordinates = this.getCanvasCoordinates(e.offsetX, e.offsetY);
 			this.draw(coordinates.x, coordinates.y);
-			console.log(this.ctx.lineWidth);
 		}
 	}
 
@@ -66,14 +66,10 @@ export class Pencil extends Tool {
 				src: this.canvas.toDataURL('image/jpeg', JPEGQUALITY),
 			},
 		};
-
 		sendMessage(JSON.stringify(message));
 	}
 
 	draw(x: number, y: number): void {
-		this.ctx.lineCap = 'butt';
-		this.ctx.lineJoin = 'miter';
-		this.ctx.shadowBlur = 0;
 		this.ctx.lineTo(x, y);
 		this.ctx.stroke();
 	}
