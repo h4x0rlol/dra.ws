@@ -49,10 +49,6 @@ export class Tool {
 		};
 	};
 
-	sendMessage = (message: string): void => {
-		lobbyStore.socket?.send(message);
-	};
-
 	getDistance = (start: number, end: number): number => {
 		return end - start;
 	};

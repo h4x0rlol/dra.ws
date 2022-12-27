@@ -25,6 +25,10 @@ const setMessage = (message: ChatMessage): void => {
 	});
 };
 
+export const sendMessage = (message: string): void => {
+	lobbyStore.socket?.send(message);
+};
+
 export const connectionHandler = (id: string | undefined): void => {
 	const socket: WebSocket = new WebSocket(WS_URL);
 

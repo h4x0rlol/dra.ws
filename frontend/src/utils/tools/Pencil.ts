@@ -1,4 +1,4 @@
-import { Methods } from 'src/api';
+import { Methods, sendMessage } from 'src/api';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
@@ -67,7 +67,7 @@ export class Pencil extends Tool {
 			},
 		};
 
-		this.sendMessage(JSON.stringify(message));
+		sendMessage(JSON.stringify(message));
 	}
 
 	draw(x: number, y: number): void {

@@ -1,4 +1,4 @@
-import { Methods } from 'src/api';
+import { Methods, sendMessage } from 'src/api';
 import canvasStore from 'src/store/canvasStore';
 import lobbyStore from 'src/store/lobbyStore';
 import toolStore from 'src/store/toolStore';
@@ -35,7 +35,7 @@ export class Line extends Tool {
 
 		this.canvas.ontouchstart = this.touchDownHandler.bind(this);
 		this.canvas.ontouchmove = this.touchMoveHandler.bind(this);
-		this.canvas.ontouchend = this.touchUpHandler.bind(this);
+		this.canvas.ontouchend = this.mouseUpHandler.bind(this);
 	}
 
 	private downHandler(x: number, y: number): void {
@@ -88,21 +88,7 @@ export class Line extends Tool {
 				src: this.canvas.toDataURL('image/jpeg', JPEGQUALITY),
 			},
 		};
-		this.sendMessage(JSON.stringify(message));
-	}
-
-	touchUpHandler(ev: TouchEvent): void {
-		this.mouseDown = false;
-		ev.preventDefault();
-
-		const message = {
-			method: Methods.DRAW,
-			id: lobbyStore.sessionId,
-			image: {
-				src: this.canvas.toDataURL('image/jpeg', JPEGQUALITY),
-			},
-		};
-		this.sendMessage(JSON.stringify(message));
+		sendMessage(JSON.stringify(message));
 	}
 
 	draw(x: number, y: number): void {
